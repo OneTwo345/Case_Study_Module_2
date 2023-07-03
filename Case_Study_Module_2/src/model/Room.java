@@ -1,5 +1,7 @@
 package model;
-import Service.IModel;
+
+import Utils.CurrencyFormat;
+import repository.IModel;
 
 public class Room implements IModel<Room> {
     private int roomId;
@@ -8,7 +10,8 @@ public class Room implements IModel<Room> {
     private ERoomType roomType;
     private int capacity;
     private double roomPrice;
-    public Room(){
+
+    public Room() {
 
     }
 
@@ -95,7 +98,35 @@ public class Room implements IModel<Room> {
         String[] strings = line.split(",");
         int id = Integer.parseInt(strings[0]);
         String name = strings[1];
-        int capacity = Integer.parseInt(strings[2]);
+        ERoomStatus status = ERoomStatus.getRoomStatusByName(strings[2]);
+        ERoomType roomType = ERoomType.getRoomTypeByName(strings[3]);
+        int capacity = Integer.parseInt(strings[4]);
+        double price = CurrencyFormat.parseDouble(strings[5]);
+        room.setRoomId(id);
+        room.setRoomName(name);
+        room.setRoomStatus(status);
+        room.setRoomType(roomType);
+        room.setCapacity(capacity);
+        room.setRoomPrice(price);
 
+        return room;
+
+    }
+     public String roomView() {
+        return String.format("  ║%6s║%-20s║ %-15s║ %-15s║ %-6s║ %-10s║", this.roomId, this.roomName,
+                this.roomStatus, this.roomType, this.capacity,this.roomPrice);
+    }
+
+
+    @Override
+    public String toString() {
+        return "Room{" +
+                "roomId=" + roomId +
+                ", roomName='" + roomName + '\'' +
+                ", roomStatus=" + roomStatus +
+                ", roomType=" + roomType +
+                ", capacity=" + capacity +
+                ", roomPrice=" + roomPrice +
+                '}';
     }
 }

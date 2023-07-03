@@ -1,4 +1,4 @@
-package Service;
+package repository;
 
 public interface IModel<T> {
     int getId();
