@@ -1,0 +1,188 @@
+package model;
+
+import Utils.DateFormat;
+import Utils.ValidateUtils;
+import repository.IModel;
+
+import java.util.Date;
+
+public class User implements IModel<User> {
+    private int id;
+    private String username;
+    private String password;
+    private String fullName;
+    private String phoneNumber;
+    private EGender gender;
+    private String CCCD;
+    private Date birthDay;
+    private String email;
+    private String address;
+    private ERole eRole;
+
+    public User(int id, String username, String password, String fullName, String phoneNumber,
+                EGender gender, String CCCD, Date birthDay, String email, String address, ERole eRole) {
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.fullName = fullName;
+        this.phoneNumber = phoneNumber;
+        this.gender = gender;
+        this.CCCD = CCCD;
+        this.birthDay = birthDay;
+        this.email = email;
+        this.address = address;
+        this.eRole = eRole;
+    }
+    public User(){
+
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public EGender getGender() {
+        return gender;
+    }
+
+    public void setGender(EGender gender) {
+        this.gender = gender;
+    }
+
+    public String getCCCD() {
+        return CCCD;
+    }
+
+    public void setCCCD(String CCCD) {
+        this.CCCD = CCCD;
+    }
+
+    public Date getBirthDay() {
+        return birthDay;
+    }
+
+    public void setBirthDay(Date birthDay) {
+        this.birthDay = birthDay;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public ERole geteRole() {
+        return eRole;
+    }
+
+    public void seteRole(ERole eRole) {
+        this.eRole = eRole;
+    }
+
+    @Override
+    public int getId() {
+        return id;
+    }
+
+    @Override
+    public String getName() {
+        return fullName;
+    }
+
+    @Override
+    public void update(User obj) {
+        this.id = obj.id;
+        this.username = obj.username;
+        this.password = obj.password;
+        this.fullName = obj.fullName;
+        this.phoneNumber = obj.phoneNumber;
+        this.gender = obj.gender;
+        this.CCCD = obj.CCCD;
+        this.birthDay = obj.birthDay;
+        this.email = obj.email;
+        this.address = obj.address;
+        this.eRole = obj.eRole;
+    }
+
+    @Override
+    public User parseData(String line) {
+        User user = new User();
+        String[] strings = line.split(",");
+        int id = Integer.parseInt(strings[0]);
+        String username = strings[1];
+        String password = strings[2];
+        String fullName = strings[3];
+        String phoneNumber = strings[4];
+        EGender gender = EGender.getEGenderByName(strings[5]);
+        String cccd = strings[6];
+        Date birthDay = DateFormat.parseDate(strings[7]);
+        String email = strings[8];
+        String address = ValidateUtils.parseCharToComma(strings[9]);
+        ERole eRole = ERole.getRoleByName(strings[10]);
+
+        user.setId(id);
+        user.setUsername(username);
+        user.setPassword(password);
+        user.setFullName(fullName);
+        ;
+        user.setPhoneNumber(phoneNumber);
+        user.setGender(gender);
+        user.setCCCD(cccd);
+        user.setBirthDay(birthDay);
+        user.setEmail(email);
+        user.setAddress(address);
+        user.seteRole(eRole);
+
+        return user;
+    }
+    public String userView() {
+        return String.format("            ║%7s║%-15s║ %-20s║ %-15s║ %-15s║%-15s║ %-15s║ %-36s║ %-30s║", this.id, this.username, this.fullName, this.phoneNumber, this.gender.getName(), this.CCCD, DateFormat.convertDateToString((java.sql.Date) this.birthDay), this.email, this.address);
+    }
+
+    @Override
+    public String toString() {
+        return id + "," + username + "," + password + "," + fullName + "," + phoneNumber + "," + gender.getName() + "," + CCCD + "," + DateFormat.convertDateToString((java.sql.Date) birthDay) + "," + email + "," + ValidateUtils.parseCommaToChar(address) + "," + eRole.getName();
+    }
+}
