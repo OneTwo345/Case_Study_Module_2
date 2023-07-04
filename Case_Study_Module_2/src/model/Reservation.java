@@ -126,7 +126,7 @@ public class Reservation implements IModel<Reservation> {
         reservation.setReservationId(reservationId);
         reservation.setCustomerId(customerId);
         reservation.setCustomerName(customerName);
-        reservation.setTimeExpected(timeExpected);
+        reservation.setTimeExpected(timeExpect);
         reservation.setDownPayment(downPayment);
         reservation.setRoomName(roomName);
         reservation.setReservationRoomStatus(reservationRoomStatus);

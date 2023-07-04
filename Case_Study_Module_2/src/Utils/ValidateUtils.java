@@ -50,7 +50,7 @@ public class ValidateUtils {
         try {
             quantity = Integer.parseInt(inputQuantity);
         } catch (NumberFormatException numberFormatException) {
-            System.out.println("Nhập lỗi, số lượng phải là một số, vui lòng nhập lại!");
+            System.out.println("Input must be a number, please try again");
             quantity = 0;
             return false;
         }
@@ -66,12 +66,12 @@ public class ValidateUtils {
         try {
             id = Integer.parseInt(input);
         } catch (NumberFormatException numberFormatException) {
-            System.out.println("ID không hợp lệ vui lòng nhập lại!");
+            System.out.println("Invalid ID please re-enter!");
             id = 0;
             return false;
         }
         if(id < 0) {
-            System.out.println("ID phải lớn hơn 0, vui lòng nhập lại!");
+            System.out.println("Have you ever seen ID less than ZERO?");
             id = 0;
             return false;
         }

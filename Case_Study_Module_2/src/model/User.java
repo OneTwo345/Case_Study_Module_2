@@ -156,7 +156,7 @@ public class User implements IModel<User> {
         String fullName = strings[3];
         String phoneNumber = strings[4];
         EGender gender = EGender.getEGenderByName(strings[5]);
-        String cccd = strings[6];
+        String CCCD = strings[6];
         Date birthDay = DateFormat.parseDate(strings[7]);
         String email = strings[8];
         String address = ValidateUtils.parseCharToComma(strings[9]);
@@ -169,7 +169,7 @@ public class User implements IModel<User> {
         ;
         user.setPhoneNumber(phoneNumber);
         user.setGender(gender);
-        user.setCCCD(cccd);
+        user.setCCCD(CCCD);
         user.setBirthDay(birthDay);
         user.setEmail(email);
         user.setAddress(address);
