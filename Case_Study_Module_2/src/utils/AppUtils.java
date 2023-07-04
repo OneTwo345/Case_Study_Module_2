@@ -1,9 +1,9 @@
-package Utils;
+package utils;
 
 import java.sql.Date;
 import java.sql.Time;
 import java.util.Scanner;
-public class AppUltis {
+public class AppUtils {
     private static Scanner sc;
     static {
         sc = new Scanner(System.in);

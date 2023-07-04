@@ -1,7 +1,7 @@
 package model;
 
-import Utils.DateFormat;
-import Utils.ValidateUtils;
+import utils.DateFormat;
+import utils.ValidateUtils;
 import repository.IModel;
 
 import java.util.Date;
@@ -146,37 +146,8 @@ public class User implements IModel<User> {
         this.eRole = obj.eRole;
     }
 
-    @Override
-    public User parseData(String line) {
-        User user = new User();
-        String[] strings = line.split(",");
-        int id = Integer.parseInt(strings[0]);
-        String username = strings[1];
-        String password = strings[2];
-        String fullName = strings[3];
-        String phoneNumber = strings[4];
-        EGender gender = EGender.getEGenderByName(strings[5]);
-        String CCCD = strings[6];
-        Date birthDay = DateFormat.parseDate(strings[7]);
-        String email = strings[8];
-        String address = ValidateUtils.parseCharToComma(strings[9]);
-        ERole eRole = ERole.getRoleByName(strings[10]);
 
-        user.setId(id);
-        user.setUsername(username);
-        user.setPassword(password);
-        user.setFullName(fullName);
-        ;
-        user.setPhoneNumber(phoneNumber);
-        user.setGender(gender);
-        user.setCCCD(CCCD);
-        user.setBirthDay(birthDay);
-        user.setEmail(email);
-        user.setAddress(address);
-        user.seteRole(eRole);
 
-        return user;
-    }
     public String userView() {
         return String.format("            ║%7s║%-15s║ %-20s║ %-15s║ %-15s║%-15s║ %-15s║ %-36s║ %-30s║", this.id, this.username, this.fullName, this.phoneNumber, this.gender.getName(), this.CCCD, DateFormat.convertDateToString((java.sql.Date) this.birthDay), this.email, this.address);
     }

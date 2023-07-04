@@ -1,7 +1,6 @@
 package model;
 
-import Utils.CurrencyFormat;
-import Utils.DateFormat;
+import utils.CurrencyFormat;
 import repository.IModel;
 
 import java.sql.Date;
@@ -112,27 +111,8 @@ public class Reservation implements IModel<Reservation> {
         this.reservationRoomStatus = obj.reservationRoomStatus;
     }
 
-    @Override
-    public Reservation parseData(String line) {
-        Reservation reservation = new Reservation();
-        String[] strings = line.split(",");
-        int reservationId = Integer.parseInt(strings[0]);
-        int customerId = Integer.parseInt(strings[1]);
-        String customerName = strings[2];
-        Date timeExpect = DateFormat.parseDateWithHours(strings[3]);
-        double downPayment = Double.parseDouble(strings[4]);
-        String roomName = strings[5];
-        ERoomStatus reservationRoomStatus = ERoomStatus.getRoomStatusByName(strings[6]);
-        reservation.setReservationId(reservationId);
-        reservation.setCustomerId(customerId);
-        reservation.setCustomerName(customerName);
-        reservation.setTimeExpected(timeExpect);
-        reservation.setDownPayment(downPayment);
-        reservation.setRoomName(roomName);
-        reservation.setReservationRoomStatus(reservationRoomStatus);
-        return reservation;
 
-    }
+
 
     public String reservationView() {
         return String.format("            ║ %-6s║ %-14s║ %-29s║ %-30s║ %-15s║ %-15s║ %-14s║", this.reservationId,

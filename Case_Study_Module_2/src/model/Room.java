@@ -1,27 +1,28 @@
 package model;
 
-import Utils.CurrencyFormat;
 import repository.IModel;
 
-public class Room implements IModel<Room> {
+import java.io.Serializable;
+
+public class Room implements IModel<Room>, Serializable {
     private int roomId;
     private String roomName;
     private ERoomStatus roomStatus;
     private ERoomType roomType;
     private int capacity;
-    private double roomPrice;
+    private double roomPricePerHour;
 
     public Room() {
 
     }
 
-    public Room(int roomId, String roomName, ERoomStatus roomStatus, ERoomType roomType, int capacity, double roomPrice) {
+    public Room(int roomId, String roomName, ERoomStatus roomStatus, ERoomType roomType, int capacity, double roomPricePerHour) {
         this.roomId = roomId;
         this.roomName = roomName;
         this.roomStatus = roomStatus;
         this.roomType = roomType;
         this.capacity = capacity;
-        this.roomPrice = roomPrice;
+        this.roomPricePerHour = roomPricePerHour;
     }
 
     public int getRoomId() {
@@ -64,12 +65,12 @@ public class Room implements IModel<Room> {
         this.capacity = capacity;
     }
 
-    public double getRoomPrice() {
-        return roomPrice;
+    public double getRoomPricePerHour() {
+        return roomPricePerHour;
     }
 
-    public void setRoomPrice(double roomPrice) {
-        this.roomPrice = roomPrice;
+    public void setRoomPricePerHour(double roomPricePerHour) {
+        this.roomPricePerHour = roomPricePerHour;
     }
 
     @Override
@@ -89,32 +90,14 @@ public class Room implements IModel<Room> {
         this.roomStatus = obj.roomStatus;
         this.roomType = obj.roomType;
         this.capacity = obj.capacity;
-        this.roomPrice = obj.roomPrice;
+        this.roomPricePerHour = obj.roomPricePerHour;
     }
 
-    @Override
-    public Room parseData(String line) {
-        Room room = new Room();
-        String[] strings = line.split(",");
-        int id = Integer.parseInt(strings[0]);
-        String name = strings[1];
-        ERoomStatus status = ERoomStatus.getRoomStatusByName(strings[2]);
-        ERoomType roomType = ERoomType.getRoomTypeByName(strings[3]);
-        int capacity = Integer.parseInt(strings[4]);
-        double price = CurrencyFormat.parseDouble(strings[5]);
-        room.setRoomId(id);
-        room.setRoomName(name);
-        room.setRoomStatus(status);
-        room.setRoomType(roomType);
-        room.setCapacity(capacity);
-        room.setRoomPrice(price);
 
-        return room;
 
-    }
      public String roomView() {
         return String.format("  ║%6s║%-20s║ %-15s║ %-15s║ %-6s║ %-10s║", this.roomId, this.roomName,
-                this.roomStatus, this.roomType, this.capacity,this.roomPrice);
+                this.roomStatus, this.roomType, this.capacity,this.roomPricePerHour);
     }
 
 
@@ -126,7 +109,7 @@ public class Room implements IModel<Room> {
                 ", roomStatus=" + roomStatus +
                 ", roomType=" + roomType +
                 ", capacity=" + capacity +
-                ", roomPrice=" + roomPrice +
+                ", roomPricePerHour=" + roomPricePerHour +
                 '}';
     }
 }
