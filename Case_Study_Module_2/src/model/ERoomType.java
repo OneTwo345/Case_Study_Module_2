@@ -1,9 +1,9 @@
 package model;
 
 public enum ERoomType {
-    Normal(1,"Normal"),
-    VIP(2,"Vip"),
-    Student(3,"Student");
+    Normal(1,"normal"),
+    VIP(2,"vip"),
+    Student(3,"student");
     private int id;
     private String name;
 

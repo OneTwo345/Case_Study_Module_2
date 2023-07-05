@@ -1,33 +1,32 @@
 package utils;
 
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.sql.Date;
+import java.util.Date;
 
 public class DateFormat {
-    private static final SimpleDateFormat dateFormatWithHours = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
-    private static final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-    public static Date parseDate(String strDate) {
-        try {
-            return (Date) simpleDateFormat.parse(strDate);
-        } catch (ParseException e) {
-            System.out.println("Invalid format");
-            return null;
-        }
-    }
+    private static SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("dd/MM/yyyy");
     public static String convertDateToString(Date date) {
-        return simpleDateFormat.format(date);
+        return simpleDateFormat1.format(date);
     }
+
+    private static final String FORMAT_PATTERN = "dd-MM-yyyy hh:mm:ss";
+
+    public static String formatDateWithHours(Date date) {
+        SimpleDateFormat formatter = new SimpleDateFormat(FORMAT_PATTERN);
+        return formatter.format(date);
+    }
+
+
     public static Date parseDateWithHours(String strDate) {
+        SimpleDateFormat formatter = new SimpleDateFormat(FORMAT_PATTERN);
         try {
-            return (Date) dateFormatWithHours.parse(strDate);
+            return formatter.parse(strDate);
         } catch (ParseException e) {
-            System.out.println("Invalid format");
-            System.out.println("dd-MM-yyyy hh:mm:ss");
+            e.printStackTrace();
             return null;
         }
     }
-    public static String convertDateToStringWithHours(Date date) {
-        return dateFormatWithHours.format(date);
-    }
+
 }

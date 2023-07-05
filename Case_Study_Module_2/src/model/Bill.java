@@ -7,29 +7,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class Bill  {
+public class Bill {
     static int currentId = 0;
 
     private int id;
     private Room room;
     private Date roomRealTimeIn;
     private Date roomRealTimeOut;
-    private Category category;
+    private Food food;
     private User user;
     private final List<Bill> bills = new ArrayList<>();
-    private String status = "Unpaid";
-    public Bill(){
+    private EBillStatus eBillStatus;
+
+    public Bill() {
 
     }
 
-    public Bill(int id, Room room, Date roomRealTimeIn, Date roomRealTimeOut, Category category, User user, String status) {
+    public Bill(int id, Room room, Date roomRealTimeIn, Date roomRealTimeOut, Food food, User user, EBillStatus eBillStatus) {
         this.id = id;
         this.room = room;
         this.roomRealTimeIn = roomRealTimeIn;
         this.roomRealTimeOut = roomRealTimeOut;
-        this.category = category;
+        this.food = food;
         this.user = user;
-        this.status = status;
+        this.eBillStatus = eBillStatus;
     }
 
     public static int getCurrentId() {
@@ -72,12 +73,12 @@ public class Bill  {
         this.roomRealTimeOut = roomRealTimeOut;
     }
 
-    public Category getCategory() {
-        return category;
+    public Food getCategory() {
+        return food;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setCategory(Food food) {
+        this.food = food;
     }
 
     public User getUser() {
@@ -92,12 +93,23 @@ public class Bill  {
         return bills;
     }
 
-    public String getStatus() {
-        return status;
+    public Food getFood() {
+        return food;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setFood(Food food) {
+        this.food = food;
     }
 
+    public EBillStatus geteBillStatus() {
+        return eBillStatus;
+    }
+
+    public void seteBillStatus(EBillStatus eBillStatus) {
+        this.eBillStatus = eBillStatus;
+    }
 }
+
+
+
+

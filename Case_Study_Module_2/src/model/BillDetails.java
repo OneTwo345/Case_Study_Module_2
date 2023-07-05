@@ -3,12 +3,12 @@ package model;
 public class BillDetails {
     //food, bill, name food , price,quantity,
     Bill bill;
-    Category category;
+    Food food;
     Room room;
 
-    public BillDetails(Bill bill, Category category, Room room) {
+    public BillDetails(Bill bill, Food food, Room room) {
         this.bill = bill;
-        this.category = category;
+        this.food = food;
         this.room = room;
     }
     public BillDetails(){
@@ -23,12 +23,12 @@ public class BillDetails {
         this.bill = bill;
     }
 
-    public Category getCategory() {
-        return category;
+    public Food getCategory() {
+        return food;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setCategory(Food food) {
+        this.food = food;
     }
 
     public Room getRoom() {

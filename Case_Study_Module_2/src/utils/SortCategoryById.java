@@ -1,13 +1,13 @@
 package utils;
 
-import model.Category;
+import model.Food;
 
 import java.util.Comparator;
 
-public class SortCategoryById implements Comparator<Category> {
+public class SortCategoryById implements Comparator<Food> {
 
     @Override
-    public int compare(Category o1, Category o2) {
-        return o1.getCategoryId() - o2.getCategoryId();
+    public int compare(Food o1, Food o2) {
+        return o1.getFoodId() - o2.getFoodId();
     }
 }
