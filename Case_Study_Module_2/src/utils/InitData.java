@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+
 public class InitData {
 
     public static void init() {
@@ -27,10 +28,12 @@ public class InitData {
     }
 
     public static void initReservation() {
-        List<Room> rooms = (List<Room>) SerializationUtil.deserialize("rooms.txt");
+        List<Reservation> rooms = (List<Reservation>) SerializationUtil.deserialize
+                ("D:\\Case_Study_Module_2\\Case_Study_Module_2\\src\\file\\reservation.txt");
 
         Reservation reservation1 = new Reservation(121, "Duy",
-                "05-06-2023 14:30:30", 200000, rooms.get(5), ERoomStatus.available);
+                "05-06-2023 14:30:30", 200000,null,null );
+
         List<Reservation> reservations = new ArrayList<>();
         reservations.add(reservation1);
 
@@ -52,7 +55,6 @@ public class InitData {
         foods.add(grilledSquid);
         foods.add(grilledChicken);
         SerializationUtil.serialize(foods, "D:\\Case_Study_Module_2\\Case_Study_Module_2\\src\\file\\foods.txt");
-
     }
 
 

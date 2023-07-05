@@ -1,7 +1,6 @@
 package main;
 
-import static utils.DisplayData.displayCategories;
-import static utils.DisplayData.displayRoom;
+import static utils.DisplayData.*;
 import static utils.InitData.*;
 
 public class Main {
@@ -9,6 +8,6 @@ public class Main {
         initRoom();
         initReservation();
         initCategory();
-        displayRoom();
+        displayReservation();
     }
 }
