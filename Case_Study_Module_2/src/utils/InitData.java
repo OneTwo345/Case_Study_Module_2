@@ -1,10 +1,9 @@
 package utils;
 
 import model.*;
+import service.RoomService;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 
 public class InitData {
@@ -22,22 +21,38 @@ public class InitData {
         Room room6 = new Room(23, "T2-3", ERoomStatus.available, ERoomType.VIP, 50, 100000);
 
         List<Room> rooms = new ArrayList<>(Arrays.asList(room1, room2, room3, room4, room5, room6));
+        RoomService.roomList =rooms;
         SerializationUtil.serialize(rooms, "D:\\Case_Study_Module_2\\Case_Study_Module_2\\src\\file\\rooms.txt");
 
 
     }
 
-    public static void initReservation() {
-        List<Reservation> rooms = (List<Reservation>) SerializationUtil.deserialize
-                ("D:\\Case_Study_Module_2\\Case_Study_Module_2\\src\\file\\reservation.txt");
 
-        Reservation reservation1 = new Reservation(121, "Duy",
-                "05-06-2023 14:30:30", 200000,null,null );
+
+    public static void initReservation() {
+        List<Room> rooms  = (List<Room>) SerializationUtil.deserialize
+                ("D:\\Case_Study_Module_2\\Case_Study_Module_2\\src\\file\\rooms.txt");
+//
+        Date date1 = DateFormat.parseDateWithHours("12-12-2022 14:30:30");
+        Date date2 = DateFormat.parseDateWithHours("12-12-2022 17:30:30");
+        Date date3 = DateFormat.parseDateWithHours("12-12-2022 20:30:30");
+
+
+
+        Reservation reservation1 = new Reservation(121,"Duy",date1,
+                150000,rooms.get(0),ERoomStatus.getRoomStatusById(1));
+        Reservation reservation2 = new Reservation(123,"Nam",date2,
+                0,rooms.get(2),ERoomStatus.getRoomStatusById(1));
+        Reservation reservation3 = new Reservation(125,"Khoa",date3,
+                50000,rooms.get(3),ERoomStatus.getRoomStatusById(1));
 
         List<Reservation> reservations = new ArrayList<>();
         reservations.add(reservation1);
+        reservations.add(reservation2);
+        reservations.add(reservation3);
 
-        SerializationUtil.serialize(reservations, "D:\\Case_Study_Module_2\\Case_Study_Module_2\\src\\file\\reservation.txt");
+
+        SerializationUtil.serialize(reservations, "D:\\Case_Study_Module_2\\Case_Study_Module_2\\src\\file\\reservations.txt");
     }
 
     public static void initCategory() {

@@ -7,6 +7,15 @@ import java.util.Date;
 
 public class DateFormat {
     private static SimpleDateFormat simpleDateFormat1 = new SimpleDateFormat("dd/MM/yyyy");
+
+
+    public static void convertDateTypeWithHours(Date date){
+        SimpleDateFormat formatterDaywithhours = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+        String formattedDate = formatterDaywithhours.format(date);
+
+    }
+
+
     public static String convertDateToString(Date date) {
         return simpleDateFormat1.format(date);
     }
@@ -17,6 +26,7 @@ public class DateFormat {
         SimpleDateFormat formatter = new SimpleDateFormat(FORMAT_PATTERN);
         return formatter.format(date);
     }
+
 
 
     public static Date parseDateWithHours(String strDate) {

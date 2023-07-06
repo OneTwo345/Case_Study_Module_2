@@ -38,19 +38,22 @@ public class DisplayData {
     }
 
     public static void displayReservation() {
+        List<Room> rooms  = (List<Room>) SerializationUtil.deserialize
+                ("D:\\Case_Study_Module_2\\Case_Study_Module_2\\src\\file\\rooms.txt");
         List<Reservation> reservations = (List<Reservation>) SerializationUtil.deserialize("D:\\Case_Study_Module_2\\Case_Study_Module_2\\src\\file\\reservations.txt");
         if (reservations == null) {
             System.out.println("Không có đặt phòng nào.");
             return;
         }
         System.out.println("Thông tin cuộc hẹn:");
-        System.out.println("\t\t\t\t===========================================================================================================");
-        System.out.printf("\t\t\t\t%-10s %-25s %-20s %-20s %-10s %-15s \n", "ID ", "Tên khách", "Ngày giờ", "Tiền cọc", "Phòng", "Trạng thái phòng");
+        System.out.println("\t\t\t\t===================================================================================================================================================");
+        System.out.printf("\t\t\t\t%-10s %-10s %-20s %-25s %-20s %-10s %-15s %-30s \n", "ID ","ID Khách", "Tên khách", "Ngày giờ", "Tiền cọc", "Phòng", "Trạng thái","Loại");
         for (Reservation reservation : reservations) {
-            System.out.printf("\t\t\t\t%-10d %-25s %-20s %-20s %-10s %-15s \n", reservation.getReservationId(), reservation.getCustomerName(), reservation.getTimeExpected().toString(),
-                    reservation.getDownPayment(), reservation.getRoomName(), reservation.getReservationRoomStatus());
+            DateFormat.convertDateTypeWithHours(reservation.getTimeExpected());
+            System.out.printf("\t\t\t\t%-10d %-10s %-15s %-30s %-20s %-10s %-15s %-20s \n", reservation.getReservationId(),reservation.getCustomerId(), reservation.getCustomerName(),DateFormat.formatDateWithHours(reservation.getTimeExpected()),
+                   CurrencyFormat.covertPriceToString(reservation.getDownPayment()) ,reservation.getRoom().getRoomName(), reservation.getReservationRoomStatus(),reservation.getRoom().getRoomType());
         }
-        System.out.println("\t\t\t\t===========================================================================================================\n\n");
+        System.out.println("\t\t\t\t====================================================================================================================================================\n\n");
 
     }
 

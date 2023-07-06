@@ -2,7 +2,6 @@ package model;
 
 import utils.CurrencyFormat;
 import repository.IModel;
-import utils.DateFormat;
 
 import java.io.Serializable;
 
@@ -15,7 +14,7 @@ public class Reservation implements IModel<Reservation>, Serializable {
     private int reservationId;
     private int customerId;
     private String customerName;
-
+Room room;
     private double downPayment;
     private String roomName;
     private Date timeExpected;
@@ -26,20 +25,23 @@ public class Reservation implements IModel<Reservation>, Serializable {
 
     }
 
-    public Reservation( int customerId, String customerName, Date timeExpected,
-                       double downPayment, Room roomName, ERoomStatus reservationRoomStatus) {
+    public Reservation(int customerId, String customerName, Date timeExpected,
+                       double downPayment, Room room, ERoomStatus reservationRoomStatus) {
         this.reservationId = ++currentId;
         this.customerId = customerId;
         this.customerName = customerName;
         this.timeExpected = timeExpected;
         this.downPayment = downPayment;
-        this.roomName = String.valueOf(roomName);
+        this.room = room;
 
         this.reservationRoomStatus = reservationRoomStatus;
     }
 
-    public Reservation(int customerId, String name, String dateFormat, int downPayment, Room roomName, ERoomStatus eRoomStatus) {
+    public Room getRoom() {
+        return room;
     }
+//    public Reservation(int customerId, String name, String dateFormat, double downPayment, Room roomName, ERoomStatus eRoomStatus) {
+//    }
 
     public int getReservationId() {
         return reservationId;

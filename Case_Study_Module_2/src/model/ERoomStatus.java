@@ -3,7 +3,8 @@ package model;
 public enum ERoomStatus {
     available(1,"available"),
     maintenance(2,"maintenance"),
-    inUse(3,"in-use");
+    inUse(3,"in-use"),
+    reserved(4,"reserved");
 
    private int id;
    private String name;

@@ -1,5 +1,9 @@
 package main;
 
+import service.RoomService;
+
+import java.security.Provider;
+
 import static utils.DisplayData.*;
 import static utils.InitData.*;
 
@@ -8,6 +12,8 @@ public class Main {
         initRoom();
         initReservation();
         initCategory();
-        displayReservation();
+    RoomService roomService = new RoomService();
+        System.out.println(roomService.getById(11).toString());
+
     }
 }

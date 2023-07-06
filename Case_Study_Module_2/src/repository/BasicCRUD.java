@@ -6,7 +6,6 @@ import java.util.List;
 public interface BasicCRUD<T> {
     T getById(int id);
 
-    List<T> getAll();
 
     void create(T obj) throws IOException;
 
@@ -14,7 +13,6 @@ public interface BasicCRUD<T> {
 
     void delete(int id) throws IOException;
 
-    boolean isExist(int id);
 
-    void print();
+
 }
