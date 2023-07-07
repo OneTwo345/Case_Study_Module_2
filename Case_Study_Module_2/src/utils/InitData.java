@@ -1,6 +1,7 @@
 package utils;
 
 import model.*;
+import service.ReservationService;
 import service.RoomService;
 
 import java.util.*;
@@ -8,25 +9,26 @@ import java.util.*;
 
 public class InitData {
 
-    public static void init() {
-
+    public static void initRoomData() {
+        List<Room> rooms = (List<Room>) SerializationUtil.deserialize
+                ("D:\\Case_Study_Module_2\\Case_Study_Module_2\\src\\file\\rooms.txt");
+        RoomService.roomList = rooms;
     }
 
-    public static void initRoom() {
-        Room room1 = new Room(11, "T1-1", ERoomStatus.available, ERoomType.Normal, 30, 60000);
-        Room room2 = new Room(12, "T1-2", ERoomStatus.available, ERoomType.Student, 20, 40000);
-        Room room3 = new Room(13, "T1-3", ERoomStatus.available, ERoomType.VIP, 50, 100000);
-        Room room4 = new Room(21, "T2-1", ERoomStatus.available, ERoomType.Normal, 30, 60000);
-        Room room5 = new Room(22, "T2-2", ERoomStatus.available, ERoomType.Student, 20, 40000);
-        Room room6 = new Room(23, "T2-3", ERoomStatus.available, ERoomType.VIP, 50, 100000);
-
-        List<Room> rooms = new ArrayList<>(Arrays.asList(room1, room2, room3, room4, room5, room6));
-        RoomService.roomList =rooms;
-        SerializationUtil.serialize(rooms, "D:\\Case_Study_Module_2\\Case_Study_Module_2\\src\\file\\rooms.txt");
-
-
-    }
-
+//    public static void initRoom() {
+//        Room room1 = new Room(11, "T1-1", ERoomStatus.available, ERoomType.Normal, 30, 60000);
+//        Room room2 = new Room(12, "T1-2", ERoomStatus.available, ERoomType.Student, 20, 40000);
+//        Room room3 = new Room(13, "T1-3", ERoomStatus.available, ERoomType.VIP, 50, 100000);
+//        Room room4 = new Room(21, "T2-1", ERoomStatus.available, ERoomType.Normal, 30, 60000);
+//        Room room5 = new Room(22, "T2-2", ERoomStatus.available, ERoomType.Student, 20, 40000);
+//        Room room6 = new Room(23, "T2-3", ERoomStatus.available, ERoomType.VIP, 50, 100000);
+//
+//        List<Room> rooms = new ArrayList<>(Arrays.asList(room1, room2, room3, room4, room5, room6));
+//        RoomService.roomList =rooms;
+//        SerializationUtil.serialize(rooms, "D:\\Case_Study_Module_2\\Case_Study_Module_2\\src\\file\\rooms.txt");
+//
+//
+//    }
 
 
     public static void initReservation() {
@@ -52,8 +54,11 @@ public class InitData {
         reservations.add(reservation3);
 
 
-        SerializationUtil.serialize(reservations, "D:\\Case_Study_Module_2\\Case_Study_Module_2\\src\\file\\reservations.txt");
+
+        SerializationUtil.serialize(reservations,
+                "D:\\Case_Study_Module_2\\Case_Study_Module_2\\src\\file\\reservations.txt");
     }
+
 
     public static void initCategory() {
         List<Food> foods = new ArrayList<>();

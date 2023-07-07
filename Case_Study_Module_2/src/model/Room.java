@@ -16,7 +16,8 @@ public class Room implements IModel<Room>, Serializable {
 
     }
 
-    public Room(int roomId, String roomName, ERoomStatus roomStatus, ERoomType roomType, int capacity, double roomPricePerHour) {
+    public Room(int roomId, String roomName, ERoomStatus roomStatus,
+                ERoomType roomType, int capacity, double roomPricePerHour) {
         this.roomId = roomId;
         this.roomName = roomName;
         this.roomStatus = roomStatus;

@@ -20,6 +20,14 @@ public class AppUtils {
             return getInt(str);
         }
     }
+    public static double getDouble(String str){
+        try{
+            return Double.parseDouble(getString(str));
+        }catch (Exception e){
+            System.out.println("Input invalid");
+            return getDouble(str);
+        }
+    }
     public static int getIntWithBound(String str, int begin, int end ){
         try{
             int number = getInt(str);

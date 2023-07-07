@@ -10,8 +10,9 @@ public class DateFormat {
 
 
     public static void convertDateTypeWithHours(Date date){
-        SimpleDateFormat formatterDaywithhours = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
-        String formattedDate = formatterDaywithhours.format(date);
+        SimpleDateFormat formatterDayWithhours = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+
+        String formattedDate = formatterDayWithhours.format(date);
 
     }
 

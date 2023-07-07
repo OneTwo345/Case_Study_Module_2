@@ -7,11 +7,13 @@ public interface BasicCRUD<T> {
     T getById(int id);
 
 
-    void create(T obj) throws IOException;
+    void create() throws IOException;
 
-    void update(T obj);
+    void update(int id);
 
     void delete(int id) throws IOException;
+
+
 
 
 
