@@ -57,6 +57,10 @@ public class DisplayData {
 
     }
 
+    public static void main(String[] args) {
+        displayReservation();
+    }
+
 
 }
 
