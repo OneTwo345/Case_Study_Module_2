@@ -3,6 +3,8 @@ package model;
 
 
 
+import model.enums.EBillStatus;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

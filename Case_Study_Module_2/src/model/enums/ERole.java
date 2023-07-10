@@ -1,12 +1,13 @@
-package model;
+package model.enums;
 
 public enum ERole {
-    admin(0,"admin"),
-   employee(1,"employee"),
-    customer(2,"customer");
+    ADMIN(0, "admin"),
+    EMPLOYEE(1, "employee"),
+    CUSTOMER(2, "customer");
     private int id;
     private String name;
-    private ERole(int id, String name){
+
+    private ERole(int id, String name) {
         this.id = id;
         this.name = name;
 
@@ -27,7 +28,8 @@ public enum ERole {
     public void setName(String name) {
         this.name = name;
     }
-    public static ERole getRoleById(int id){
+
+    public static ERole getRoleById(int id) {
         ERole[] var1 = values();
         int var2 = var1.length;
         for (ERole role : var1) {
@@ -38,7 +40,8 @@ public enum ERole {
         }
         return null;
     }
-    public static ERole getRoleByName(String name){
+
+    public static ERole getRoleByName(String name) {
         ERole[] var1 = values();
         int var2 = var1.length;
         for (ERole role : var1) {

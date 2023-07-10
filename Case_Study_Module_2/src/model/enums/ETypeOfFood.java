@@ -1,9 +1,9 @@
-package model;
+package model.enums;
 
 public enum ETypeOfFood {
-    drink(1,"drink"),
-    food(2,"food"),
-    other(3,"other");
+    DRINK(1,"drink"),
+    FOOD(2,"food"),
+    OTHER(3,"other");
 
     private int id;
     private String name;

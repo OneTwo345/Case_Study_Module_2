@@ -1,14 +1,14 @@
 package model;
 
+import model.enums.ERoomStatus;
 import utils.CurrencyFormat;
-import repository.IModel;
 
 import java.io.Serializable;
 
 
 import java.util.Date;
 
-public class Reservation implements IModel<Reservation>, Serializable {
+public class Reservation implements  Serializable {
     static int currentId = 0;
 
     private int reservationId =(int) (Math.random() * 100000) + 1;
@@ -108,26 +108,10 @@ Room room;
     }
 
 
-    @Override
-    public int getId() {
-        return reservationId;
-    }
 
-    @Override
-    public String getName() {
-        return null;
-    }
 
-    @Override
-    public void update(Reservation obj) {
 
-        this.customerId = obj.customerId;
-        this.customerName = obj.customerName;
-        this.timeExpected = obj.timeExpected;
-        this.downPayment = obj.downPayment;
-        this.roomName = obj.roomName;
-        this.reservationRoomStatus = obj.reservationRoomStatus;
-    }
+
 
 
     public String reservationView() {

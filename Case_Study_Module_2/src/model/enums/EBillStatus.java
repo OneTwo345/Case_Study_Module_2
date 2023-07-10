@@ -1,8 +1,8 @@
-package model;
+package model.enums;
 
 public enum EBillStatus {
-    pay(1,"pay"),
-    unpay(2,"unpay");
+    PAY(1,"pay"),
+    UNPAY(2,"unpay");
     private int id;
     private String name;
 

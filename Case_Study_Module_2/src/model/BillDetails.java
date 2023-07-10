@@ -39,10 +39,6 @@ public class BillDetails {
         this.room = room;
     }
 
-    public static void main(String[] args) {
-        BillDetails billDetails = new BillDetails();
-       String roomName =  billDetails.getRoom().getName();
 
-    }
 
 }

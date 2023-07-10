@@ -1,10 +1,11 @@
 package model;
 
-import repository.IModel;
+import model.enums.ERoomStatus;
+import model.enums.ERoomType;
 
 import java.io.Serializable;
 
-public class Room implements IModel<Room>, Serializable {
+public class Room implements  Serializable {
     private int roomId;
     private String roomName;
     private ERoomStatus roomStatus;
@@ -74,25 +75,11 @@ public class Room implements IModel<Room>, Serializable {
         this.roomPricePerHour = roomPricePerHour;
     }
 
-    @Override
-    public int getId() {
-        return this.roomId;
-    }
 
-    @Override
-    public String getName() {
-        return this.roomName;
-    }
 
-    @Override
-    public void update(Room obj) {
-        this.roomId = obj.roomId;
-        this.roomName = obj.roomName;
-        this.roomStatus = obj.roomStatus;
-        this.roomType = obj.roomType;
-        this.capacity = obj.capacity;
-        this.roomPricePerHour = obj.roomPricePerHour;
-    }
+
+
+
 
 
 

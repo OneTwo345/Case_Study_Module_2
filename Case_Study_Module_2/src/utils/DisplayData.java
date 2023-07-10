@@ -18,7 +18,7 @@ public class DisplayData {
         System.out.println("\t\t\t\t=========================================================================================================================");
         System.out.printf("\t\t\t\t%-10s %-25s %-30s %-15s  \n", "ID", "Loại sản phẩm", "Tên sản phẩm", "Giá");
         for (Food food : foods) {
-            System.out.printf("\t\t\t\t%-10d %-25s %-30s %-25s \n", food.getId(), food.getFoodName(), food.geteTypeOfFood(),
+            System.out.printf("\t\t\t\t%-10d %-25s %-30s %-25s \n", food.getFoodId(), food.getFoodName(), food.geteTypeOfFood(),
                     CurrencyFormat.covertPriceToString(food.getFoodPrice()));
         }
         System.out.println("\t\t\t\t=========================================================================================================================\n\n");

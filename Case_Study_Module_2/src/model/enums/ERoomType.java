@@ -1,9 +1,9 @@
-package model;
+package model.enums;
 
 public enum ERoomType {
-    Normal(1,"normal"),
+    NORMAL(1,"normal"),
     VIP(2,"vip"),
-    Student(3,"student");
+    STUDENT(3,"student");
     private int id;
     private String name;
 

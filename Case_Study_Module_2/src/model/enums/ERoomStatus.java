@@ -1,10 +1,11 @@
-package model;
+package model.enums;
 
 public enum ERoomStatus {
-    available(1,"available"),
-    maintenance(2,"maintenance"),
-    inUse(3,"in-use"),
-    reserved(4,"reserved");
+    // full UPPER CASE
+    AVAILABLE(1,"available"),
+    MAINTENANCE(2,"maintenance"),
+    INUSE(3,"in-use"),
+    RESERVED(4,"reserved");
 
    private int id;
    private String name;

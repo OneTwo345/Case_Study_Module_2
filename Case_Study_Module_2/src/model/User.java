@@ -1,12 +1,13 @@
 package model;
 
+import model.enums.EGender;
+import model.enums.ERole;
 import utils.DateFormat;
 import utils.ValidateUtils;
-import repository.IModel;
 
 import java.util.Date;
 
-public class User implements IModel<User> {
+public class User {
     private int id;
     private String username;
     private String password;
@@ -121,30 +122,9 @@ public class User implements IModel<User> {
         this.eRole = eRole;
     }
 
-    @Override
-    public int getId() {
-        return id;
-    }
 
-    @Override
-    public String getName() {
-        return fullName;
-    }
 
-    @Override
-    public void update(User obj) {
-        this.id = obj.id;
-        this.username = obj.username;
-        this.password = obj.password;
-        this.fullName = obj.fullName;
-        this.phoneNumber = obj.phoneNumber;
-        this.gender = obj.gender;
-        this.CCCD = obj.CCCD;
-        this.birthDay = obj.birthDay;
-        this.email = obj.email;
-        this.address = obj.address;
-        this.eRole = obj.eRole;
-    }
+
 
 
 

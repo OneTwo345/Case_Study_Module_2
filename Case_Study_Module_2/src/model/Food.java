@@ -1,11 +1,11 @@
 package model;
 
+import model.enums.ETypeOfFood;
 import utils.CurrencyFormat;
-import repository.IModel;
 
 import java.io.Serializable;
 
-public class Food implements IModel<Food>, Serializable {
+public class Food implements Serializable {
     static int currentId = 1;
     private int foodId;
     private String foodName;
@@ -60,25 +60,11 @@ public class Food implements IModel<Food>, Serializable {
     }
 
 
-    @Override
-    public int getId() {
-        return foodId;
-    }
 
-    @Override
-    public String getName() {
-        return foodName;
-    }
 
-    @Override
-    public void update(Food obj) {
-        this.foodId = obj.foodId;
-        this.foodName = obj.foodName;
 
-        this.foodPrice = obj.foodPrice;
-        this.eTypeOfFood = obj.eTypeOfFood;
 
-    }
+
 
 
 
@@ -97,4 +83,6 @@ public class Food implements IModel<Food>, Serializable {
                 ", eTypeOfFood=" + eTypeOfFood +
                 '}';
     }
+
+
 }
