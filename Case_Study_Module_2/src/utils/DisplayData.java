@@ -4,6 +4,7 @@ package utils;
 import model.Food;
 import model.Reservation;
 import model.Room;
+import service.RoomService;
 
 import java.util.List;
 
@@ -25,12 +26,12 @@ public class DisplayData {
     }
 
     public static void displayRoom() {
-        List<Room> rooms = (List<Room>) SerializationUtil.deserialize
-                ("D:\\Case_Study_Module_2\\Case_Study_Module_2\\src\\file\\rooms.txt");
+//        List<Room> rooms = (List<Room>) SerializationUtil.deserialize
+//                ("D:\\Case_Study_Module_2\\Case_Study_Module_2\\src\\file\\rooms.txt");
         System.out.println("Thông tin phòng:");
         System.out.println("\t\t\t\t===========================================================================================================");
         System.out.printf("\t\t\t\t%-10s %-25s %-20s %-20s %-10s %-15s \n", "ID", "Tên phòng", "Trạng thái", "Loại phòng", "Sức chứa", "Giá/1h");
-        for (Room room : rooms) {
+        for (Room room : RoomService.roomList) {
             System.out.printf("\t\t\t\t%-10d %-25s %-20s %-20s %-10d %-15s \n", room.getRoomId(), room.getRoomName(), room.getRoomStatus().toString(), room.getRoomType().toString(), room.getCapacity(), CurrencyFormat.covertPriceToString(room.getRoomPricePerHour()));
         }
         System.out.println("\t\t\t\t===========================================================================================================\n\n");

@@ -11,8 +11,8 @@ import java.util.Date;
 public class Reservation implements IModel<Reservation>, Serializable {
     static int currentId = 0;
 
-    private int reservationId;
-    private int customerId;
+    private int reservationId =(int) (Math.random() * 100000) + 1;
+    private String customerId;
     private String customerName;
 Room room;
     private double downPayment;
@@ -25,9 +25,9 @@ Room room;
 
     }
 
-    public Reservation(int customerId, String customerName, Date timeExpected,
+    public Reservation(String customerId, String customerName, Date timeExpected,
                        double downPayment, Room room, ERoomStatus reservationRoomStatus) {
-        this.reservationId = ++currentId;
+        this.reservationId = ++currentId + (int) (Math.random() * 1000) + 1;
         this.customerId = customerId;
         this.customerName = customerName;
         this.timeExpected = timeExpected;
@@ -40,12 +40,16 @@ Room room;
     public Room getRoom() {
         return room;
     }
+//    public Reservation(int reservationId,String customerId, String customerName,Date timeExpected,double downPayment,Room roomName, ERoomStatus eRoomStatus,ERoomType eRoomType){
+//
+//    };
 //    public Reservation(int customerId, String name, String dateFormat, double downPayment, Room roomName, ERoomStatus eRoomStatus) {
 //    }
 
     public int getReservationId() {
         return reservationId;
     }
+
 
 
     public void setReservationId(int reservationId) {
@@ -60,7 +64,7 @@ Room room;
         this.timeExpected = timeExpected;
     }
 
-    public int getCustomerId() {
+    public String getCustomerId() {
         return customerId;
     }
 
@@ -72,7 +76,7 @@ Room room;
         this.roomName = roomName;
     }
 
-    public void setCustomerId(int customerId) {
+    public void setCustomerId(String customerId) {
         this.customerId = customerId;
     }
 

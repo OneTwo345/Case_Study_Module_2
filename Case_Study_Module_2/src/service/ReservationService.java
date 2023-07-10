@@ -6,6 +6,7 @@ import model.Reservation;
 import model.Room;
 import repository.BasicCRUD;
 import utils.DateFormat;
+import utils.InitData;
 import utils.SerializationUtil;
 
 import java.io.IOException;
@@ -13,12 +14,15 @@ import java.io.Serializable;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
+
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
+
 
 import static utils.AppUtils.*;
-import static utils.AppUtils.getDouble;
+
+import static utils.DisplayData.displayReservation;
+import static utils.DisplayData.displayRoom;
 
 public class ReservationService implements BasicCRUD {
     List<Reservation> reservationList = (List<Reservation>) SerializationUtil.deserialize
@@ -44,12 +48,15 @@ public class ReservationService implements BasicCRUD {
     public void create() throws IOException {
 //        int customerId, String customerName, Date timeExpected,
 //        double downPayment, Room room, ERoomStatus reservationRoomStatus
+        int reservationId = getInt("Nhập vào Id cuộc hẹn");
 
 
-//
-//        String customerId = getString("Nhập id khách");
-//        String customerName = getString("Nhập tên khách");
-//
+            String customerId = getString("Nhập id khách");
+
+
+        String customerName = getString("Nhập tên khách");
+        Date timeExpected = getDayTime();
+
 //        int choice = getIntWithBound("1. Lấy mốc thời gian hiện tại \n" + "2.Nhập vào thời gian", 1, 2);
 //        switch (choice) {
 //
@@ -82,11 +89,39 @@ public class ReservationService implements BasicCRUD {
 //                    }
 //                }
 //        }
-//        double downPayment = getDouble("Nhập vào số tiền khách cọc trước");
+        double downPayment = getDouble("Nhập vào số tiền khách cọc trước");
 
 
+        boolean validInput2 = false;
+        Room roomOrder = new Room();
+        while (!validInput2) {
+            int roomIdReservation = getInt("Nhập id phòng muốn đặt");
+            boolean roomFound = false;
+            for (Room room : rooms) {
+                if (roomIdReservation ==(room.getRoomId())) {
+                    roomOrder = room;
+                    roomFound = true;
+                    if (room.getRoomStatus() == ERoomStatus.available) {
+                        room.setRoomStatus(ERoomStatus.reserved);
+                        validInput2 = true;
+                        break;
+                    } else {
+                        System.out.println("Phòng này đang ở trạng thái: " + room.getRoomStatus());
+                    }
+                }
+            }
+            if (!roomFound) {
+                System.out.println("Không tìm thấy Id phòng");
+            }
+        }
 
+        Reservation reservation1 = new Reservation(customerId,customerName,timeExpected,downPayment,roomOrder, ERoomStatus.reserved );
+        reservationList.add(reservation1);
 
+        SerializationUtil.serialize(reservationList, "D:\\Case_Study_Module_2\\Case_Study_Module_2\\src\\file\\reservations.txt");
+
+        displayRoom();
+        displayReservation();
 
 //
 
@@ -94,7 +129,15 @@ public class ReservationService implements BasicCRUD {
     }
 
     public static void main(String[] args) throws IOException {
-        new ReservationService().create();
+        InitData.initRoom();
+        displayRoom();
+
+        displayReservation();
+
+        ReservationService reservationService = new ReservationService();
+        reservationService.create();
+
+
     }
 
     @Override
