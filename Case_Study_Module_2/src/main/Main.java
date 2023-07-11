@@ -15,10 +15,7 @@ public class Main {
         initRoom();
         initReservation();
         initFood();
-//
-        loadRooms();
-        loadReservation();
-        loadFoods();
+
 
 
 

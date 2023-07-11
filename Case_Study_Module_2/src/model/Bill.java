@@ -11,13 +11,12 @@ import java.util.List;
 
 
 public class Bill {
-    static int currentId = 0;
 
-    private int id;
+
+    private String id;
     private Room room;
     private Date roomRealTimeIn;
     private Date roomRealTimeOut;
-    private Food food;
     private User user;
     private final List<Bill> bills = new ArrayList<>();
     private EBillStatus eBillStatus;
@@ -26,29 +25,25 @@ public class Bill {
 
     }
 
-    public Bill(int id, Room room, Date roomRealTimeIn, Date roomRealTimeOut, Food food, User user, EBillStatus eBillStatus) {
+    public Bill(String id, Room room, Date roomRealTimeIn, Date roomRealTimeOut,  User user, EBillStatus eBillStatus) {
         this.id = id;
         this.room = room;
         this.roomRealTimeIn = roomRealTimeIn;
         this.roomRealTimeOut = roomRealTimeOut;
-        this.food = food;
+
         this.user = user;
         this.eBillStatus = eBillStatus;
     }
 
-    public static int getCurrentId() {
-        return currentId;
-    }
 
-    public static void setCurrentId(int currentId) {
-        Bill.currentId = currentId;
-    }
 
-    public int getId() {
+
+
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -76,13 +71,7 @@ public class Bill {
         this.roomRealTimeOut = roomRealTimeOut;
     }
 
-    public Food getCategory() {
-        return food;
-    }
 
-    public void setCategory(Food food) {
-        this.food = food;
-    }
 
     public User getUser() {
         return user;
@@ -96,13 +85,7 @@ public class Bill {
         return bills;
     }
 
-    public Food getFood() {
-        return food;
-    }
 
-    public void setFood(Food food) {
-        this.food = food;
-    }
 
     public EBillStatus geteBillStatus() {
         return eBillStatus;

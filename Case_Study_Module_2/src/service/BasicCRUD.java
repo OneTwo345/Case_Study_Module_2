@@ -8,11 +8,11 @@ public interface BasicCRUD<T> {
 
     List<T> getAll();
 
-    void create(T obj) throws IOException;
+    void create(T obj);
 
     void update(T obj);
 
-    void delete(int id) throws IOException;
+    void delete(int id) ;
 
     boolean isExist(int id);
 

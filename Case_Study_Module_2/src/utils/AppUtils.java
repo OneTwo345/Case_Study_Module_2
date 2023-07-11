@@ -48,6 +48,16 @@ public class AppUtils {
             return getIntWithBound(str, begin, end);
         }
     }
+    public static Date getCurrentTime(){
+        ZoneId currentZone = ZoneId.systemDefault();
+        LocalDateTime localDateTime = LocalDateTime.now();
+        ZoneId targetZone = ZoneId.of("Asia/Ho_Chi_Minh");
+        ZonedDateTime targetDateTime = localDateTime.atZone(currentZone).withZoneSameInstant(targetZone);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        String formattedDateTime = targetDateTime.format(formatter);
+        System.out.println(formattedDateTime);
+        return   DateFormat.parseDateWithHours(formattedDateTime);
+    }
 
     public static Date getDayTime(){
         int choice = getIntWithBound("1. Lấy mốc thời gian hiện tại \n" + "2.Nhập vào thời gian", 1, 2);

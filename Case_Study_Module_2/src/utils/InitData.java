@@ -1,22 +1,17 @@
 package utils;
 
 import model.*;
-import model.enums.EPath;
-import model.enums.ERoomStatus;
-import model.enums.ERoomType;
-import model.enums.ETypeOfFood;
+import model.enums.*;
 import service.FoodService;
+import service.ReservationService;
 import service.RoomService;
 
-import java.io.IOException;
-import java.io.Serializable;
 import java.util.*;
 
 import static service.RoomService.roomList;
 
 
 public class InitData {
-
 
 
     public static void initRoom() {
@@ -34,7 +29,7 @@ public class InitData {
         Room room12 = new Room(43, "T4-3", ERoomStatus.AVAILABLE
                 , ERoomType.VIP, 50, 100000);
 
-        List<Room> roomList = new ArrayList<>(Arrays.asList(room1, room2, room3, room4, room5, room6,room7,room8,room9,room10,room11,room12));
+        roomList = new ArrayList<>(Arrays.asList(room1, room2, room3, room4, room5, room6, room7, room8, room9, room10, room11, room12));
 
         SerializationUtil.serialize(roomList, "D:\\Case_Study_Module_2\\Case_Study_Module_2\\src\\file\\rooms.txt");
 
@@ -43,23 +38,24 @@ public class InitData {
 
 
     public static void initReservation() {
-        List<Reservation> reservationList  = new ArrayList<>();
-       loadRooms();
+        List<Reservation> reservations = new ArrayList<>();
+        SerializationUtil.deserialize(EPath.ROOM.getFilePath());
+
 //
         Date date1 = DateFormat.parseDateWithHours("12-12-2022 14:30:30");
         Date date2 = DateFormat.parseDateWithHours("12-12-2022 17:30:30");
         Date date3 = DateFormat.parseDateWithHours("12-12-2022 20:30:30");
-        Reservation reservation1 = new Reservation("S123","Duy",date1, 150000,roomList.get(0),ERoomStatus.getRoomStatusById(1));
-        Reservation reservation2 = new Reservation("S125","Nam",date2,
-                0,roomList.get(2),ERoomStatus.getRoomStatusById(1));
-        Reservation reservation3 = new Reservation("S153","Khoa",date3,
-                50000,roomList.get(3),ERoomStatus.getRoomStatusById(1));
+        Reservation reservation1 = new Reservation("S123", "Duy", date1, 150000, roomList.get(0), ERoomStatus.getRoomStatusById(1));
+        Reservation reservation2 = new Reservation("S125", "Nam", date2,
+                0, roomList.get(2), ERoomStatus.getRoomStatusById(1));
+        Reservation reservation3 = new Reservation("S153", "Khoa", date3,
+                50000, roomList.get(3), ERoomStatus.getRoomStatusById(1));
+        reservations.add(reservation1);
+        reservations.add(reservation2);
+        reservations.add(reservation3);
+        SerializationUtil.serialize(reservations, "D:\\Case_Study_Module_2\\Case_Study_Module_2\\src\\file\\reservations.txt");
 
-        List<Reservation> re = new ArrayList<>();
-        reservationList.add(reservation1);
-        reservationList.add(reservation2);
-        reservationList.add(reservation3);
-        SerializationUtil.serialize(reservationList,EPath.RESERVATION.toString());
+
     }
 
 
@@ -70,27 +66,42 @@ public class InitData {
         Food fruitDishBig = new Food("Dia trai cay lon", 100000d, ETypeOfFood.FOOD);
         Food fruitDishSmall = new Food("Dia trai cay nho", 80000d, ETypeOfFood.FOOD);
         Food grilledSquid = new Food("Muc nuong", 100000d, ETypeOfFood.FOOD);
-        Food grilledChicken = new Food("MC",  250000d, ETypeOfFood.OTHER);
+        Food grilledChicken = new Food("MC", 250000d, ETypeOfFood.OTHER);
         foodList.add(comboHuda1);
         foodList.add(comboHuda2);
         foodList.add(fruitDishBig);
         foodList.add(fruitDishSmall);
         foodList.add(grilledSquid);
         foodList.add(grilledChicken);
-        SerializationUtil.serialize(foodList,EPath.FOOD.toString());
-    }
-    public static void loadRooms(){
-        roomList = (List<Room>)  SerializationUtil.deserialize(EPath.ROOM.getFilePath());
-    }
-    public static void loadFoods(){
-        FoodService.listFoods =(List<Food>) SerializationUtil.deserialize(EPath.FOOD.getFilePath());
-    }
-    public static void loadReservation(){
-        roomList = (List<Room>)  SerializationUtil.deserialize(EPath.RESERVATION.getFilePath());
+
+        SerializationUtil.serialize(foodList, EPath.FOOD.getFilePath());
     }
 
+    public static void initBill() {
+//
+        List<Bill> billList = new ArrayList<>();
+        Date date1 = DateFormat.parseDateWithHours("12-12-2023 14:30:30");
+        Date date2 = DateFormat.parseDateWithHours("12-12-2023 17:30:30");
+        Date date3 = DateFormat.parseDateWithHours("12-12-2023 20:30:30");
+        User user1 = new User();
+        Bill bill1 = new Bill("12345", roomList.get(1), AppUtils.getCurrentTime(), date1, user1, EBillStatus.PAY);
+        Bill bill2 = new Bill("B0811", roomList.get(0), AppUtils.getCurrentTime(), date2, user1, EBillStatus.PAY);
+        Bill bill3 = new Bill("B0911", roomList.get(2), AppUtils.getCurrentTime(), date3, user1, EBillStatus.PAY);
+        billList.add(bill1);
+        billList.add(bill2);
+        billList.add(bill3);
+        SerializationUtil.serialize(billList,EPath.Bill.getFilePath());
+
+    }
+
+    public static void main(String[] args) {
+        initFood();
+        initRoom();
+        initReservation();
+        initBill();
 
 
+    }
 
 
 }

@@ -1,15 +1,17 @@
 package service;
 
 
+import model.Food;
 import model.Room;
-
-import utils.InitData;
+import model.enums.EPath;
 import utils.SerializationUtil;
 
 import java.io.IOException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 
 import static utils.AppUtils.*;
@@ -17,40 +19,77 @@ import static utils.AppUtils.*;
 public class RoomService implements BasicCRUD<Room> {
     public static List<Room> roomList;
 
+    static {
+        roomList = (List<Room>) SerializationUtil.deserialize(EPath.ROOM.getFilePath());
+    }
 
     public RoomService() {
-        roomList = new ArrayList<>();
+
     }
 
 
-
-
     @Override
-    public Room getById(int roomId) {
+    public Room getById(int id) {
+
         return roomList.stream()
-                .filter(room -> room.getRoomId() == roomId)
+                .filter(food -> food.getRoomId() == id)
                 .findFirst()
                 .orElse(null);
     }
 
+
     @Override
     public List<Room> getAll() {
-        return null;
+        return roomList;
     }
 
     @Override
-    public void create(Room obj) throws IOException {
+    public void create(Room room) {
+        roomList.add(room);
+        save();
+    }
 
+    public static void save() {
+        SerializationUtil.serialize(roomList, EPath.ROOM.getFilePath());
     }
 
     @Override
-    public void update(Room obj) {
+    public void update(Room room) {
+        roomList.stream()
+                .map(existingRoom -> {
+                    if (existingRoom.getRoomId() ==room.getRoomId()) {
+                        return room;
+                    } else {
+                        return existingRoom;
+                    }
+                })
+                .findFirst()
+                .orElse(null);
+    }
 
+
+    @Override
+    public void delete(int id) {
+        roomList = roomList.stream()
+                .filter(e -> !Objects.equals(e.getRoomId(), id))
+                .collect(Collectors.toList());
+        save();
     }
 
     @Override
-    public void delete(int id) throws IOException {
+    public boolean isExist(int id) {
+        Room room = roomList.stream()
+                .filter(e -> Objects.equals(e.getRoomId(), id))
+                .findFirst()
+                .orElse(null);
+        return room != null;
+    }
 
+    @Override
+    public void print() {
+        for (Room room : roomList) {
+            System.out.println(room.toString());
+        }
     }
 //
 
@@ -133,15 +172,7 @@ public class RoomService implements BasicCRUD<Room> {
 //        InitData.initRoomData();
 //    }
 
-    @Override
-    public boolean isExist(int id) {
-        return false;
-    }
 
-    @Override
-    public void print() {
-
-    }
 
 
 }

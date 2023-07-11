@@ -1,6 +1,8 @@
 package service;
 
-import model.enums.ERoomStatus;
+import model.Food;
+import model.enums.EPath;
+
 import model.Reservation;
 import model.Room;
 import utils.InitData;
@@ -8,16 +10,23 @@ import utils.SerializationUtil;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
+
 import static utils.DisplayData.displayReservation;
 import static utils.DisplayData.displayRoom;
 
 public class ReservationService implements BasicCRUD<Reservation> {
-    List<Reservation> reservationList;
-    List<Room> roomList;
+    public static List<Reservation> reservationList;
 
 
     public ReservationService() {
 
+    }
+
+    static {
+        reservationList = (List<Reservation>) SerializationUtil.deserialize(EPath.RESERVATION.getFilePath());
     }
 
 
@@ -31,17 +40,32 @@ public class ReservationService implements BasicCRUD<Reservation> {
 
     @Override
     public List<Reservation> getAll() {
-        return null;
+        return reservationList;
     }
 
     @Override
-    public void create(Reservation obj) throws IOException {
-
+    public void create(Reservation reservation) {
+        reservationList.add(reservation);
+        save();
     }
 
-    @Override
-    public void update(Reservation obj) {
+    public static void save() {
+        SerializationUtil.serialize(reservationList, EPath.RESERVATION.getFilePath());
+    }
 
+
+    @Override
+    public void update(Reservation reservation) {
+        reservationList.stream()
+                .map(existingReservation -> {
+                    if (existingReservation.getReservationId() == reservation.getReservationId() ) {
+                        return reservation;
+                    } else {
+                        return existingReservation;
+                    }
+                })
+                .findFirst()
+                .orElse(null);
     }
 
 //    @Override
@@ -128,33 +152,29 @@ public class ReservationService implements BasicCRUD<Reservation> {
 //
 //    }
 
-    public static void main(String[] args) throws IOException {
-
-        InitData.initRoom();
-        displayRoom();
-
-        displayReservation();
-
-        ReservationService reservationService = new ReservationService();
-
-
-
-    }
-
 
 
     @Override
-    public void delete(int id) throws IOException {
-
+    public void delete(int id) {
+        reservationList = reservationList.stream()
+                .filter(e -> !Objects.equals(e.getReservationId(), id))
+                .collect(Collectors.toList());
+        save();
     }
 
     @Override
     public boolean isExist(int id) {
-        return false;
+        Reservation reservation = reservationList.stream()
+                .filter(e -> Objects.equals(e.getReservationId(), id))
+                .findFirst()
+                .orElse(null);
+        return reservation != null;
     }
 
     @Override
     public void print() {
-
+        for (Reservation reservation : reservationList) {
+            System.out.println(reservation.toString());
+        }
     }
 }
