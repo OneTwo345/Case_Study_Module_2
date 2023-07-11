@@ -1,6 +1,7 @@
 package service;
 
 import model.Manager;
+import model.enums.EPath;
 import utils.SerializationUtil;
 
 import java.util.List;
@@ -10,10 +11,8 @@ public class ManagerService {
     public static Manager currentManager;
 
     static {
-        listManagers = (List<Manager>) SerializationUtil.deserialize(EPath.MANAGERS.getFilePath());
-        if (LoginService.currentUser instanceof Manager) {
-            currentManager = (Manager) LoginService.currentUser;
-        }
+        listManagers = (List<Manager>) SerializationUtil.deserialize(EPath.MANAGER.getFilePath());
+
     }
 
 
