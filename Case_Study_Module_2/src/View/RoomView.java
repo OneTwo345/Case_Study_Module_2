@@ -11,16 +11,14 @@ import static utils.ListView.loginMenuList;
 
 public class RoomView {
     static RoomService roomService = new RoomService();
-    public static void driverMenu() throws IOException {
+    public static void clientMenu() throws IOException {
         int choice;
         do {
             System.out.println("Room menu");
             System.out.println("1. Display room ");
-            System.out.println("2. Start ride");
-            System.out.println("3. Finish ride");
-            System.out.println("4. Get car detail");
-            System.out.println("5. Get ride detail");
-            System.out.println("6. Get ride history");
+            System.out.println("2. Book room");
+
+
             System.out.println("0. Back to login menu");
             choice = AppUtils.getIntWithBound("Input choice", 0, 5);
             switch (choice) {
