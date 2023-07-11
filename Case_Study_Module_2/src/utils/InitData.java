@@ -3,6 +3,7 @@ package utils;
 import model.*;
 import model.enums.*;
 import service.FoodService;
+import service.ManagerService;
 import service.ReservationService;
 import service.RoomService;
 
@@ -92,6 +93,13 @@ public class InitData {
         billList.add(bill3);
         SerializationUtil.serialize(billList,EPath.Bill.getFilePath());
 
+    }
+    private static void initManager() {
+        Manager manager = new Manager("Duy Nguyen", "duy0305@gmail.com", "123123", "099999999");
+        List<Manager> listManagers = new ArrayList<>();
+        listManagers.add(manager);
+        ManagerService.listManagers = listManagers;
+        SerializationUtil.serialize(listManagers, EPath.MANAGER.getFilePath());
     }
 
     public static void main(String[] args) {

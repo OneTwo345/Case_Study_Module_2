@@ -7,7 +7,7 @@ public enum EPath {
 
     Bill("D:\\Case_Study_Module_2\\Case_Study_Module_2\\src\\file\\Bills.txt"),
 
-    DATE("D:\\Case_Study_Module_2\\Case_Study_Module_2\\src\\file\\Date.txt"),
+    MANAGER("D:\\Case_Study_Module_2\\Case_Study_Module_2\\src\\file\\managers.txt"),
 
     FOOD("D:\\Case_Study_Module_2\\Case_Study_Module_2\\src\\file\\foods.txt"),
 
