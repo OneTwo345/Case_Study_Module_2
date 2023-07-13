@@ -17,7 +17,7 @@ public class Bill {
     private Room room;
     private Date roomRealTimeIn;
     private Date roomRealTimeOut;
-    private User user;
+
     private final List<Bill> bills = new ArrayList<>();
     private EBillStatus eBillStatus;
 
@@ -25,13 +25,12 @@ public class Bill {
 
     }
 
-    public Bill(String id, Room room, Date roomRealTimeIn, Date roomRealTimeOut,  User user, EBillStatus eBillStatus) {
+    public Bill(String id, Room room, Date roomRealTimeIn, Date roomRealTimeOut,   EBillStatus eBillStatus) {
         this.id = id;
         this.room = room;
         this.roomRealTimeIn = roomRealTimeIn;
         this.roomRealTimeOut = roomRealTimeOut;
 
-        this.user = user;
         this.eBillStatus = eBillStatus;
     }
 
@@ -73,13 +72,7 @@ public class Bill {
 
 
 
-    public User getUser() {
-        return user;
-    }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
 
     public List<Bill> getBills() {
         return bills;

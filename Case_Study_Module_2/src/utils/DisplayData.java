@@ -4,20 +4,22 @@ package utils;
 import model.Food;
 import model.Reservation;
 import model.Room;
+import service.FoodService;
+import service.ReservationService;
 import service.RoomService;
 
 import java.util.List;
 
 public class DisplayData {
     public static void displayCategories() {
-        List<Food> foods = (List<Food>) SerializationUtil.deserialize
-                ("D:\\Case_Study_Module_2\\Case_Study_Module_2\\src\\file\\foods.txt");
+//        List<Food> foods = (List<Food>) SerializationUtil.deserialize
+//                ("D:\\Case_Study_Module_2\\Case_Study_Module_2\\src\\file\\foods.txt");
 //
 
         System.out.println("Danh sách sản phẩm : ");
         System.out.println("\t\t\t\t=========================================================================================================================");
         System.out.printf("\t\t\t\t%-10s %-25s %-30s %-15s  \n", "ID", "Loại sản phẩm", "Tên sản phẩm", "Giá");
-        for (Food food : foods) {
+        for (Food food : FoodService.listFoods) {
             System.out.printf("\t\t\t\t%-10d %-25s %-30s %-25s \n", food.getFoodId(), food.getFoodName(), food.geteTypeOfFood(),
                     CurrencyFormat.covertPriceToString(food.getFoodPrice()));
         }
@@ -39,19 +41,20 @@ public class DisplayData {
     }
 
     public static void displayReservation() {
-        List<Room> rooms  = (List<Room>) SerializationUtil.deserialize
-                ("D:\\Case_Study_Module_2\\Case_Study_Module_2\\src\\file\\rooms.txt");
-        List<Reservation> reservations = (List<Reservation>) SerializationUtil.deserialize("D:\\Case_Study_Module_2\\Case_Study_Module_2\\src\\file\\reservations.txt");
-        if (reservations == null) {
+
+//        List<Room> rooms  = (List<Room>) SerializationUtil.deserialize
+//                ("D:\\Case_Study_Module_2\\Case_Study_Module_2\\src\\file\\rooms.txt");
+//        List<Reservation> reservations = (List<Reservation>) SerializationUtil.deserialize("D:\\Case_Study_Module_2\\Case_Study_Module_2\\src\\file\\reservations.txt");
+        if (ReservationService.reservationList == null) {
             System.out.println("Không có đặt phòng nào.");
             return;
         }
         System.out.println("Thông tin cuộc hẹn:");
         System.out.println("\t\t\t\t===================================================================================================================================================");
         System.out.printf("\t\t\t\t%-10s %-10s %-20s %-25s %-20s %-10s %-15s %-30s \n", "ID ","ID Khách", "Tên khách", "Ngày giờ", "Tiền cọc", "Phòng", "Trạng thái","Loại");
-        for (Reservation reservation : reservations) {
-            DateFormat.convertDateTypeWithHours(reservation.getTimeExpected());
-            System.out.printf("\t\t\t\t%-10d %-10s %-15s %-30s %-20s %-10s %-15s %-20s \n", reservation.getReservationId(),reservation.getCustomerId(), reservation.getCustomerName(),DateFormat.formatDateWithHours(reservation.getTimeExpected()),
+        for (Reservation reservation : ReservationService.reservationList) {
+           reservation.getTimeExpected();
+            System.out.printf("\t\t\t\t%-10d %-10s %-15s %-30s %-20s %-10s %-15s %-20s \n", reservation.getReservationId(),reservation.getCustomerId(), reservation.getCustomerName(),reservation.getTimeExpected(),
                    CurrencyFormat.covertPriceToString(reservation.getDownPayment()) ,reservation.getRoom().getRoomName(), reservation.getReservationRoomStatus(),reservation.getRoom().getRoomType());
         }
         System.out.println("\t\t\t\t====================================================================================================================================================\n\n");

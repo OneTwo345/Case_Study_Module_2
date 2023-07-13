@@ -1,5 +1,6 @@
 package service;
 
+import model.Client;
 import model.Food;
 import model.enums.EPath;
 
@@ -25,6 +26,7 @@ public class ReservationService implements BasicCRUD<Reservation> {
     }
 
 
+
     @Override
     public Reservation getById(int reservationId) {
         return reservationList.stream()
@@ -39,9 +41,10 @@ public class ReservationService implements BasicCRUD<Reservation> {
     }
 
     @Override
-    public void create(Reservation reservation) {
+    public boolean create(Reservation reservation) {
         reservationList.add(reservation);
         save();
+        return true;
     }
 
     public static void save() {

@@ -3,6 +3,7 @@ package utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 public class DateFormat {
@@ -27,6 +28,7 @@ public class DateFormat {
         SimpleDateFormat formatter = new SimpleDateFormat(FORMAT_PATTERN);
         return formatter.format(date);
     }
+    public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
 
 

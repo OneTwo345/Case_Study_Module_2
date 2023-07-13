@@ -6,6 +6,7 @@ import utils.CurrencyFormat;
 import java.io.Serializable;
 
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class Reservation implements  Serializable {
@@ -17,7 +18,7 @@ public class Reservation implements  Serializable {
 Room room;
     private double downPayment;
     private String roomName;
-    private Date timeExpected;
+    private LocalDateTime timeExpected;
 
     private ERoomStatus reservationRoomStatus;
 
@@ -25,7 +26,7 @@ Room room;
 
     }
 
-    public Reservation(String customerId, String customerName, Date timeExpected,
+    public Reservation(String customerId, String customerName, LocalDateTime timeExpected,
                        double downPayment, Room room, ERoomStatus reservationRoomStatus) {
         this.reservationId = ++currentId + (int) (Math.random() * 1000) + 1;
         this.customerId = customerId;
@@ -56,11 +57,11 @@ Room room;
         this.reservationId = reservationId;
     }
 
-    public Date getTimeExpected() {
+    public LocalDateTime getTimeExpected() {
         return timeExpected;
     }
 
-    public void setTimeExpected(Date timeExpected) {
+    public void setTimeExpected(LocalDateTime timeExpected) {
         this.timeExpected = timeExpected;
     }
 

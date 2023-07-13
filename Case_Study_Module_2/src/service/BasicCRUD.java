@@ -8,7 +8,7 @@ public interface BasicCRUD<T> {
 
     List<T> getAll();
 
-    void create(T obj);
+     boolean create(T obj);
 
     void update(T obj);
 

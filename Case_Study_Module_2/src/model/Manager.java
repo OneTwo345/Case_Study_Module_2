@@ -12,4 +12,6 @@ public class Manager extends Person implements Serializable {
         super(name, email, password, phoneNumber);
     }
 
+
+
 }

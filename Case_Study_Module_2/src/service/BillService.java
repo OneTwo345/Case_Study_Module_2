@@ -40,11 +40,12 @@ public class BillService implements BasicCRUD<Bill> {
     }
 
     @Override
-    public void create(Bill bill) {
+    public boolean create(Bill bill) {
         billList.add(bill);
-        save();
+        saveBill();
+        return true;
     }
-    public static void save() {
+    public static void saveBill() {
         SerializationUtil.serialize(billList, EPath.Bill.getFilePath());
     }
 
@@ -67,7 +68,7 @@ public class BillService implements BasicCRUD<Bill> {
         billList = billList.stream()
                 .filter(e -> !Objects.equals(e.getId(), id))
                 .collect(Collectors.toList());
-        save();
+        saveBill();
     }
 
     @Override

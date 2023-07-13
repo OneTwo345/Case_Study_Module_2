@@ -2,11 +2,9 @@ package utils;
 
 import model.*;
 import model.enums.*;
-import service.FoodService;
-import service.ManagerService;
-import service.ReservationService;
-import service.RoomService;
+import service.*;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 import static service.RoomService.roomList;
@@ -43,9 +41,9 @@ public class InitData {
         SerializationUtil.deserialize(EPath.ROOM.getFilePath());
 
 //
-        Date date1 = DateFormat.parseDateWithHours("12-12-2022 14:30:30");
-        Date date2 = DateFormat.parseDateWithHours("12-12-2022 17:30:30");
-        Date date3 = DateFormat.parseDateWithHours("12-12-2022 20:30:30");
+        LocalDateTime date1 = AppUtils.parseDateTime("12-12-2022 14:30:30");
+        LocalDateTime date2 = AppUtils.parseDateTime("12-12-2022 17:30:30");
+        LocalDateTime date3 = AppUtils.parseDateTime("12-12-2022 20:30:30");
         Reservation reservation1 = new Reservation("S123", "Duy", date1, 150000, roomList.get(0), ERoomStatus.getRoomStatusById(1));
         Reservation reservation2 = new Reservation("S125", "Nam", date2,
                 0, roomList.get(2), ERoomStatus.getRoomStatusById(1));
@@ -84,29 +82,40 @@ public class InitData {
         Date date1 = DateFormat.parseDateWithHours("12-12-2023 14:30:30");
         Date date2 = DateFormat.parseDateWithHours("12-12-2023 17:30:30");
         Date date3 = DateFormat.parseDateWithHours("12-12-2023 20:30:30");
-        User user1 = new User();
-        Bill bill1 = new Bill("12345", roomList.get(1), AppUtils.getCurrentTime(), date1, user1, EBillStatus.PAY);
-        Bill bill2 = new Bill("B0811", roomList.get(0), AppUtils.getCurrentTime(), date2, user1, EBillStatus.PAY);
-        Bill bill3 = new Bill("B0911", roomList.get(2), AppUtils.getCurrentTime(), date3, user1, EBillStatus.PAY);
+
+        Bill bill1 = new Bill("12345", roomList.get(1), AppUtils.getCurrentTime(), date1, EBillStatus.PAY);
+        Bill bill2 = new Bill("B0811", roomList.get(0), AppUtils.getCurrentTime(), date2, EBillStatus.PAY);
+        Bill bill3 = new Bill("B0911", roomList.get(2), AppUtils.getCurrentTime(), date3, EBillStatus.PAY);
         billList.add(bill1);
         billList.add(bill2);
         billList.add(bill3);
-        SerializationUtil.serialize(billList,EPath.Bill.getFilePath());
+        SerializationUtil.serialize(billList, EPath.Bill.getFilePath());
 
     }
-    private static void initManager() {
-        Manager manager = new Manager("Duy Nguyen", "duy0305@gmail.com", "123123", "099999999");
+
+    public static void initManager() {
+        Manager manager = new Manager("duy123", "duy@gmail.com", "123456", "0769973715");
         List<Manager> listManagers = new ArrayList<>();
         listManagers.add(manager);
         ManagerService.listManagers = listManagers;
         SerializationUtil.serialize(listManagers, EPath.MANAGER.getFilePath());
     }
 
+    public static void initClients() {
+        Client client1 = new Client("tuan123", "anhtuan@gmail.com", "123456",
+                "0123456789");
+        Client client2 = new Client("phuc123", "siphuc@gmail.com", "123456",
+                "0123456789");
+        List<Client> clientList = new ArrayList<>();
+        clientList.add(client1);
+        clientList.add(client2);
+        ClientService.clientList = clientList;
+        SerializationUtil.serialize(clientList, EPath.CLIENT.getFilePath());
+
+    }
+
     public static void main(String[] args) {
-        initFood();
-        initRoom();
-        initReservation();
-        initBill();
+ initReservation();
 
 
     }

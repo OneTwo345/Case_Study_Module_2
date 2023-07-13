@@ -3,7 +3,7 @@ package model.enums;
 public enum ERole {
     ADMIN(0, "admin"),
     EMPLOYEE(1, "employee"),
-    CUSTOMER(2, "customer");
+    CLIENT(2, "client");
     private int id;
     private String name;
 

@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 public class FoodService implements BasicCRUD<Food> {
     public static List<Food> listFoods;
 
+
     static {
         listFoods = (List<Food>) SerializationUtil.deserialize(EPath.FOOD.getFilePath());
     }
@@ -37,12 +38,14 @@ public class FoodService implements BasicCRUD<Food> {
     }
 
     @Override
-    public void create(Food food) {
+    public boolean create(Food food) {
+
         listFoods.add(food);
-        save();
+        saveFood();
+        return true;
     }
 
-    public static void save() {
+    public static void saveFood() {
         SerializationUtil.serialize(listFoods, EPath.FOOD.getFilePath());
     }
 
@@ -66,7 +69,7 @@ public class FoodService implements BasicCRUD<Food> {
         listFoods = listFoods.stream()
                 .filter(e -> !Objects.equals(e.getFoodId(), id))
                 .collect(Collectors.toList());
-        save();
+        saveFood();
     }
 
     @Override

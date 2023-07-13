@@ -19,6 +19,7 @@ import static utils.AppUtils.*;
 public class RoomService implements BasicCRUD<Room> {
     public static List<Room> roomList;
 
+
     static {
         roomList = (List<Room>) SerializationUtil.deserialize(EPath.ROOM.getFilePath());
     }
@@ -32,7 +33,7 @@ public class RoomService implements BasicCRUD<Room> {
     public Room getById(int id) {
 
         return roomList.stream()
-                .filter(food -> food.getRoomId() == id)
+                .filter(room -> room.getRoomId() == id)
                 .findFirst()
                 .orElse(null);
     }
@@ -44,12 +45,13 @@ public class RoomService implements BasicCRUD<Room> {
     }
 
     @Override
-    public void create(Room room) {
+    public boolean create(Room room) {
         roomList.add(room);
-        save();
+        saveRoom();
+        return true;
     }
 
-    public static void save() {
+    public static void saveRoom() {
         SerializationUtil.serialize(roomList, EPath.ROOM.getFilePath());
     }
 
@@ -73,7 +75,7 @@ public class RoomService implements BasicCRUD<Room> {
         roomList = roomList.stream()
                 .filter(e -> !Objects.equals(e.getRoomId(), id))
                 .collect(Collectors.toList());
-        save();
+        saveRoom();
     }
 
     @Override

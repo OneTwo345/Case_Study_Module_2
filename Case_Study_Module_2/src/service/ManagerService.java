@@ -25,4 +25,10 @@ public class ManagerService {
                 .findFirst()
                 .orElse(null);
     }
+    public static Manager getUserByName(String username) {
+        return listManagers.stream()
+                .filter(e -> e.getName().equals(username))
+                .findFirst()
+                .orElse(null);
+    }
 }
