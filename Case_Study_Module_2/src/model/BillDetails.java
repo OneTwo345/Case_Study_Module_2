@@ -1,6 +1,8 @@
 package model;
 
-public class BillDetails {
+import java.io.Serializable;
+
+public class BillDetails implements Serializable {
     //food, bill, name food , price,quantity,
     Bill bill;
     Food food;

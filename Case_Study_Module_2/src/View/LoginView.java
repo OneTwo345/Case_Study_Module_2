@@ -81,6 +81,7 @@ LoginView {
 
     }
 
+
     public static void main(String[] args) {
         loginMenu();
     }

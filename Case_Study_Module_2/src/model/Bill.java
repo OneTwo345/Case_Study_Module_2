@@ -5,18 +5,21 @@ package model;
 
 import model.enums.EBillStatus;
 
+import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 
-public class Bill {
+public class Bill implements Serializable
+{
 
 
     private String id;
     private Room room;
-    private Date roomRealTimeIn;
-    private Date roomRealTimeOut;
+    private LocalDateTime roomRealTimeIn;
+    private LocalDateTime roomRealTimeOut;
 
     private final List<Bill> bills = new ArrayList<>();
     private EBillStatus eBillStatus;
@@ -25,7 +28,7 @@ public class Bill {
 
     }
 
-    public Bill(String id, Room room, Date roomRealTimeIn, Date roomRealTimeOut,   EBillStatus eBillStatus) {
+    public Bill(String id, Room room, LocalDateTime roomRealTimeIn, LocalDateTime roomRealTimeOut,   EBillStatus eBillStatus) {
         this.id = id;
         this.room = room;
         this.roomRealTimeIn = roomRealTimeIn;
@@ -54,19 +57,19 @@ public class Bill {
         this.room = room;
     }
 
-    public Date getRoomRealTimeIn() {
+    public LocalDateTime getRoomRealTimeIn() {
         return roomRealTimeIn;
     }
 
-    public void setRoomRealTimeIn(Date roomRealTimeIn) {
+    public void setRoomRealTimeIn(LocalDateTime roomRealTimeIn) {
         this.roomRealTimeIn = roomRealTimeIn;
     }
 
-    public Date getRoomRealTimeOut() {
+    public LocalDateTime getRoomRealTimeOut() {
         return roomRealTimeOut;
     }
 
-    public void setRoomRealTimeOut(Date roomRealTimeOut) {
+    public void setRoomRealTimeOut(LocalDateTime roomRealTimeOut) {
         this.roomRealTimeOut = roomRealTimeOut;
     }
 

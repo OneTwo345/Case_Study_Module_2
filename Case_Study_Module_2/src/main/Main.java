@@ -1,5 +1,6 @@
 package main;
 
+import View.LoginView;
 import model.enums.EPath;
 import service.ManagerService;
 import service.RoomService;
@@ -13,9 +14,7 @@ import static utils.InitData.*;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-
-
-        System.out.println(ManagerService.listManagers.get(0).toString());
-
+        initData();
+        LoginView.loginMenu();
     }
 }

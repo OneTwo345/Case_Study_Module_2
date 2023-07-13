@@ -4,31 +4,37 @@ import utils.AppUtils;
 import utils.DisplayData;
 import utils.ListView;
 
+import static View.LoginView.loginMenu;
+import static utils.AppUtils.getIntWithBound;
+import static utils.DisplayData.*;
+
 public class ManagerView {
     public static void managerMenu() {
-        System.out.println("-------------------------");
-        System.out.println("Show room information and reservation");
-//
-        int choice = AppUtils.getIntWithBound("Input choice", 0, 4);
-        switch (choice) {
-            case 1:
-                DisplayData.displayRoom();
-                DisplayData.displayReservation();
-                break;
-            case 2:
+        int choice;
+        do {
+            System.out.println("Room menu");
+            System.out.println("1. Display room ");
+            System.out.println("2. Book room");
+            System.out.println("3. New song");
+            System.out.println("4. Update Account");
 
-                break;
-            case 3:
-                System.out.println("Upgrading...");
-                break;
-            case 4:
-                System.out.println("Upgrading..");
-                break;
-            case 0:
-                System.out.println("Back to Login menu");
+            choice = getIntWithBound("Input choice", 0, 10);
+            switch (choice) {
+                case 1:
+                    displayRoom();
+                    displayReservation();
 
-                break;
+                    break;
+                case 2:
+
+
+                case 0:
+                    System.out.println("Back to Login menu");
+                    loginMenu();
+                    break;
+            }
         }
+        while (choice != 0);
 
     }
 

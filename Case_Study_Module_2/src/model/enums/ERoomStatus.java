@@ -5,7 +5,8 @@ public enum ERoomStatus {
     AVAILABLE(1,"available"),
     MAINTENANCE(2,"maintenance"),
     INUSE(3,"in-use"),
-    RESERVED(4,"reserved");
+    RESERVED(4,"reserved"),
+    WAITING(5,"waiting");
 
    private int id;
    private String name;

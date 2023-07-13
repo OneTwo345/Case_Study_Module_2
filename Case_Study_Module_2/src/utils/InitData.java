@@ -7,10 +7,35 @@ import service.*;
 import java.time.LocalDateTime;
 import java.util.*;
 
+import static service.ReservationService.reservationList;
 import static service.RoomService.roomList;
 
 
 public class InitData {
+    public static void initData() {
+//        if (FoodService.listFoods.isEmpty()) {
+//            initFood();
+//        }
+//        if (ManagerService.listManagers.isEmpty()) {
+//            initManager();
+//        }
+//        if (roomList.isEmpty()) {
+//            initRoom();
+//        }
+//        if (ClientService.clientList.isEmpty()) {
+//            initClients();
+//        }
+//        if (reservationList.isEmpty()) {
+//            initReservation();
+//        }
+        initRoom();
+        initFood();
+        initReservation();
+        initManager();
+        initClients();
+
+
+    }
 
 
     public static void initRoom() {
@@ -41,9 +66,9 @@ public class InitData {
         SerializationUtil.deserialize(EPath.ROOM.getFilePath());
 
 //
-        LocalDateTime date1 = AppUtils.parseDateTime("12-12-2022 14:30:30");
-        LocalDateTime date2 = AppUtils.parseDateTime("12-12-2022 17:30:30");
-        LocalDateTime date3 = AppUtils.parseDateTime("12-12-2022 20:30:30");
+        LocalDateTime date1 = AppUtils.parseDateTime("2023-07-15 14:30:30");
+        LocalDateTime date2 = AppUtils.parseDateTime("2023-07-16 17:30:30");
+        LocalDateTime date3 = AppUtils.parseDateTime("2023-07-15 20:30:30");
         Reservation reservation1 = new Reservation("S123", "Duy", date1, 150000, roomList.get(0), ERoomStatus.getRoomStatusById(1));
         Reservation reservation2 = new Reservation("S125", "Nam", date2,
                 0, roomList.get(2), ERoomStatus.getRoomStatusById(1));
@@ -79,13 +104,13 @@ public class InitData {
     public static void initBill() {
 //
         List<Bill> billList = new ArrayList<>();
-        Date date1 = DateFormat.parseDateWithHours("12-12-2023 14:30:30");
-        Date date2 = DateFormat.parseDateWithHours("12-12-2023 17:30:30");
-        Date date3 = DateFormat.parseDateWithHours("12-12-2023 20:30:30");
+        LocalDateTime date1 = AppUtils.parseDateTime("2023-07-16 14:30:30");
+        LocalDateTime date2 = AppUtils.parseDateTime("2023-07-15 17:30:30");
+        LocalDateTime date3 = AppUtils.parseDateTime(("2023-07-15 20:30:30"));
 
-        Bill bill1 = new Bill("12345", roomList.get(1), AppUtils.getCurrentTime(), date1, EBillStatus.PAY);
-        Bill bill2 = new Bill("B0811", roomList.get(0), AppUtils.getCurrentTime(), date2, EBillStatus.PAY);
-        Bill bill3 = new Bill("B0911", roomList.get(2), AppUtils.getCurrentTime(), date3, EBillStatus.PAY);
+        Bill bill1 = new Bill("12345", roomList.get(1), AppUtils.getDateTimeNow(), date1, EBillStatus.PAY);
+        Bill bill2 = new Bill("B0811", roomList.get(0), AppUtils.getDateTimeNow(), date2, EBillStatus.PAY);
+        Bill bill3 = new Bill("B0911", roomList.get(2), AppUtils.getDateTimeNow(), date3, EBillStatus.PAY);
         billList.add(bill1);
         billList.add(bill2);
         billList.add(bill3);
@@ -115,7 +140,8 @@ public class InitData {
     }
 
     public static void main(String[] args) {
- initReservation();
+      initData();
+
 
 
     }

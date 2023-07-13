@@ -1,20 +1,14 @@
 package service;
 
 
-import model.Food;
+import Repository.BasicCRUD;
 import model.Room;
 import model.enums.EPath;
 import utils.SerializationUtil;
 
-import java.io.IOException;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
-
-
-import static utils.AppUtils.*;
 
 public class RoomService implements BasicCRUD<Room> {
     public static List<Room> roomList;

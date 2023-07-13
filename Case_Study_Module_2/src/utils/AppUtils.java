@@ -107,8 +107,8 @@ public static LocalDateTime getDateTimeNow() {
         try {
             LocalDateTime dateTime = LocalDateTime.parse(getString(str + " (yyyy-MM-dd HH:mm:ss):"), DATE_TIME_FORMATTER);
             LocalDateTime now = getDateTimeNow();
-            if (getDuration(now, dateTime) < 0 || getDuration(now, dateTime) > 4320) {
-                throw new RuntimeException("Invalid Date Range. Please enter a date and time within the last 72 hours.");
+            if (getDuration(now, dateTime) < 0 || getDuration(now, dateTime) > 43200) {
+                throw new RuntimeException("Invalid Date Range. Please enter a date and time within the last a month.");
             }
             return dateTime;
         } catch (DateTimeParseException e) {
