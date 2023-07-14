@@ -49,6 +49,9 @@ public class ReservationService implements BasicCRUD<Reservation> {
     public static void saveReservation() {
         SerializationUtil.serialize(reservationList, EPath.RESERVATION.getFilePath());
     }
+    public static void loadReservation(){
+        SerializationUtil.deserialize(EPath.RESERVATION.getFilePath());
+    }
 
 
     @Override

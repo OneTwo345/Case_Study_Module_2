@@ -1,6 +1,7 @@
 package model;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 public class Contact implements Serializable {
     private Reservation reservation;
@@ -9,6 +10,8 @@ public class Contact implements Serializable {
     private String message;
     private int id;
     private String name;
+    private LocalDateTime localDateTime;
+    private String username;
 
     public Contact(Reservation reservation, Manager manager, Client client, String message) {
         this.reservation = reservation;
@@ -22,12 +25,27 @@ public class Contact implements Serializable {
     }
 
     public Contact(int reservationid, String
-            clientName, String message) {
+            clientName, String message, LocalDateTime localDateTime) {
         this.id = reservationid;
         this.name = clientName;
         this.message = message;
+        this.localDateTime = localDateTime;
+    }
 
+    public Contact(int id, String name, String message, LocalDateTime localDateTime, String username) {
+        this.id = id;
+        this.name = name;
+        this.message = message;
+        this.localDateTime = localDateTime;
+        this.username = username;
+    }
 
+    public LocalDateTime getLocalDateTime() {
+        return localDateTime;
+    }
+
+    public void setLocalDateTime(LocalDateTime localDateTime) {
+        this.localDateTime = localDateTime;
     }
 
     public int getId() {
@@ -36,6 +54,14 @@ public class Contact implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getName() {

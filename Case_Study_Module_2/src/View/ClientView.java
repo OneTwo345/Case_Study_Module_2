@@ -13,15 +13,13 @@ import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
+
 import java.util.*;
 
 import static View.LoginView.loginMenu;
+import static service.ReservationService.loadReservation;
 import static service.ReservationService.reservationList;
 import static service.RoomService.roomList;
-import static service.RoomService.saveRoom;
 import static utils.AppUtils.*;
 import static utils.DisplayData.*;
 
@@ -38,15 +36,19 @@ public class ClientView {
             System.out.println("1. Display room ");
             System.out.println("2. Book room");
             System.out.println("3. New song");
-            System.out.println("4. Update Account");
+            System.out.println("4. Contact Owner");
             System.out.println("5. Cancel reservation");
             System.out.println("6. Show your room");
             System.out.println("7. Pre-order food");
             System.out.println("8. Show Pre-order food");
             System.out.println("9. Cancel Pre-order food");
-            System.out.println("10. Contact owner");
+            System.out.println("10. Update Account");
+            System.out.println("11. Message Box");
+            System.out.println("12. Check Message");
+            System.out.println("13. Delete Message");
+            System.out.println("14. Delete All Message");
             System.out.println("0. Back to login menu");
-            choice = getIntWithBound("Input choice", 0, 10);
+            choice = getIntWithBound("Input choice", 0, 15);
             switch (choice) {
                 case 1:
                     displayRoomClientView();
@@ -59,7 +61,8 @@ public class ClientView {
                     getSong();
                     break;
                 case 4:
-                    updateAccount();
+
+                    contactOwner();
                     break;
                 case 5:
                     cancelReservation();
@@ -77,7 +80,20 @@ public class ClientView {
                     cancelPreOrderFood();
                     break;
                 case 10:
-                    contactOwner();
+                    updateAccount();
+                    break;
+                case 11:
+                    viewMessagesFromOwner();
+                    break;
+                case 12:
+                    viewSentMessages();
+                    break;
+                case 13:
+                    deleteMessage();
+                    break;
+                case 14:
+                    deleteAllMessages();
+                    break;
 
 
                 case 0:
@@ -116,11 +132,13 @@ public class ClientView {
                     validRoomId = true;
                     break;
                 }
+
             }
             if (!validRoomId) {
                 System.out.println("Mã phòng không hợp lệ. Vui lòng nhập lại.");
             }
         }
+        System.out.println("Đặt phòng thành công");
 
 
         Reservation reservation1 = new Reservation(customerName, timeExpected, downPayment, selectedRoom, ERoomStatus.WAITING
@@ -131,11 +149,13 @@ public class ClientView {
         }
         reservationList.add(reservation1);
         ReservationService.saveReservation();
+        System.out.println("Đặt phòng thành công");
 
 
     }
 
     public static void viewMyReservations() {
+        loadReservation();
         String customerName = LoginService.getUserName();
         List<Reservation> myReservations = new ArrayList<>();
         for (Reservation reservation : reservationList) {
@@ -152,7 +172,7 @@ public class ClientView {
             for (Reservation reservation : myReservations) {
 
 
-                System.out.printf("\t\t\t\t%-10d  %-15s %-30s %-20s %-10s %-15s %-20s \n", reservation.getReservationId(), reservation.getCustomerName(), reservation.getTimeExpected(),
+                System.out.printf("\t\t\t\t%-10d  %-15s %-30s %-20s %-10s %-15s %-20s \n", reservation.getReservationId(), reservation.getCustomerName(),AppUtils.formatDateTime(reservation.getTimeExpected()) ,
                         CurrencyFormat.covertPriceToString(reservation.getDownPayment()), reservation.getRoom().getRoomName(), ERoomStatus.WAITING, reservation.getRoom().getRoomType());
 
             }
@@ -416,7 +436,7 @@ public class ClientView {
               Reservation reservationContactId = reservation;
               String message = getString("Nhập vào thông báo bạn muốn gửi");
               Client client1 = new Client();
-              Contact contact = new Contact(reservationContactId.getReservationId(),client1.getName(),message);
+              Contact contact = new Contact(reservationContactId.getReservationId(),reservation.getCustomerName(),message, LocalDateTime.now());
               ContactService.contactList.add(contact);
               ContactService.saveContact();
                 foundReservation = true;
@@ -487,6 +507,78 @@ public class ClientView {
             System.out.println("Không tìm thấy món ăn có ID là " + foodId + ".");
         }
     }
+    public static void viewMessagesFromOwner() {
+        ContactService.loadContact();
+        Set<String> uniqueMessages = new HashSet<>();
+        for (Contact contact : ContactService.contactList) {
+            if (contact.getName().equals("Duy Nguyen")) {
+                uniqueMessages.add(contact.getMessage());
+            }
+        }
+        if (uniqueMessages.isEmpty()) {
+            System.out.println("Không có thông báo nào từ chủ quán hát.");
+            return;
+        }
+        System.out.println("Danh sách thông báo từ chủ quán hát:");
+        int count = 1;
+        for (String message : uniqueMessages) {
+            System.out.println("--------------------------------------------------");
+            System.out.printf("STT: %d\n", count);
+            System.out.printf("Nội dung: %s\n", message);
+            System.out.println("--------------------------------------------------");
+            count++;
+        }
+    }
+    public static void viewSentMessages() {
+        ContactService.loadContact();
+        String senderName = LoginService.getUserName();
+        List<Contact> sentMessages = new ArrayList<>();
+        for (Contact contact : ContactService.contactList) {
+            if (contact.getName().equals(senderName)) {
+                sentMessages.add(contact);
+            }
+        }
+        if (sentMessages.isEmpty()) {
+            System.out.println("Bạn chưa gửi tin nhắn nào.");
+            return;
+        }
+        System.out.println("Danh sách tin nhắn đã gửi:");
+        for (Contact contact : sentMessages) {
+            System.out.println("--------------------------------------------------");
+            System.out.printf("Người nhận: %s\n", "Duy Nguyen");
+            System.out.printf("Nội dung: %s\n", contact.getMessage());
+            System.out.printf("Giờ gửi: %s\n",AppUtils.formatDateTime(contact.getLocalDateTime()) );
+            System.out.println("--------------------------------------------------");
+        }
+    }
+    public static void deleteMessage() {
+        int messageId = getInt("Nhập ID tin nhắn muốn xóa");
+        ContactService.loadContact();
+        boolean found = false;
+        for (Contact contact : ContactService.contactList) {
+            if (contact.getId() == messageId) {
+                ContactService.contactList.remove(contact);
+                ContactService.saveContact();
+                System.out.println("Đã xóa tin nhắn có ID là " + messageId + ".");
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            System.out.println("Không tìm thấy tin nhắn có ID là " + messageId + ".");
+        }
+    }
+    public static void deleteAllMessages() {
+        ContactService.loadContact();
+        if (ContactService.contactList.isEmpty()) {
+            System.out.println("Không có tin nhắn nào để xóa.");
+            return;
+        }
+        ContactService.contactList.clear();
+        ContactService.saveContact();
+        System.out.println("Đã xóa tất cả tin nhắn.");
+    }
+
 
 
 }

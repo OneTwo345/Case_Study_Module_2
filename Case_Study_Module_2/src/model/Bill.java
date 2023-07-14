@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 
-public class Bill implements Serializable
+public class Bill extends BillDetails implements Serializable
 {
 
 

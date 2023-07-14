@@ -11,7 +11,6 @@ import static service.ReservationService.reservationList;
 import static service.RoomService.roomList;
 import static utils.AppUtils.getString;
 
-
 public class InitData {
     public static void initData() {
 //        if (FoodService.listFoods.isEmpty()) {
@@ -144,19 +143,18 @@ public class InitData {
     public static void initMessage(){
         String message = "Thank you";
         Client client1 = new Client();
-        Contact contact = new Contact(15,"Dat",message);
-       List<Contact> contactList1 = new ArrayList<>();
+        Contact contact = new Contact(15,"Dat",message,LocalDateTime.now());
+        List<Contact> contactList1 = new ArrayList<>();
         SerializationUtil.serialize(contactList1, EPath.CONTACT.getFilePath());
     }
 
 
+
     public static void main(String[] args) {
-      initData();
+        initData();
 
 
 
     }
 
-
 }
-

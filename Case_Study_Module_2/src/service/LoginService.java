@@ -9,13 +9,13 @@ import static View.ClientView.clientMenu;
 import static View.ManagerView.managerMenu;
 
 public class LoginService {
-    private static final StringBuilder result;
-
-    static {
-        result = new StringBuilder();
-    }
+//    private static final StringBuilder result;
+    private static String result;
+//    static {
+//        result = new StringBuilder();
+//    }
     public static String getUserName(){
-        return result.toString();
+        return result;
     }
     public static void login() throws IOException {
         String username = AppUtils.getString("Input username: ");
@@ -28,7 +28,8 @@ public class LoginService {
 
         } else if (ClientService.getUsername(username) != null && Objects.equals(ClientService.getUsername(username).getPassword(), password)) {
             ClientService.currentClient = ClientService.getUsername(username);
-            result.append(username);
+//            result.append(username);
+            result = username;
             System.out.println("Welcome "+ username);
             clientMenu();
 

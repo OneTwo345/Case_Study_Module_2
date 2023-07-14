@@ -102,6 +102,10 @@ public class AppUtils {
 public static LocalDateTime getDateTimeNow() {
     return LocalDateTime.now();
 }
+    public static String formatDateTime(LocalDateTime dateTime) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM HH:mm");
+        return dateTime.format(formatter);
+    }
 
     public static LocalDateTime getDateTime(String str) {
         try {
