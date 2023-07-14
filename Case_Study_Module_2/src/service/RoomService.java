@@ -48,6 +48,9 @@ public class RoomService implements BasicCRUD<Room> {
     public static void saveRoom() {
         SerializationUtil.serialize(roomList, EPath.ROOM.getFilePath());
     }
+    public static void loadRoom() {
+        SerializationUtil.deserialize( EPath.ROOM.getFilePath());
+    }
 
     @Override
     public void update(Room room) {

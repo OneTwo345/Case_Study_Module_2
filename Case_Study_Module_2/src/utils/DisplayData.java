@@ -49,9 +49,6 @@ public class DisplayData {
 
     public static void displayReservation() {
 
-//        List<Room> rooms  = (List<Room>) SerializationUtil.deserialize
-//                ("D:\\Case_Study_Module_2\\Case_Study_Module_2\\src\\file\\rooms.txt");
-//        List<Reservation> reservations = (List<Reservation>) SerializationUtil.deserialize("D:\\Case_Study_Module_2\\Case_Study_Module_2\\src\\file\\reservations.txt");
         if (ReservationService.reservationList == null) {
             System.out.println("Không có đặt phòng nào.");
             return;
