@@ -43,6 +43,8 @@ public class ClientView {
             System.out.println("6. Show your room");
             System.out.println("7. Pre-order food");
             System.out.println("8. Show Pre-order food");
+            System.out.println("9. Cancel Pre-order food");
+            System.out.println("10. Contact owner");
             System.out.println("0. Back to login menu");
             choice = getIntWithBound("Input choice", 0, 10);
             switch (choice) {
@@ -71,6 +73,12 @@ public class ClientView {
                 case 8:
                     showPreOrderFood();
                     break;
+                case 9:
+                    cancelPreOrderFood();
+                    break;
+                case 10:
+                    contactOwner();
+
 
                 case 0:
                     System.out.println("Back to Login menu");
@@ -271,7 +279,7 @@ public class ClientView {
         System.out.println("\t\t\t\t===================================================================================================================================================");
         System.out.printf("\t\t\t\t%-10s %-20s %-25s %-20s %-10s %-15s %-30s \n", "ID ", "Tên khách", "Ngày giờ", "Tiền cọc", "Phòng", "Trạng thái", "Loại");
         for (Reservation reservation : myReservations) {
-            System.out.printf("\t\t\t\t%-10d  %-15s %-30s %-20s %-10s %-15s %-20s \n", reservation.getReservationId(), reservation.getCustomerName(), reservation.getTimeExpected(),
+            System.out.printf("\t\t\t\t%-10d  %-15s %-30s %-20s %-10s %-15s %-20s \n", reservation.getReservationId(), LoginService.getUserName(), reservation.getTimeExpected(),
                     CurrencyFormat.covertPriceToString(reservation.getDownPayment()), reservation.getRoom().getRoomName(), ERoomStatus.WAITING, reservation.getRoom().getRoomType());
         }
         int reservationId = getInt("Nhập ID của đặt phòng bạn muốn đặt trước đồ ăn:");
@@ -362,7 +370,7 @@ public class ClientView {
                     CurrencyFormat.covertPriceToString(reservation.getDownPayment()), reservation.getRoom().getRoomName(), ERoomStatus.WAITING, reservation.getRoom().getRoomType(),
                     CurrencyFormat.covertPriceToString(reservation.getRoom().getRoomPricePerHour()));
         }
-        int reservationId = getInt("Nhập ID của đặt phòng bạn muốn xem:");
+        int reservationId = getInt("Nhập ID của phòng bạn muốn xem:");
         boolean foundReservation = false;
         for (Reservation reservation : myReservations) {
             if (reservationId == reservation.getReservationId()) {
@@ -375,6 +383,112 @@ public class ClientView {
             System.out.println("ID nhập vào không hợp lệ.");
         }
     }
+
+    public static void contactOwner() {
+        System.out.println("Thông tin liên lạc của chủ quán hát:");
+        System.out.println("- Tên: Duy Nguyen");
+        System.out.println("- Số điện thoại: 0769973715");
+        System.out.println("- Địa chỉ email: duy@gmail.com");
+
+        String customerName = LoginService.getUserName();
+        List<Reservation> myReservations = new ArrayList<>();
+        for (Reservation reservation : reservationList) {
+            if (reservation.getCustomerName().equals(customerName)) {
+                myReservations.add(reservation);
+            }
+        }
+        if (myReservations.isEmpty()) {
+            System.out.println("Bạn chưa đặt phòng nào.");
+            return;
+        }
+        System.out.println("Danh sách các phòng bạn đã đặt:");
+        System.out.println("\t\t\t\t===================================================================================================================================================");
+        System.out.printf("\t\t\t\t%-10s %-20s %-25s %-20s %-10s %-15s %-20s %-20s\n", "ID ", "Tên khách", "Ngày giờ", "Tiền cọc", "Phòng", "Trạng thái", "Loại", "Số tiền hát 1h");
+        for (Reservation reservation : myReservations) {
+            System.out.printf("\t\t\t\t%-10d  %-15s %-30s %-20s %-10s %-15s %-20s %-20s\n", reservation.getReservationId(), reservation.getCustomerName(), reservation.getTimeExpected(),
+                    CurrencyFormat.covertPriceToString(reservation.getDownPayment()), reservation.getRoom().getRoomName(), ERoomStatus.WAITING, reservation.getRoom().getRoomType(),
+                    CurrencyFormat.covertPriceToString(reservation.getRoom().getRoomPricePerHour()));
+        }
+        int reservationId = getInt("Nhập ID của phòng bạn muốn gửi lời nhắn:");
+        boolean foundReservation = false;
+        for (Reservation reservation : myReservations) {
+            if (reservationId == reservation.getReservationId()) {
+              Reservation reservationContactId = reservation;
+              String message = getString("Nhập vào thông báo bạn muốn gửi");
+              Client client1 = new Client();
+              Contact contact = new Contact(reservationContactId.getReservationId(),client1.getName(),message);
+              ContactService.contactList.add(contact);
+              ContactService.saveContact();
+                foundReservation = true;
+                break;
+            }
+        }
+        if (!foundReservation) {
+            System.out.println("ID nhập vào không hợp lệ.");
+        }
+
+
+
+    }
+    public static void cancelPreOrderFood() {
+        String customerName = LoginService.getUserName();
+        List<Reservation> myReservations = new ArrayList<>();
+        for (Reservation reservation : reservationList) {
+            if (reservation.getCustomerName().equals(customerName)) {
+                myReservations.add(reservation);
+            }
+        }
+        if (myReservations.isEmpty()) {
+            System.out.println("Bạn chưa đặt phòng nào.");
+            return;
+        }
+        System.out.println("Danh sách các phòng bạn đã đặt:");
+        System.out.println("\t\t\t\t===================================================================================================================================================");
+        System.out.printf("\t\t\t\t%-10s %-20s %-25s %-20s %-10s %-15s %-30s \n", "ID ", "Tên khách", "Ngày giờ", "Tiền cọc", "Phòng", "Trạng thái", "Loại");
+        for (Reservation reservation : myReservations) {
+            System.out.printf("\t\t\t\t%-10d  %-15s %-30s %-20s %-10s %-15s %-20s \n", reservation.getReservationId(), LoginService.getUserName(), reservation.getTimeExpected(),
+                    CurrencyFormat.covertPriceToString(reservation.getDownPayment()), reservation.getRoom().getRoomName(), ERoomStatus.WAITING, reservation.getRoom().getRoomType());
+        }
+        int reservationId = getInt("Nhập ID của đặt phòng bạn muốn hủy đồ ăn:");
+        Reservation reservationToCancelPreOrder = null;
+        for (Reservation reservation : myReservations) {
+            if (reservation.getReservationId() == reservationId) {
+                reservationToCancelPreOrder = reservation;
+                break;
+            }
+        }
+        if (reservationToCancelPreOrder == null) {
+            System.out.println("Không tìm thấy đặt phòng có ID là " + reservationId + ".");
+            return;
+        }
+        List<OrderedFood> preOrderedFoodList = reservationToCancelPreOrder.getPreOrderedFoodList();
+        if (preOrderedFoodList == null || preOrderedFoodList.isEmpty()) {
+            System.out.println("Đặt phòng này không có đồ ăn nào để hủy.");
+            return;
+        }
+        System.out.println("Danh sách đồ ăn đã đặt trước của đặt phòng có ID là " + reservationId + ":");
+        System.out.println("\t\t\t\t===========================================================================");
+        System.out.printf("\t\t\t\t%-10s %-30s %-20s %-20s \n", "ID", "Tên món ăn", "Số lượng", "Giá");
+        for (OrderedFood orderedFood : preOrderedFoodList) {
+            System.out.printf("\t\t\t\t%-10d %-30s %-20d %-20s \n", orderedFood.getFood().getFoodId(), orderedFood.getFood().getFoodName(),
+                    orderedFood.getQuantity(), CurrencyFormat.covertPriceToString(orderedFood.getFood().getFoodPrice()));
+        }
+        int foodId = getInt("Nhập ID của món ăn bạn muốn hủy đặt trước:");
+        boolean foundFood = false;
+        for (OrderedFood orderedFood : preOrderedFoodList) {
+            if (orderedFood.getFood().getFoodId() == foodId) {
+                preOrderedFoodList.remove(orderedFood);
+                System.out.println("Đã hủy đặt trước đồ ăn có ID là " + foodId + ".");
+                foundFood = true;
+                break;
+            }
+        }
+        if (!foundFood) {
+            System.out.println("Không tìm thấy món ăn có ID là " + foodId + ".");
+        }
+    }
+
+
 }
 
 
