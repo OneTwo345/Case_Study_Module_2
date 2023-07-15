@@ -52,6 +52,14 @@ public class ReservationService implements BasicCRUD<Reservation> {
     public static void loadReservation(){
         SerializationUtil.deserialize(EPath.RESERVATION.getFilePath());
     }
+    public static Reservation findReservationById(int reservationId) {
+        for (Reservation reservation : ReservationService.reservationList) {
+            if (reservation.getReservationId()==(reservationId)) {
+                return reservation;
+            }
+        }
+        return null;
+    }
 
 
     @Override

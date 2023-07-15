@@ -1,9 +1,6 @@
 package View;
 
-import model.Client;
-import model.Contact;
-import model.Reservation;
-import model.Room;
+import model.*;
 import model.enums.ERoomStatus;
 import service.*;
 import utils.AppUtils;
@@ -11,6 +8,7 @@ import utils.CurrencyFormat;
 import utils.DisplayData;
 import utils.ListView;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -18,6 +16,7 @@ import java.time.format.DateTimeParseException;
 import java.util.*;
 
 import static View.LoginView.loginMenu;
+import static service.ReservationService.findReservationById;
 import static service.ReservationService.reservationList;
 import static utils.AppUtils.*;
 import static utils.DisplayData.*;
@@ -38,6 +37,7 @@ public class ManagerView {
             System.out.println("8. Change room status");
             System.out.println("9. Xem cuộc hẹn theo ngày");
             System.out.println("10. Thay đổi trạng thái phòng theo Id cuộc hẹn");
+            System.out.println("11. Tính tiền theo Id cuộc hẹn");
 
 
             choice = getIntWithBound("Input choice", 0, 30);
@@ -72,6 +72,9 @@ public class ManagerView {
                     break;
                 case 10:
                     changeRoomStatusByReservationId();
+                    break;
+                case 11:
+                    tinhHoaDon();
                     break;
 
                 case 0:
@@ -337,6 +340,71 @@ public class ManagerView {
         System.out.println("Trạng thái của phòng đã được cập nhật.");
         displayReservation();
     }
+    public static void tinhHoaDon() {
+        int  reservationId = getInt("Nhập vào Id cuộc hẹn cần tính tiền");
+        Reservation reservation = findReservationById(reservationId);
+        if (reservation == null) {
+            System.out.println("Không tìm thấy cuộc hẹn với Id là " + reservationId);
+            return;
+        }
+
+        Room room = reservation.getRoom();
+
+
+        LocalDateTime gioVao;
+        while (true) {
+            String gioVaoStr = getString("Nhập giờ vào (yyyy-MM-dd HH:mm:ss): ");
+            try {
+                gioVao = parseDateTime(gioVaoStr);
+            } catch (DateTimeParseException e) {
+                System.out.println("Lỗi định dạng ngày giờ. Vui lòng nhập lại.");
+                continue;
+            }
+            break;
+        }
+        LocalDateTime gioRa;
+        while (true) {
+            String gioRaStr = getString("Nhập giờ ra (yyyy-MM-dd HH:mm:ss): ");
+            try {
+                gioRa = parseDateTime(gioRaStr);
+            } catch (DateTimeParseException e) {
+                System.out.println("Lỗi định dạng ngày giờ. Vui lòng nhập lại.");
+                continue;
+            }
+            if (gioRa.isBefore(gioVao)) {
+                System.out.println("Giờ ra phải sau giờ vào. Vui lòng nhập lại.");
+                continue;
+            }
+            break;
+        }
+        List<OrderedFood> doAn = reservation.getPreOrderedFoodList();
+        String customer = reservation.getCustomerName();
+        long soGioSuDung = Duration.between(gioVao, gioRa).toHours();
+        double giaPhong = room.getRoomPricePerHour(); // giá thuê phòng mặc định là giá của phòng/giờ
+        double thanhTienPhong = giaPhong * soGioSuDung;
+        double thanhTienDoAn = 0;
+        for (OrderedFood mon : doAn) {
+            thanhTienDoAn += mon.getQuantity()+mon.getFood().getFoodPrice();
+        }
+        double thanhTien = thanhTienPhong + thanhTienDoAn - reservation.getDownPayment();
+
+        System.out.println("HÓA ĐƠN PHÒNG HÁT KARAOKE DN");
+        System.out.println("Phòng: " + room.getRoomName());
+        System.out.println("Giờ vào: " + gioVao);
+        System.out.println("Giờ ra: " + gioRa);
+        System.out.println("Thời gian sử dụng: " + soGioSuDung + " giờ");
+        System.out.println("Tiền thuê phòng: " + thanhTienPhong + " đồng");
+        if (!doAn.isEmpty()) {
+            System.out.println("Đồ ăn đã đặt:");
+            for (OrderedFood mon : doAn) {
+                System.out.println("- " + mon.getFood().getFoodName() + ": " + mon.getQuantity() + mon.getFood().getFoodPrice() + " đồng");
+            }
+            System.out.println("Tiền đồ ăn: " + thanhTienDoAn + " đồng");
+        }
+        System.out.println("Tiền khách cọc trước " + reservation.getDownPayment());
+        System.out.println("Tổng thành tiền: " + thanhTien + " đồng");
+    }
+
 
 
 
