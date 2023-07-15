@@ -34,6 +34,7 @@ public class InitData {
         initManager();
         initClients();
         initMessage();
+        initReceiveMessage();
 
 
 
@@ -87,18 +88,28 @@ public class InitData {
 
     public static void initFood() {
         List<Food> foodList = new ArrayList<>();
-        Food comboHuda1 = new Food("Bia/10 chai", 100000d, ETypeOfFood.DRINK);
-        Food comboHuda2 = new Food("Bia/1 thung", 250000d, ETypeOfFood.DRINK);
-        Food fruitDishBig = new Food("Dia trai cay lon", 100000d, ETypeOfFood.FOOD);
-        Food fruitDishSmall = new Food("Dia trai cay nho", 80000d, ETypeOfFood.FOOD);
-        Food grilledSquid = new Food("Muc nuong", 100000d, ETypeOfFood.FOOD);
-        Food grilledChicken = new Food("MC", 250000d, ETypeOfFood.OTHER);
+        Food comboHuda1 = new Food("1 thùng Huda", 280000d, ETypeOfFood.DRINK);
+        Food comboHuda2 = new Food("1 chai huda", 13000d, ETypeOfFood.DRINK);
+        Food comboTiger = new Food("1 thùng Tiger bạc", 400000d, ETypeOfFood.DRINK);
+        Food comboHeineken = new Food("1 thùng Heineken", 460000d, ETypeOfFood.DRINK);
+        Food orangeDrink = new Food("1 lon nước cam ", 10000d, ETypeOfFood.DRINK);
+        Food cocacolaDrink = new Food("1 lon Cocacola", 13000d, ETypeOfFood.DRINK);
+        Food water  = new Food("1 nước suối Aquafina", 6000d, ETypeOfFood.DRINK);
+        Food fruitDishBig = new Food("1 dĩa trái cây lớn", 100000d, ETypeOfFood.FOOD);
+        Food fruitDishSmall = new Food("1 dĩa trái cây nhỏ", 80000d, ETypeOfFood.FOOD);
+        Food grilledSquid = new Food("Mực nướng", 100000d, ETypeOfFood.FOOD);
+        Food oshi  = new Food("1 gói Oshi ", 10000d, ETypeOfFood.OTHER);
         foodList.add(comboHuda1);
         foodList.add(comboHuda2);
+        foodList.add(comboTiger);
+        foodList.add(comboHeineken);
+        foodList.add(orangeDrink);
+        foodList.add(cocacolaDrink);
+        foodList.add(water);
         foodList.add(fruitDishBig);
         foodList.add(fruitDishSmall);
         foodList.add(grilledSquid);
-        foodList.add(grilledChicken);
+        foodList.add(oshi);
 
         SerializationUtil.serialize(foodList, EPath.FOOD.getFilePath());
     }
@@ -146,6 +157,12 @@ public class InitData {
         Contact contact = new Contact(15,"Dat",message,LocalDateTime.now());
         List<Contact> contactList1 = new ArrayList<>();
         SerializationUtil.serialize(contactList1, EPath.CONTACT.getFilePath());
+    }
+    public static void initReceiveMessage(){
+        Contact contact1 = new Contact("tuan123","okok");
+        Contact contact2 = new Contact("phuc123", "okok");
+        List<Contact> receiveList = new ArrayList<>();
+        SerializationUtil.serialize(receiveList,EPath.MESSAGE.getFilePath());
     }
 
 

@@ -12,12 +12,16 @@ import java.util.Objects;
 
 public class ContactService {
     public static List<Contact> contactList;
+    public static List<Contact> messageList;
     public ContactService() {
         contactList = new ArrayList<>();
     }
 
     static {
         contactList = (List<Contact>) SerializationUtil.deserialize(EPath.CONTACT.getFilePath());
+    }
+    static {
+        messageList = (List<Contact>) SerializationUtil.deserialize(EPath.MESSAGE.getFilePath());
     }
     public boolean isExist(int id) {
         Contact contact = contactList.stream()
@@ -31,6 +35,12 @@ public class ContactService {
     }
     public static void loadContact() {
         SerializationUtil.deserialize( EPath.CONTACT.getFilePath());
+    }
+    public static void loadMessage() {
+        SerializationUtil.deserialize( EPath.MESSAGE.getFilePath());
+    }
+    public static void saveMessage() {
+        SerializationUtil.serialize(messageList, EPath.MESSAGE.getFilePath());
     }
 
 }

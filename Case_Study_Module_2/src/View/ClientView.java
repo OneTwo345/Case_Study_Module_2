@@ -138,7 +138,6 @@ public class ClientView {
                 System.out.println("Mã phòng không hợp lệ. Vui lòng nhập lại.");
             }
         }
-        System.out.println("Đặt phòng thành công");
 
 
         Reservation reservation1 = new Reservation(customerName, timeExpected, downPayment, selectedRoom, ERoomStatus.WAITING
@@ -509,9 +508,16 @@ public class ClientView {
     }
     public static void viewMessagesFromOwner() {
         ContactService.loadContact();
+        ContactService.loadMessage();
+
         Set<String> uniqueMessages = new HashSet<>();
         for (Contact contact : ContactService.contactList) {
             if (contact.getName().equals("Duy Nguyen")) {
+                uniqueMessages.add(contact.getMessage());
+            }
+        }
+        for (Contact contact : ContactService.messageList) {
+            if (contact.getUsername().equals(LoginService.getUserName())) {
                 uniqueMessages.add(contact.getMessage());
             }
         }
@@ -534,7 +540,7 @@ public class ClientView {
         String senderName = LoginService.getUserName();
         List<Contact> sentMessages = new ArrayList<>();
         for (Contact contact : ContactService.contactList) {
-            if (contact.getName().equals(senderName)) {
+            if (contact.getUsername().equals(senderName)) {
                 sentMessages.add(contact);
             }
         }

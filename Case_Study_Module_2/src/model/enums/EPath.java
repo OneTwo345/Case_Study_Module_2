@@ -16,7 +16,8 @@ public enum EPath {
     ROOM("D:\\Case_Study_Module_2\\Case_Study_Module_2\\src\\file\\rooms.txt"),
     EMPLOYEE("D:\\Case_Study_Module_2\\Case_Study_Module_2\\src\\file\\employees.txt"),
     BOOKROOM("D:\\Case_Study_Module_2\\Case_Study_Module_2\\src\\file\\bookRoom.txt"),
-    CONTACT("D:\\Case_Study_Module_2\\Case_Study_Module_2\\src\\file\\contact.txt");
+    CONTACT("D:\\Case_Study_Module_2\\Case_Study_Module_2\\src\\file\\contact.txt"),
+    MESSAGE("D:\\Case_Study_Module_2\\Case_Study_Module_2\\src\\file\\message.txt");
 
     private final String filePath;
 

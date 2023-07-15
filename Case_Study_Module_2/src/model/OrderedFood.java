@@ -1,6 +1,8 @@
 package model;
 
-public class OrderedFood {
+import java.io.Serializable;
+
+public class OrderedFood implements Serializable {
     private Food food;
     private int quantity;
 

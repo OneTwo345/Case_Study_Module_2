@@ -13,10 +13,16 @@ public class Contact implements Serializable {
     private LocalDateTime localDateTime;
     private String username;
 
+
     public Contact(Reservation reservation, Manager manager, Client client, String message) {
         this.reservation = reservation;
         this.manager = manager;
         this.client = client;
+        this.message = message;
+    }
+    public Contact(String username,String message){
+
+        this.username = username;
         this.message = message;
     }
 

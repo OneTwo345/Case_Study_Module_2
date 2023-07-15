@@ -1,13 +1,11 @@
 package View;
 
+import model.Client;
 import model.Contact;
 import model.Reservation;
 import model.Room;
 import model.enums.ERoomStatus;
-import service.ContactService;
-import service.LoginService;
-import service.ReservationService;
-import service.RoomService;
+import service.*;
 import utils.AppUtils;
 import utils.CurrencyFormat;
 import utils.DisplayData;
@@ -17,10 +15,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static View.LoginView.loginMenu;
 import static service.ReservationService.reservationList;
@@ -161,35 +156,24 @@ public class ManagerView {
     }
 
     public static void contactCustomer() {
-        ContactService.loadContact();
+        ClientService.loadClient();
+
         String customerName = getString("Nhập tên khách hàng:");
-        List<Reservation> customerReservations = new ArrayList<>();
-        for (Reservation reservation : reservationList) {
-            if (reservation.getCustomerName().equals(customerName)) {
-                customerReservations.add(reservation);
-            }
-        }
-        if (customerReservations.isEmpty()) {
-            System.out.println("Khách hàng không có đặt phòng nào.");
-            return;
-        }
-        displayReservation();
-        int reservationId = getInt("Nhập ID đặt phòng của khách hàng:");
-        boolean foundReservation = false;
-        for (Reservation reservation : customerReservations) {
-            if (reservationId == reservation.getReservationId()) {
-                foundReservation = true;
-                String message = getString("Nhập vào thông báo của chủ quán hát:");
-                Contact contact = new Contact(reservationId, "Duy Nguyen", message, LocalDateTime.now());
-                ContactService.contactList.add(contact);
-                ContactService.saveContact();
-                System.out.println("Thông báo đã được gửi đến khách hàng.");
+
+        for (Client client : ClientService.clientList) {
+            if (client.getName().equalsIgnoreCase(customerName)) {
+
                 break;
             }
+            if (customerName == null) {
+                System.out.println("Không tìm thấy khách hàng có tên '" + customerName + "'. Vui lòng thử lại.");
+                return;
+            }
         }
-        if (!foundReservation) {
-            System.out.println("ID đặt phòng không hợp lệ.");
-        }
+        String message = getString("Nhập thông báo muốn gửi tới");
+        Contact contact = new Contact(customerName, message);
+        ContactService.messageList.add(contact);
+        System.out.println("Gửi thông báo thành công");
     }
 
     public static void contactEachCustomer() {
