@@ -172,7 +172,7 @@ public class ClientView {
 
 
                 System.out.printf("\t\t\t\t%-10d  %-15s %-30s %-20s %-10s %-15s %-20s \n", reservation.getReservationId(), reservation.getCustomerName(),AppUtils.formatDateTime(reservation.getTimeExpected()) ,
-                        CurrencyFormat.covertPriceToString(reservation.getDownPayment()), reservation.getRoom().getRoomName(), ERoomStatus.WAITING, reservation.getRoom().getRoomType());
+                        CurrencyFormat.covertPriceToString(reservation.getDownPayment()), reservation.getRoom().getRoomName(), reservation.getReservationRoomStatus(), reservation.getRoom().getRoomType());
 
             }
         }

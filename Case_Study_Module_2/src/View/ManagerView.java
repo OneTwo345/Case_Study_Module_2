@@ -341,17 +341,17 @@ public class ManagerView {
         displayReservation();
     }
     public static void tinhHoaDon() {
-        int  reservationId = getInt("Nhập vào Id cuộc hẹn cần tính tiền");
+        String employee = getString("Nhập tên thu ngân");
+        int reservationId = getInt("Nhập vào Id cuộc hẹn cần tính tiền");
         Reservation reservation = findReservationById(reservationId);
         if (reservation == null) {
             System.out.println("Không tìm thấy cuộc hẹn với Id là " + reservationId);
             return;
         }
-
         Room room = reservation.getRoom();
 
-
         LocalDateTime gioVao;
+
         while (true) {
             String gioVaoStr = getString("Nhập giờ vào (yyyy-MM-dd HH:mm:ss): ");
             try {
@@ -360,8 +360,14 @@ public class ManagerView {
                 System.out.println("Lỗi định dạng ngày giờ. Vui lòng nhập lại.");
                 continue;
             }
+            LocalDateTime gioTruoc30Phut = reservation.getTimeExpected().minusMinutes(30);
+            if (gioVao.isBefore(gioTruoc30Phut)) {
+                System.out.println("Giờ vào chỉ có thể đến trước 30 phút so với cuộc hẹn. Vui lòng nhập lại.");
+                continue;
+            }
             break;
         }
+
         LocalDateTime gioRa;
         while (true) {
             String gioRaStr = getString("Nhập giờ ra (yyyy-MM-dd HH:mm:ss): ");
@@ -377,14 +383,20 @@ public class ManagerView {
             }
             break;
         }
+
         List<OrderedFood> doAn = reservation.getPreOrderedFoodList();
         String customer = reservation.getCustomerName();
         long soGioSuDung = Duration.between(gioVao, gioRa).toHours();
+        long soPhutSuDung = Duration.between(gioVao, gioRa).toMinutes();
+
+        long soPhutDuRa = soPhutSuDung - soGioSuDung*60;
         double giaPhong = room.getRoomPricePerHour(); // giá thuê phòng mặc định là giá của phòng/giờ
-        double thanhTienPhong = giaPhong * soGioSuDung;
+        double thanhTienPhong = giaPhong * (soPhutSuDung/60);
         double thanhTienDoAn = 0;
-        for (OrderedFood mon : doAn) {
-            thanhTienDoAn += mon.getQuantity()+mon.getFood().getFoodPrice();
+        if (doAn != null) {
+            for (OrderedFood mon : doAn) {
+                thanhTienDoAn += mon.getQuantity()*mon.getFood().getFoodPrice();
+            }
         }
         double thanhTien = thanhTienPhong + thanhTienDoAn - reservation.getDownPayment();
 
@@ -392,17 +404,22 @@ public class ManagerView {
         System.out.println("Phòng: " + room.getRoomName());
         System.out.println("Giờ vào: " + gioVao);
         System.out.println("Giờ ra: " + gioRa);
-        System.out.println("Thời gian sử dụng: " + soGioSuDung + " giờ");
-        System.out.println("Tiền thuê phòng: " + thanhTienPhong + " đồng");
-        if (!doAn.isEmpty()) {
+        System.out.println("Thời gian sử dụng: " + soGioSuDung + "giờ " + soPhutDuRa + " phút");
+        System.out.println("Tiền thuê phòng: " + CurrencyFormat.covertPriceToString(thanhTienPhong) );
+        if (doAn != null && !doAn.isEmpty()) {
             System.out.println("Đồ ăn đã đặt:");
             for (OrderedFood mon : doAn) {
-                System.out.println("- " + mon.getFood().getFoodName() + ": " + mon.getQuantity() + mon.getFood().getFoodPrice() + " đồng");
+                System.out.println("- " + mon.getFood().getFoodName() + " " +
+                        "- Số lượng: " + mon.getQuantity() + "- Giá: "+ CurrencyFormat.covertPriceToString(mon.getFood().getFoodPrice()) + " Tổng tiền: " +
+                        " " +CurrencyFormat.covertPriceToString(mon.getFood().getFoodPrice()*mon.getQuantity()));
             }
-            System.out.println("Tiền đồ ăn: " + thanhTienDoAn + " đồng");
+            System.out.println("Tiền đồ ăn: " + CurrencyFormat.covertPriceToString(thanhTienDoAn)  );
         }
-        System.out.println("Tiền khách cọc trước " + reservation.getDownPayment());
-        System.out.println("Tổng thành tiền: " + thanhTien + " đồng");
+        System.out.println("Tiền khách cọc trước " + CurrencyFormat.covertPriceToString( reservation.getDownPayment()));
+        System.out.println("Tổng thành tiền: " + CurrencyFormat.covertPriceToString(thanhTien)  );
+        System.out.println("Nhân viên thu tiền: " + employee);
+        reservation.setReservationRoomStatus(ERoomStatus.MAINTENANCE);
+        ReservationService.saveReservation();
     }
 
 
