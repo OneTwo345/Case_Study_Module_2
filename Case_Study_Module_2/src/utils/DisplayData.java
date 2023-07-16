@@ -48,6 +48,7 @@ public class DisplayData {
     }
 
     public static void displayReservation() {
+        ReservationService.loadReservation();
 
         if (ReservationService.reservationList == null) {
             System.out.println("Không có đặt phòng nào.");
@@ -58,7 +59,7 @@ public class DisplayData {
         System.out.printf("\t\t\t\t%-10s %-20s %-25s %-20s %-10s %-15s %-30s \n", "ID ", "Tên khách", "Ngày giờ", "Tiền cọc", "Phòng", "Trạng thái","Loại");
         for (Reservation reservation : ReservationService.reservationList) {
            reservation.getTimeExpected();
-            System.out.printf("\t\t\t\t%-10d  %-15s %-30s %-20s %-10s %-15s %-20s \n", reservation.getReservationId(),reservation.getCustomerName(),reservation.getTimeExpected(),
+            System.out.printf("\t\t\t\t%-10d  %-15s %-30s %-20s %-10s %-15s %-20s \n", reservation.getReservationId(),reservation.getCustomerName(),AppUtils.formatDateTime(reservation.getTimeExpected()) ,
                    CurrencyFormat.covertPriceToString(reservation.getDownPayment()) ,reservation.getRoom().getRoomName(), reservation.getReservationRoomStatus(),reservation.getRoom().getRoomType());
         }
         System.out.println("\t\t\t\t====================================================================================================================================================\n\n");

@@ -50,7 +50,8 @@ public class AppUtils {
             return getIntWithBound(str, begin, end);
         }
     }
-    public static Date getCurrentTime(){
+
+    public static Date getCurrentTime() {
         ZoneId currentZone = ZoneId.systemDefault();
         LocalDateTime localDateTime = LocalDateTime.now();
         ZoneId targetZone = ZoneId.of("Asia/Ho_Chi_Minh");
@@ -58,13 +59,14 @@ public class AppUtils {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
         String formattedDateTime = targetDateTime.format(formatter);
         System.out.println(formattedDateTime);
-        return   DateFormat.parseDateWithHours(formattedDateTime);
+        return DateFormat.parseDateWithHours(formattedDateTime);
     }
 
 
-public static LocalDateTime getDateTimeNow() {
-    return LocalDateTime.now();
-}
+    public static LocalDateTime getDateTimeNow() {
+        return LocalDateTime.now();
+    }
+
     public static String formatDateTime(LocalDateTime dateTime) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM HH:mm");
         return dateTime.format(formatter);
@@ -86,22 +88,19 @@ public static LocalDateTime getDateTimeNow() {
             return getDateTime(str);
         }
     }
+
     public static int getDuration(LocalDateTime startTime, LocalDateTime endTime) {
         Duration duration = Duration.between(startTime, endTime);
         return (int) duration.toMinutes();
     }
+
     public static LocalDateTime parseDateTime(String input) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         return LocalDateTime.parse(input, formatter);
     }
 
 
-
-
-
-
     public static void main(String[] args) {
-
 
 
     }

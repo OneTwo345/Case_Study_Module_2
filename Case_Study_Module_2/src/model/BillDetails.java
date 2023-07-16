@@ -7,14 +7,39 @@ public class BillDetails implements Serializable {
     Bill bill;
     Food food;
     Room room;
+    String name;
 
     public BillDetails(Bill bill, Food food, Room room) {
         this.bill = bill;
         this.food = food;
         this.room = room;
     }
+
+    public BillDetails(Bill bill, Food food, Room room, String name) {
+        this.bill = bill;
+        this.food = food;
+        this.room = room;
+        this.name = name;
+    }
+
     public BillDetails(){
 
+    }
+
+    public Food getFood() {
+        return food;
+    }
+
+    public void setFood(Food food) {
+        this.food = food;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Bill getBill() {

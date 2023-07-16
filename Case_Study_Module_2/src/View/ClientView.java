@@ -33,22 +33,22 @@ public class ClientView {
         int choice;
         do {
             System.out.println("Room menu");
-            System.out.println("1. Display room ");
-            System.out.println("2. Book room");
-            System.out.println("3. New song");
-            System.out.println("4. Contact Owner");
-            System.out.println("5. Cancel reservation");
-            System.out.println("6. Show your room");
-            System.out.println("7. Pre-order food");
-            System.out.println("8. Show Pre-order food");
-            System.out.println("9. Cancel Pre-order food");
-            System.out.println("10. Update Account");
-            System.out.println("11. Message Box");
-            System.out.println("12. Check Message");
-            System.out.println("13. Delete Message");
-            System.out.println("14. Delete All Message");
+            System.out.println("1. Xem danh sách phòng hát");
+            System.out.println("2. Đặt phòng");
+            System.out.println("3. Xem bài hát gợi ý");
+            System.out.println("4. Liên lạc chủ quán hát");
+            System.out.println("5. Hủy cuộc hẹn");
+            System.out.println("6. Xem cuộc hẹn của bạn");
+            System.out.println("7. Đặt trước đồ ăn");
+            System.out.println("8. Xem đồ ăn đã đặt");
+            System.out.println("9. Hủy đồ ăn đã đặt");
+            System.out.println("10. Cật nhập tài khoản");
+            System.out.println("11. Hộp thư tin nhắn");
+            System.out.println("12. Xem tin nhắn đã gửi");
+            System.out.println("13. Xóa tin nhắn");
+            System.out.println("14. Xóa toàn bộ tin nhắn");
             System.out.println("0. Back to login menu");
-            choice = getIntWithBound("Input choice", 0, 15);
+            choice = getIntWithBound("Input choice", 0, 30);
             switch (choice) {
                 case 1:
                     displayRoomClientView();
@@ -299,7 +299,7 @@ public class ClientView {
         System.out.printf("\t\t\t\t%-10s %-20s %-25s %-20s %-10s %-15s %-30s \n", "ID ", "Tên khách", "Ngày giờ", "Tiền cọc", "Phòng", "Trạng thái", "Loại");
         for (Reservation reservation : myReservations) {
             System.out.printf("\t\t\t\t%-10d  %-15s %-30s %-20s %-10s %-15s %-20s \n", reservation.getReservationId(), LoginService.getUserName(), reservation.getTimeExpected(),
-                    CurrencyFormat.covertPriceToString(reservation.getDownPayment()), reservation.getRoom().getRoomName(), ERoomStatus.WAITING, reservation.getRoom().getRoomType());
+                    CurrencyFormat.covertPriceToString(reservation.getDownPayment()), reservation.getRoom().getRoomName(), reservation.getReservationRoomStatus(), reservation.getRoom().getRoomType());
         }
         int reservationId = getInt("Nhập ID của đặt phòng bạn muốn đặt trước đồ ăn:");
         Reservation reservationToPreOrder = null;
@@ -386,7 +386,7 @@ public class ClientView {
         System.out.printf("\t\t\t\t%-10s %-20s %-25s %-20s %-10s %-15s %-20s %-20s\n", "ID ", "Tên khách", "Ngày giờ", "Tiền cọc", "Phòng", "Trạng thái", "Loại", "Số tiền hát 1h");
         for (Reservation reservation : myReservations) {
             System.out.printf("\t\t\t\t%-10d  %-15s %-30s %-20s %-10s %-15s %-20s %-20s\n", reservation.getReservationId(), reservation.getCustomerName(), reservation.getTimeExpected(),
-                    CurrencyFormat.covertPriceToString(reservation.getDownPayment()), reservation.getRoom().getRoomName(), ERoomStatus.WAITING, reservation.getRoom().getRoomType(),
+                    CurrencyFormat.covertPriceToString(reservation.getDownPayment()), reservation.getRoom().getRoomName(), reservation.getReservationRoomStatus(), reservation.getRoom().getRoomType(),
                     CurrencyFormat.covertPriceToString(reservation.getRoom().getRoomPricePerHour()));
         }
         int reservationId = getInt("Nhập ID của phòng bạn muốn xem:");
