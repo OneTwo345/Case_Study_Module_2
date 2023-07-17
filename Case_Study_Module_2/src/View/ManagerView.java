@@ -41,6 +41,7 @@ public class ManagerView {
             System.out.println("11. Tính tiền theo ID cuộc hẹn");
             System.out.println("12. Thêm cuộc hẹn mới");
             System.out.println("13. Xem thông tin chi tiết cuộc hẹn");
+            System.out.println("14. Chuyển phòng");
             System.out.println("0. Quay lại");
 
 
@@ -85,6 +86,9 @@ public class ManagerView {
                     break;
                 case 13:
                     checkReservationDetails();
+                    break;
+                case 14:
+                    changeRoomByReservationId();
                     break;
 
                 case 0:
@@ -413,6 +417,7 @@ public class ManagerView {
             }
         }
         double thanhTien = thanhTienPhong + thanhTienDoAn - reservation.getDownPayment();
+        String note = getString("Nhập vào ghi chú");
 
         System.out.println("HÓA ĐƠN PHÒNG HÁT KARAOKE DN");
         System.out.println("Tên khách hàng: " + customer);
@@ -431,7 +436,9 @@ public class ManagerView {
             System.out.println("Tiền đồ ăn: " + CurrencyFormat.covertPriceToString(thanhTienDoAn)  );
         }
         System.out.println("Tiền khách cọc trước " + CurrencyFormat.covertPriceToString( reservation.getDownPayment()));
+        System.out.println(note);
         System.out.println("Tổng thành tiền: " + CurrencyFormat.covertPriceToString(thanhTien)  );
+
         System.out.println("Nhân viên thu tiền: " + employee);
         reservation.setReservationRoomStatus(ERoomStatus.MAINTENANCE);
         ReservationService.saveReservation();
@@ -620,18 +627,91 @@ public class ManagerView {
         System.out.println("Tiền khách cọc trước " + CurrencyFormat.covertPriceToString( reservation.getDownPayment()));
         System.out.println("Tổng thành tiền: " + CurrencyFormat.covertPriceToString(thanhTien)  );
     }
-//    public static void changeRoom() {
-//        ReservationService.loadReservation();
-//        int reservationId = getInt("Nhập ID của cuộc hẹn bạn muốn chuyển phòng:");
-//        Reservation reservation = findReservationById(reservationId);
-//        if (reservation == null) {
-//            System.out.println("Không tìm thấy cuộc hẹn có ID là " + reservationId);
-//            return;
-//        }
-//        Room currentRoom = reservation.getRoom();
-//        int tienGioHatPhongTruoc =
-//
-//    }
+    public static void changeRoomByReservationId( ) {
+        ReservationService.loadReservation();
+        int reservationId = getInt("Nhập ID cuộc hẹn");
+
+        Reservation reservation = null;
+        for (Reservation r : ReservationService.reservationList) {
+            if (r.getReservationId() == reservationId) {
+                reservation = r;
+                break;
+            }
+        }
+        if (reservation == null) {
+            System.out.println("Không tìm thấy cuộc hẹn với ID tương ứng.");
+            return;
+        }
+        int roomId = getInt("Nhập ID phòng mới");
+
+        Room oldRoom = reservation.getRoom();
+        Room newRoom = null;
+        for (Room room : RoomService.roomList) {
+            if (room.getRoomId() == roomId) {
+                newRoom = room;
+                break;
+            }
+        }
+        if (newRoom == null) {
+            System.out.println("Không tìm thấy phòng với ID tương ứng.");
+            return;
+        }
+
+        if (oldRoom.equals(newRoom)) {
+            System.out.println("Phòng cũ và phòng mới giống nhau.");
+            return;
+        }
+
+        reservation.setRoom(newRoom);
+
+
+        oldRoom.setRoomStatus(ERoomStatus.MAINTENANCE);
+        newRoom.setRoomStatus(ERoomStatus.INUSE);
+        LocalDateTime gioVao;
+
+        while (true) {
+            String gioVaoStr = getString("Nhập giờ vào (yyyy-MM-dd HH:mm:ss): ");
+            try {
+                gioVao = parseDateTime(gioVaoStr);
+            } catch (DateTimeParseException e) {
+                System.out.println("Lỗi định dạng ngày giờ. Vui lòng nhập lại.");
+                continue;
+            }
+            LocalDateTime gioTruoc30Phut = reservation.getTimeExpected().minusMinutes(30);
+            if (gioVao.isBefore(gioTruoc30Phut)) {
+                System.out.println("Giờ vào chỉ có thể đến trước 30 phút so với cuộc hẹn. Vui lòng nhập lại.");
+                continue;
+            }
+            break;
+        }
+
+        LocalDateTime gioRa;
+        while (true) {
+            String gioRaStr = getString("Nhập giờ ra (yyyy-MM-dd HH:mm:ss): ");
+            try {
+                gioRa = parseDateTime(gioRaStr);
+            } catch (DateTimeParseException e) {
+                System.out.println("Lỗi định dạng ngày giờ. Vui lòng nhập lại.");
+                continue;
+            }
+            if (gioRa.isBefore(gioVao)) {
+                System.out.println("Giờ ra phải sau giờ vào. Vui lòng nhập lại.");
+                continue;
+            }
+            break;
+        }
+        long soPhutSuDung = Duration.between(gioVao, gioRa).toMinutes();
+        double giaPhongCu = oldRoom.getRoomPricePerHour();
+        double thanhTienPhongCu = giaPhongCu/60 * soPhutSuDung;
+        System.out.println("Giá tiền hát phòng cũ là: " + CurrencyFormat.covertPriceToString(thanhTienPhongCu));
+
+
+        ReservationService.saveReservation();
+        System.out.println("Đã chuyển phòng thành công.");
+        displayReservation();
+    }
+
+
 
 
 

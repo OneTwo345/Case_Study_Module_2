@@ -47,7 +47,7 @@ public class ClientView {
             System.out.println("12. Xem tin nhắn đã gửi");
             System.out.println("13. Xóa tin nhắn");
             System.out.println("14. Xóa toàn bộ tin nhắn");
-            System.out.println("0. Back to login menu");
+            System.out.println("0. Quay lại");
             choice = getIntWithBound("Input choice", 0, 30);
             switch (choice) {
                 case 1:
