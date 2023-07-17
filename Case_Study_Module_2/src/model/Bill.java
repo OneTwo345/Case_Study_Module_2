@@ -8,7 +8,6 @@ import model.enums.EBillStatus;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 
@@ -16,7 +15,7 @@ public class Bill extends BillDetails implements Serializable
 {
 
 
-    private String id;
+    private int id;
     private Room room;
     private LocalDateTime roomRealTimeIn;
     private LocalDateTime roomRealTimeOut;
@@ -28,7 +27,7 @@ public class Bill extends BillDetails implements Serializable
 
     }
 
-    public Bill(String id, Room room, LocalDateTime roomRealTimeIn, LocalDateTime roomRealTimeOut,   EBillStatus eBillStatus) {
+    public Bill(int id, Room room, LocalDateTime roomRealTimeIn, LocalDateTime roomRealTimeOut,   EBillStatus eBillStatus) {
         this.id = id;
         this.room = room;
         this.roomRealTimeIn = roomRealTimeIn;
@@ -38,14 +37,12 @@ public class Bill extends BillDetails implements Serializable
     }
 
 
-
-
-
-    public String getId() {
+    @Override
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

@@ -5,9 +5,6 @@ import model.enums.ERoomStatus;
 import service.*;
 import utils.AppUtils;
 import utils.CurrencyFormat;
-import utils.DisplayData;
-import utils.ListView;
-
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -28,75 +25,39 @@ public class ManagerView {
     public static void managerMenu() {
         int choice;
         do {
-            System.out.println("Admin menu");
-            System.out.println("1. Xem danh sách cuộc hẹn ");
-            System.out.println("2. Kiểm tra tin nhắn ");
-            System.out.println("3. Xóa tin nhắn");
-            System.out.println("4. Xóa cuộc hẹn");
-            System.out.println("5. Liên lạc khách hàng");
-            System.out.println("6. Gửi tin nhắn cho những khách đặt trước");
-            System.out.println("7. Xóa toàn bộ tin nhắn ");
-            System.out.println("8. Thêm thức ăn vào phòng");
-            System.out.println("9. Xem cuộc hẹn theo ngày");
-            System.out.println("10. Thay đổi trạng thái phòng theo ID cuộc hẹn");
-            System.out.println("11. Tính tiền theo ID cuộc hẹn");
-            System.out.println("12. Thêm cuộc hẹn mới");
-            System.out.println("13. Xem thông tin chi tiết cuộc hẹn");
-            System.out.println("14. Chuyển phòng");
-            System.out.println("15. Tính doanh thu tổng theo khoảng ngày");
-            System.out.println("16. Tính doanh thu tiền phòng theo khoảng ngày");
-            System.out.println("0. Quay lại");
+//            System.out.println("Manager menu");
+//            System.out.println("1. Xem danh sách cuộc hẹn ");
+//            System.out.println("2. Kiểm tra tin nhắn ");
+//            System.out.println("3. Thêm thức ăn vào phòng");
+//            System.out.println("4. Tính doanh thu tổng theo khoảng ngày");
+//            System.out.println("5. Tính doanh thu tiền phòng theo khoảng ngày");
+//            System.out.println("0. Quay lại");
+            System.out.println("                               ╔═══════════════════════════════════════════════════════════════════════════════════╗");
+            System.out.println("                               ║                              GIAO DIỆN QUẢN LÝ                                    ║");
+            System.out.println("                               ║                       [1]  DANH SÁCH CUỘC HẸN                                     ║");
+            System.out.println("                               ║                       [2] KIỂM TRA TIN NHẮN                                       ║");
+            System.out.println("                               ║                       [3] THÊM THỨC ĂN VÀO PHÒNG                                  ║");
+            System.out.println("                               ║                       [4] TÍNH DOANH THU TỔNG THEO KHOẢNG NGÀY                    ║");
+            System.out.println("                               ║                       [5] TÍNH DOANH THU TIỀN PHÒNG THEO KHOẢNG NGÀY              ║");
+            System.out.println("                               ║                       [0] QUAY LẠI                                                ║");
+            System.out.println("                               ╚═══════════════════════════════════════════════════════════════════════════════════╝");
 
 
-            choice = getIntWithBound("Input choice", 0, 30);
+            choice = getIntWithBound("Input choice", 0, 5);
             switch (choice) {
                 case 1:
-                    displayRoomClientView();
-                    displayReservation();
+                  reservationMenu();
                     break;
                 case 2:
-                    displayNotification();
+                    mailManagerMenu();
                     break;
                 case 3:
-                    deleteMessage();
-                    break;
-                case 4:
-                    deleteReservation();
-                    break;
-                case 5:
-                    contactCustomer();
-                    break;
-                case 6:
-                    contactEachCustomer();
-                    break;
-                case 7:
-                    deleteAllMessages();
-                    break;
-                case 8:
                     addFoodToReservation();
                     break;
-                case 9:
-                    displayReservationByDate();
-                    break;
-                case 10:
-                    changeRoomStatusByReservationId();
-                    break;
-                case 11:
-                    makeBill();
-                    break;
-                case 12:
-                    createNewReservation();
-                    break;
-                case 13:
-                    checkReservationDetails();
-                    break;
-                case 14:
-                    changeRoomByReservationId();
-                    break;
-                case 15:
+                case 4:
                     calculateRevenueByDateRangeAndPrintDetails();
                     break;
-                case 16:
+                case 5:
                     calculatePricePerHourByDateRangeAndPrintDetails();
                     break;
 
@@ -109,6 +70,118 @@ public class ManagerView {
         while (choice != 0);
 
     }
+    public static void reservationMenu() {
+        int choice;
+        do {
+//            System.out.println("Reservation menu");
+//            System.out.println("1. Xem danh sách cuộc hẹn ");
+//            System.out.println("2. Xóa cuộc hẹn");
+//            System.out.println("3. Xem cuộc hẹn theo ngày");
+//            System.out.println("4. Thay đổi trạng thái phòng theo ID cuộc hẹn");
+//            System.out.println("5. Tính tiền theo ID cuộc hẹn");
+//            System.out.println("6. Thêm cuộc hẹn mới");
+//            System.out.println("7. Xem thông tin chi tiết cuộc hẹn");
+//            System.out.println("8. Chuyển phòng");
+//            System.out.println("0. Quay lại");
+            System.out.println("                               ╔═══════════════════════════════════════════════════════════════════════════════════╗");
+            System.out.println("                               ║                              GIAO DIỆN CUỘC HẸN                                   ║");
+            System.out.println("                               ║                       [1] XEM DANH SÁCH CUỘC HẸN                                  ║");
+            System.out.println("                               ║                       [2] XÓA CUỘC HẸN                                            ║");
+            System.out.println("                               ║                       [3] XEM CUỘC HẸN THEO NGÀY                                  ║");
+            System.out.println("                               ║                       [4] THAY ĐỔI TRẠNG THÁI CUỘC HẸN                            ║");
+            System.out.println("                               ║                       [5] TÍNH TIỀN                                               ║");
+            System.out.println("                               ║                       [6] THÊM CUỘC HẸN MỚI                                       ║");
+            System.out.println("                               ║                       [7] XEM THÔNG TIN CHI TIẾT CUỘC HẸN                         ║");
+            System.out.println("                               ║                       [8] CHUYỂN PHÒNG                                            ║");
+            System.out.println("                               ║                       [0] QUAY LẠI                                                ║");
+            System.out.println("                               ╚═══════════════════════════════════════════════════════════════════════════════════╝");
+
+
+            choice = getIntWithBound("Input choice", 0, 30);
+            switch (choice) {
+                case 1:
+                    displayRoomClientView();
+                    displayReservation();
+                    break;
+                case 2:
+                    deleteReservation();
+                    break;
+                case 3:
+                    displayReservationByDate();
+                    break;
+                case 4:
+                    changeRoomStatusByReservationId();
+                    break;
+                case 5:
+                    makeBill();
+                    break;
+                case 6:
+                    createNewReservation();
+                    break;
+                case 7:
+                    checkReservationDetails();
+                    break;
+                case 8:
+                    changeRoomByReservationId();
+
+                case 0:
+                    managerMenu();
+                    break;
+            }
+        }
+        while (choice != 0);
+
+    }
+    public static void mailManagerMenu() {
+        int choice;
+        do {
+//            System.out.println("Mail Manager menu");
+//            System.out.println("1. Kiểm tra tin nhắn ");
+//            System.out.println("2. Xóa tin nhắn");
+//            System.out.println("3. Liên lạc khách hàng");
+//            System.out.println("4. Gửi tin nhắn cho những khách đặt trước");
+//            System.out.println("5. Xóa toàn bộ tin nhắn ");
+//            System.out.println("0. Quay lại");
+            System.out.println("                               ╔═══════════════════════════════════════════════════════════════════════════════════╗");
+            System.out.println("                               ║                              GIAO DIỆN TIN NHẮN                                   ║");
+            System.out.println("                               ║                       [1] KIỂM TRA TIN NHẮN                                       ║");
+            System.out.println("                               ║                       [2] XÓA TIN NHẮN                                            ║");
+            System.out.println("                               ║                       [3] LIÊN LẠC KHÁCH HÀNG                                     ║");
+            System.out.println("                               ║                       [4] GỬI TIN NHẮN CHO NHỮNG KHÁCH HẸN TRƯỚC                  ║");
+            System.out.println("                               ║                       [5] XÓA TOÀN BỘ TIN NHẮN                                    ║");
+            System.out.println("                               ║                       [0] QUAY LẠI                                                ║");
+            System.out.println("                               ╚═══════════════════════════════════════════════════════════════════════════════════╝");
+
+
+
+            choice = getIntWithBound("Input choice", 0, 5);
+            switch (choice) {
+
+                case 1:
+                    displayNotification();
+                    break;
+                case 2:
+                    deleteMessage();
+                    break;
+                case 3:
+                    contactCustomer();
+                    break;
+                case 4:
+                    contactEachCustomer();
+                    break;
+                case 5:
+                    deleteAllMessages();
+                    break;
+                case 0:
+                    System.out.println("Back to Manager menu");
+                    managerMenu();
+                    break;
+            }
+        }
+        while (choice != 0);
+
+    }
+
 
     public static void main(String[] args) {
         managerMenu();
@@ -176,9 +249,14 @@ public class ManagerView {
             System.out.println("Không có tin nhắn nào để xóa.");
             return;
         }
-        ContactService.contactList.clear();
-        ContactService.saveContact();
-        System.out.println("Đã xóa tất cả tin nhắn.");
+        String confirmation = getString("Bạn có chắc chắn muốn xóa toàn bộ tin nhắn? (y/n): ");
+        if (confirmation.equalsIgnoreCase("y")) {
+            ContactService.contactList.clear();
+            ContactService.saveContact();
+            System.out.println("Đã xóa tất cả tin nhắn.");
+        } else {
+            System.out.println("Hủy xóa toàn bộ tin nhắn.");
+        }
     }
 
     public static void contactCustomer() {
@@ -224,6 +302,7 @@ public class ManagerView {
 
         ContactService.saveContact();
         System.out.println("Thông báo đã được gửi đến từng khách hàng.");
+
 
     }
 
@@ -357,7 +436,7 @@ public class ManagerView {
                     newStatus = ERoomStatus.WAITING;
                     break;
                 case 6:
-                    newStatus = ERoomStatus.WAITING;
+                    newStatus = ERoomStatus.DONE;
                     break;
                 default:
                     System.out.println("Chọn không hợp lệ.");
@@ -428,31 +507,59 @@ public class ManagerView {
             }
         }
         double thanhTien = thanhTienPhong + thanhTienDoAn - reservation.getDownPayment();
-        BillDetails billDetails = new BillDetails(reservation.getCustomerName(), reservation.getTimeExpected(), thanhTienPhong, thanhTien);
+        BillDetails billDetails = new BillDetails(reservation.getCustomerName(), reservation.getTimeExpected(), thanhTienPhong, thanhTien,reservation.getReservationId());
         billDetailsList.add(billDetails);
         String note = getString("Nhập vào ghi chú");
 
-        System.out.println("HÓA ĐƠN PHÒNG HÁT KARAOKE DN");
-        System.out.println("Tên khách hàng: " + customer);
-        System.out.println("Phòng: " + room.getRoomName());
-        System.out.println("Giờ vào: " + gioVao);
-        System.out.println("Giờ ra: " + gioRa);
-        System.out.println("Thời gian sử dụng: " + soGioSuDung + "giờ " + soPhutDuRa + " phút");
-        System.out.println("Tiền thuê phòng: " + CurrencyFormat.covertPriceToString(thanhTienPhong));
+//        System.out.println("HÓA ĐƠN PHÒNG HÁT KARAOKE DN");
+//        System.out.println("Tên khách hàng: " + customer);
+//        System.out.println("Phòng: " + room.getRoomName());
+//        System.out.println("Giờ vào: " + gioVao);
+//        System.out.println("Giờ ra: " + gioRa);
+//        System.out.println("Thời gian sử dụng: " + soGioSuDung + "giờ " + soPhutDuRa + " phút");
+//        System.out.println("Tiền thuê phòng: " + CurrencyFormat.covertPriceToString(thanhTienPhong));
+//        if (doAn != null && !doAn.isEmpty()) {
+//            System.out.println("Đồ ăn đã đặt:");
+//            for (OrderedFood mon : doAn) {
+//                System.out.println("- " + mon.getFood().getFoodName() + " " +
+//                        "- Số lượng: " + mon.getQuantity() + "- Giá: " + CurrencyFormat.covertPriceToString(mon.getFood().getFoodPrice()) + " Tổng tiền: " +
+//                        " " + CurrencyFormat.covertPriceToString(mon.getFood().getFoodPrice() * mon.getQuantity()));
+//            }
+//            System.out.println("Tiền đồ ăn: " + CurrencyFormat.covertPriceToString(thanhTienDoAn));
+//        }
+//        System.out.println("Tiền khách cọc trước " + CurrencyFormat.covertPriceToString(reservation.getDownPayment()));
+//        System.out.println(note);
+//        System.out.println("Tổng thành tiền: " + CurrencyFormat.covertPriceToString(thanhTien));
+//
+//        System.out.println("Nhân viên thu tiền: " + employee);
+        System.out.println("                               ╔═══════════════════════════════════════════════════════════════════════════════════");
+        System.out.println("                               ║                              KARAOKE DUY NGUYỄN                                   ");
+        System.out.println("                               ║      Địa chỉ: 01 Nguyễn Trường Tộ, Huế                                            ");
+        System.out.println("                               ║      Số điện thoại: 076 997 3715                                                  ");
+        System.out.println("                               ║                              PHIẾU TẠM TÍNH                                       ");
+        System.out.println("                               ║                                                                                   ");
+        System.out.println("                               ║      Tên khách hàng: " + customer +"                                              ");
+        System.out.println("                               ║      Tên phòng: " + room.getRoomName()   +"                                       ");
+        System.out.println("                               ║      Giờ vào: " + gioVao +                           "                            ");
+        System.out.println("                               ║      Giờ ra: " + gioRa +                                           "              ");
+        System.out.println("                               ║      Thời gian hát: " + soGioSuDung + "giờ " + soPhutDuRa + " phút                ");
         if (doAn != null && !doAn.isEmpty()) {
             System.out.println("Đồ ăn đã đặt:");
             for (OrderedFood mon : doAn) {
-                System.out.println("- " + mon.getFood().getFoodName() + " " +
-                        "- Số lượng: " + mon.getQuantity() + "- Giá: " + CurrencyFormat.covertPriceToString(mon.getFood().getFoodPrice()) + " Tổng tiền: " +
-                        " " + CurrencyFormat.covertPriceToString(mon.getFood().getFoodPrice() * mon.getQuantity()));
+                System.out.println(                               "- " + mon.getFood().getFoodName() + " " +
+                                                                  "- Số lượng: " + mon.getQuantity() + "- Giá: " + CurrencyFormat.covertPriceToString(mon.getFood().getFoodPrice()) + " Tổng tiền: " +
+                                                                  " " + CurrencyFormat.covertPriceToString(mon.getFood().getFoodPrice() * mon.getQuantity()));
             }
-            System.out.println("Tiền đồ ăn: " + CurrencyFormat.covertPriceToString(thanhTienDoAn));
+                                               System.out.println("Tiền đồ ăn: " + CurrencyFormat.covertPriceToString(thanhTienDoAn));
         }
-        System.out.println("Tiền khách cọc trước " + CurrencyFormat.covertPriceToString(reservation.getDownPayment()));
-        System.out.println(note);
-        System.out.println("Tổng thành tiền: " + CurrencyFormat.covertPriceToString(thanhTien));
+        System.out.println("                               ║      Tiền phòng: " + CurrencyFormat.covertPriceToString(thanhTienPhong) +"        ");
+        System.out.println(                                       "    ║      Tiền khách cọc trước " + CurrencyFormat.covertPriceToString(reservation.getDownPayment()));;
+        System.out.println(                                       "    ║      Tổng thành tiền: " + CurrencyFormat.covertPriceToString(thanhTien));
+        System.out.println("                               ║      Tiền phòng: " + CurrencyFormat.covertPriceToString(thanhTienPhong) +"        ");
+        System.out.println("                                    ║ " + note + "                                                              ");
+        System.out.println("                               ║      Nhân viên thu ngân: " + employee + "                                                              ");
+        System.out.println("                               ╚═══════════════════════════════════════════════════════════════════════════════════");
 
-        System.out.println("Nhân viên thu tiền: " + employee);
         reservation.setReservationRoomStatus(ERoomStatus.MAINTENANCE);
         ReservationService.saveReservation();
     }
@@ -813,12 +920,13 @@ public class ManagerView {
             if (billDate.isEqual(startDate) || billDate.isEqual(endDate) ||
                     (billDate.isAfter(startDate) && billDate.isBefore(endDate))) {
                 totalRevenue += billDetails.getThanhTienPhong();
-                System.out.println("Hóa đơn ngày " + billDetails.getTimeExpected() + " của khách hàng " + billDetails.getCustomerName() + " có tổng tiền là " + CurrencyFormat.covertPriceToString(billDetails.getThanhTien()));
+                System.out.println("Hóa đơn ngày " + billDetails.getTimeExpected() + " của khách hàng " + billDetails.getCustomerName() + " có tổng tiền là " + CurrencyFormat.covertPriceToString(billDetails.getThanhTienPhong()));
             }
         }
         System.out.println("Tổng doanh thu từ " + startDate + " đến " + endDate + " là: " + CurrencyFormat.covertPriceToString(totalRevenue));
         return totalRevenue;
     }
+
 
 
 }

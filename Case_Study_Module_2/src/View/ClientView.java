@@ -32,22 +32,29 @@ public class ClientView {
     public static void clientMenu() {
         int choice;
         do {
-            System.out.println("Room menu");
-            System.out.println("1. Xem danh sách phòng hát");
-            System.out.println("2. Đặt phòng");
-            System.out.println("3. Xem bài hát gợi ý");
-            System.out.println("4. Liên lạc chủ quán hát");
-            System.out.println("5. Hủy cuộc hẹn");
-            System.out.println("6. Xem cuộc hẹn của bạn");
-            System.out.println("7. Đặt trước đồ ăn");
-            System.out.println("8. Xem đồ ăn đã đặt");
-            System.out.println("9. Hủy đồ ăn đã đặt");
-            System.out.println("10. Cật nhập tài khoản");
-            System.out.println("11. Hộp thư tin nhắn");
-            System.out.println("12. Xem tin nhắn đã gửi");
-            System.out.println("13. Xóa tin nhắn");
-            System.out.println("14. Xóa toàn bộ tin nhắn");
-            System.out.println("0. Quay lại");
+//            System.out.println("Client menu");
+//            System.out.println("1. Xem danh sách phòng hát");
+//            System.out.println("2. Đặt phòng");
+//            System.out.println("3. Xem bài hát gợi ý");
+//            System.out.println("4. Tin nhắn");
+//            System.out.println("5. Hủy cuộc hẹn");
+//            System.out.println("6. Xem cuộc hẹn của bạn");
+//            System.out.println("7. Đặt trước đồ ăn");
+//            System.out.println("8. Cật nhập tài khoản");
+//            System.out.println("0. Quay lại");
+            System.out.println("                               ╔═══════════════════════════════════════════════════════════════════════════════════╗");
+            System.out.println("                               ║                              GIAO DIỆN KHÁCH HÀNG                                 ║");
+            System.out.println("                               ║                       [1] XEM DANH SÁCH PHÒNG HÁT                                 ║");
+            System.out.println("                               ║                       [2] ĐẶT PHÒNG                                               ║");
+            System.out.println("                               ║                       [3] XEM BÀI HÁT GỢI Ý                                       ║");
+            System.out.println("                               ║                       [4] HỘP THƯ TIN NHẮN                                        ║");
+            System.out.println("                               ║                       [5] HỦY CUỘC HẸN                                            ║");
+            System.out.println("                               ║                       [6] XEM CUỘC HẸN CỦA BẠN                                    ║");
+            System.out.println("                               ║                       [7] ĐẶT TRƯỚC ĐỒ ĂN                                         ║");
+            System.out.println("                               ║                       [8] CẬP NHẬT TÀI KHOẢN                                      ║");
+            System.out.println("                               ║                       [0] QUAY LẠI                                                ║");
+            System.out.println("                               ╚═══════════════════════════════════════════════════════════════════════════════════╝");
+
             choice = getIntWithBound("Input choice", 0, 30);
             switch (choice) {
                 case 1:
@@ -62,7 +69,7 @@ public class ClientView {
                     break;
                 case 4:
 
-                    contactOwner();
+                    mailMenu();
                     break;
                 case 5:
                     cancelReservation();
@@ -71,28 +78,10 @@ public class ClientView {
                     viewMyReservations();
                     break;
                 case 7:
-                    preOrderFood();
+                    foodMenu();
                     break;
                 case 8:
-                    showPreOrderFood();
-                    break;
-                case 9:
-                    cancelPreOrderFood();
-                    break;
-                case 10:
                     updateAccount();
-                    break;
-                case 11:
-                    viewMessagesFromOwner();
-                    break;
-                case 12:
-                    viewSentMessages();
-                    break;
-                case 13:
-                    deleteMessage();
-                    break;
-                case 14:
-                    deleteAllMessages();
                     break;
 
 
@@ -108,6 +97,87 @@ public class ClientView {
 
     public static void main(String[] args) throws IOException {
         clientMenu();
+    }
+
+    public static void mailMenu() {
+        int choice;
+        do {
+//            System.out.println("Mail menu");
+//            System.out.println("1. Gửi tin nhắn cho chủ quán hát");
+//            System.out.println("2. Hộp thư tin nhắn");
+//            System.out.println("3. Xóa tin nhắn");
+//            System.out.println("4. Xóa toàn bộ tin nhắn");
+//            System.out.println("0. Quay lại");
+            System.out.println("                               ╔═══════════════════════════════════════════════════════════════════════════════════╗");
+            System.out.println("                               ║                              GIAO DIỆN HỘP THƯ                                    ║");
+            System.out.println("                               ║                       [1] GỬI TIN NHẮN CHO CHỦ QUÁN                               ║");
+            System.out.println("                               ║                       [2] HỘP THƯ ĐẾN                                             ║");
+            System.out.println("                               ║                       [3] XÓA TIN NHẮN                                            ║");
+            System.out.println("                               ║                       [4] XÓA TOÀN BỘ TIN NHẮN                                    ║");
+            System.out.println("                               ║                       [0] QUAY LẠI                                                ║");
+            System.out.println("                               ╚═══════════════════════════════════════════════════════════════════════════════════╝");
+
+            choice = getIntWithBound("Input choice", 0, 5);
+            switch (choice) {
+                case 1:
+
+                    contactOwner();
+                    break;
+                case 2:
+                    viewMessagesFromOwner();
+                    break;
+//                case 3:
+//                    viewSentMessages();
+//                    break;
+                case 3:
+                    deleteMessage();
+                    break;
+                case 4:
+                    deleteAllMessages();
+                    break;
+
+                case 0:
+                    System.out.println("Quay lại Client Menu");
+                    clientMenu();
+                    break;
+            }
+        }
+        while (choice != 0);
+    }
+    public static void foodMenu() {
+        int choice;
+        do {
+//            System.out.println("Food menu");
+//            System.out.println("1. Đặt trước đồ ăn");
+//            System.out.println("2. Xem đồ ăn đã đặt");
+//            System.out.println("3. Hủy đồ ăn đã đặt");
+//            System.out.println("0. Quay lại Client Menu");
+            System.out.println("                               ╔═══════════════════════════════════════════════════════════════════════════════════╗");
+            System.out.println("                               ║                              GIAO DIỆN ĐỒ ĂN                                      ║");
+            System.out.println("                               ║                       [1] ĐẶT TRƯỚC ĐỒ ĂN                                         ║");
+            System.out.println("                               ║                       [2] XEM ĐỒ ĂN ĐÃ ĐẶT                                        ║");
+            System.out.println("                               ║                       [3] HỦY ĐỒ ĂN ĐÃ ĐẶT                                        ║");
+            System.out.println("                               ║                       [0] QUAY LẠI                                                ║");
+            System.out.println("                               ╚═══════════════════════════════════════════════════════════════════════════════════╝");
+
+            choice = getIntWithBound("Input choice", 0, 3);
+            switch (choice) {
+
+                case 1:
+                    preOrderFood();
+                    break;
+                case 2:
+                    showPreOrderFood();
+                    break;
+                case 3:
+                    cancelPreOrderFood();
+                    break;
+                case 0:
+                    clientMenu();
+                    break;
+            }
+        }
+        while (choice != 0);
     }
 
 
@@ -171,7 +241,7 @@ public class ClientView {
             for (Reservation reservation : myReservations) {
 
 
-                System.out.printf("\t\t\t\t%-10d  %-15s %-30s %-20s %-10s %-15s %-20s \n", reservation.getReservationId(), reservation.getCustomerName(),AppUtils.formatDateTime(reservation.getTimeExpected()) ,
+                System.out.printf("\t\t\t\t%-10d  %-15s %-30s %-20s %-10s %-15s %-20s \n", reservation.getReservationId(), reservation.getCustomerName(), AppUtils.formatDateTime(reservation.getTimeExpected()),
                         CurrencyFormat.covertPriceToString(reservation.getDownPayment()), reservation.getRoom().getRoomName(), reservation.getReservationRoomStatus(), reservation.getRoom().getRoomType());
 
             }
@@ -425,19 +495,19 @@ public class ClientView {
         System.out.printf("\t\t\t\t%-10s %-20s %-25s %-20s %-10s %-15s %-20s %-20s\n", "ID ", "Tên khách", "Ngày giờ", "Tiền cọc", "Phòng", "Trạng thái", "Loại", "Số tiền hát 1h");
         for (Reservation reservation : myReservations) {
             System.out.printf("\t\t\t\t%-10d  %-15s %-30s %-20s %-10s %-15s %-20s %-20s\n", reservation.getReservationId(), reservation.getCustomerName(), reservation.getTimeExpected(),
-                    CurrencyFormat.covertPriceToString(reservation.getDownPayment()), reservation.getRoom().getRoomName(), ERoomStatus.WAITING, reservation.getRoom().getRoomType(),
+                    CurrencyFormat.covertPriceToString(reservation.getDownPayment()), reservation.getRoom().getRoomName(), reservation.getReservationRoomStatus(), reservation.getRoom().getRoomType(),
                     CurrencyFormat.covertPriceToString(reservation.getRoom().getRoomPricePerHour()));
         }
         int reservationId = getInt("Nhập ID của phòng bạn muốn gửi lời nhắn:");
         boolean foundReservation = false;
         for (Reservation reservation : myReservations) {
             if (reservationId == reservation.getReservationId()) {
-              Reservation reservationContactId = reservation;
-              String message = getString("Nhập vào thông báo bạn muốn gửi");
-              Client client1 = new Client();
-              Contact contact = new Contact(reservationContactId.getReservationId(),reservation.getCustomerName(),message, LocalDateTime.now());
-              ContactService.contactList.add(contact);
-              ContactService.saveContact();
+                Reservation reservationContactId = reservation;
+                String message = getString("Nhập vào thông báo bạn muốn gửi");
+                Client client1 = new Client();
+                Contact contact = new Contact(reservationContactId.getReservationId(), reservation.getCustomerName(), message, LocalDateTime.now());
+                ContactService.contactList.add(contact);
+                ContactService.saveContact();
                 foundReservation = true;
                 break;
             }
@@ -447,8 +517,8 @@ public class ClientView {
         }
 
 
-
     }
+
     public static void cancelPreOrderFood() {
         String customerName = LoginService.getUserName();
         List<Reservation> myReservations = new ArrayList<>();
@@ -506,6 +576,7 @@ public class ClientView {
             System.out.println("Không tìm thấy món ăn có ID là " + foodId + ".");
         }
     }
+
     public static void viewMessagesFromOwner() {
         ContactService.loadContact();
         ContactService.loadMessage();
@@ -535,12 +606,13 @@ public class ClientView {
             count++;
         }
     }
+
     public static void viewSentMessages() {
         ContactService.loadContact();
         String senderName = LoginService.getUserName();
         List<Contact> sentMessages = new ArrayList<>();
         for (Contact contact : ContactService.contactList) {
-            if (contact.getUsername().equals(senderName)) {
+            if (Objects.equals(contact.getUsername(),(senderName))) {
                 sentMessages.add(contact);
             }
         }
@@ -553,10 +625,11 @@ public class ClientView {
             System.out.println("--------------------------------------------------");
             System.out.printf("Người nhận: %s\n", "Duy Nguyen");
             System.out.printf("Nội dung: %s\n", contact.getMessage());
-            System.out.printf("Giờ gửi: %s\n",AppUtils.formatDateTime(contact.getLocalDateTime()) );
+            System.out.printf("Giờ gửi: %s\n", AppUtils.formatDateTime(contact.getLocalDateTime()));
             System.out.println("--------------------------------------------------");
         }
     }
+
     public static void deleteMessage() {
         int messageId = getInt("Nhập ID tin nhắn muốn xóa");
         ContactService.loadContact();
@@ -574,6 +647,7 @@ public class ClientView {
             System.out.println("Không tìm thấy tin nhắn có ID là " + messageId + ".");
         }
     }
+
     public static void deleteAllMessages() {
         ContactService.loadContact();
         if (ContactService.contactList.isEmpty()) {
@@ -584,7 +658,6 @@ public class ClientView {
         ContactService.saveContact();
         System.out.println("Đã xóa tất cả tin nhắn.");
     }
-
 
 
 }

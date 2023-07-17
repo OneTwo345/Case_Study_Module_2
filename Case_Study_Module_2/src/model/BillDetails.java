@@ -14,6 +14,7 @@ public class BillDetails implements Serializable {
     LocalDateTime timeExpected;
     double thanhTienPhong;
     double thanhTien;
+    int id;
 
 
     public BillDetails(Bill bill, Food food, Room room,Reservation reservation) {
@@ -34,12 +35,12 @@ public class BillDetails implements Serializable {
 
     }
 
-    public BillDetails(String customerName, LocalDateTime timeExpected, double thanhTienPhong, double thanhTien) {
+    public BillDetails(String customerName, LocalDateTime timeExpected, double thanhTienPhong, double thanhTien, int id) {
        this.customerName = customerName;
        this.timeExpected = timeExpected;
        this.thanhTienPhong = thanhTienPhong;
        this.thanhTien = thanhTien;
-
+       this.id = id;
     }
 
     public Reservation getReservation() {
@@ -96,6 +97,14 @@ public class BillDetails implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public Bill getBill() {

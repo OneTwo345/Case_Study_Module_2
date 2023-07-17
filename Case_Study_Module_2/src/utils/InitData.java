@@ -114,27 +114,27 @@ public class InitData {
         SerializationUtil.serialize(foodList, EPath.FOOD.getFilePath());
     }
 
-    public static void initBill() {
+//    public static void initBill() {
+////
+//        List<Bill> billList = new ArrayList<>();
+//        LocalDateTime date1 = AppUtils.parseDateTime("2023-07-16 14:30:30");
+//        LocalDateTime date2 = AppUtils.parseDateTime("2023-07-15 17:30:30");
+//        LocalDateTime date3 = AppUtils.parseDateTime(("2023-07-15 20:30:30"));
 //
-        List<Bill> billList = new ArrayList<>();
-        LocalDateTime date1 = AppUtils.parseDateTime("2023-07-16 14:30:30");
-        LocalDateTime date2 = AppUtils.parseDateTime("2023-07-15 17:30:30");
-        LocalDateTime date3 = AppUtils.parseDateTime(("2023-07-15 20:30:30"));
-
-        Bill bill1 = new Bill("12345", roomList.get(1), AppUtils.getDateTimeNow(), date1, EBillStatus.PAY);
-        Bill bill2 = new Bill("B0811", roomList.get(0), AppUtils.getDateTimeNow(), date2, EBillStatus.PAY);
-        Bill bill3 = new Bill("B0911", roomList.get(2), AppUtils.getDateTimeNow(), date3, EBillStatus.PAY);
-        billList.add(bill1);
-        billList.add(bill2);
-        billList.add(bill3);
-        SerializationUtil.serialize(billList, EPath.Bill.getFilePath());
-
-    }
+//        Bill bill1 = new Bill("12345", roomList.get(1), AppUtils.getDateTimeNow(), date1, EBillStatus.PAY);
+//        Bill bill2 = new Bill("B0811", roomList.get(0), AppUtils.getDateTimeNow(), date2, EBillStatus.PAY);
+//        Bill bill3 = new Bill("B0911", roomList.get(2), AppUtils.getDateTimeNow(), date3, EBillStatus.PAY);
+//        billList.add(bill1);
+//        billList.add(bill2);
+//        billList.add(bill3);
+//        SerializationUtil.serialize(billList, EPath.Bill.getFilePath());
+//
+//    }
     public static void initBillDetails() {
 
         List<BillDetails> billDetailsList = new ArrayList<>();
         LocalDateTime date1 = AppUtils.parseDateTime("2023-07-16 14:30:30");
-        BillDetails billDetails = new BillDetails("Tuan",date1,100000,300000);
+        BillDetails billDetails = new BillDetails("Tuan",date1,100000,300000,13);
         billDetailsList.add(billDetails);
         SerializationUtil.serialize(billDetailsList, EPath.BILLDETAILS.getFilePath());
 
