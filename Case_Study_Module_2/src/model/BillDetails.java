@@ -1,6 +1,7 @@
 package model;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 public class BillDetails implements Serializable {
     //food, bill, name food , price,quantity,
@@ -8,11 +9,18 @@ public class BillDetails implements Serializable {
     Food food;
     Room room;
     String name;
+    Reservation reservation;
+    String customerName;
+    LocalDateTime timeExpected;
+    double thanhTienPhong;
+    double thanhTien;
 
-    public BillDetails(Bill bill, Food food, Room room) {
+
+    public BillDetails(Bill bill, Food food, Room room,Reservation reservation) {
         this.bill = bill;
         this.food = food;
         this.room = room;
+        this.reservation = reservation;
     }
 
     public BillDetails(Bill bill, Food food, Room room, String name) {
@@ -24,6 +32,54 @@ public class BillDetails implements Serializable {
 
     public BillDetails(){
 
+    }
+
+    public BillDetails(String customerName, LocalDateTime timeExpected, double thanhTienPhong, double thanhTien) {
+       this.customerName = customerName;
+       this.timeExpected = timeExpected;
+       this.thanhTienPhong = thanhTienPhong;
+       this.thanhTien = thanhTien;
+
+    }
+
+    public Reservation getReservation() {
+        return reservation;
+    }
+
+    public void setReservation(Reservation reservation) {
+        this.reservation = reservation;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public LocalDateTime getTimeExpected() {
+        return timeExpected;
+    }
+
+    public void setTimeExpected(LocalDateTime timeExpected) {
+        this.timeExpected = timeExpected;
+    }
+
+    public double getThanhTienPhong() {
+        return thanhTienPhong;
+    }
+
+    public void setThanhTienPhong(double thanhTienPhong) {
+        this.thanhTienPhong = thanhTienPhong;
+    }
+
+    public double getThanhTien() {
+        return thanhTien;
+    }
+
+    public void setThanhTien(double thanhTien) {
+        this.thanhTien = thanhTien;
     }
 
     public Food getFood() {
@@ -65,6 +121,7 @@ public class BillDetails implements Serializable {
     public void setRoom(Room room) {
         this.room = room;
     }
+
 
 
 

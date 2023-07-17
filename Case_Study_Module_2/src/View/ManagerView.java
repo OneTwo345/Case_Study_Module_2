@@ -16,6 +16,7 @@ import java.time.format.DateTimeParseException;
 import java.util.*;
 
 import static View.LoginView.loginMenu;
+import static service.BillDetailService.billDetailsList;
 import static service.ReservationService.findReservationById;
 import static service.ReservationService.reservationList;
 import static service.RoomService.roomList;
@@ -42,13 +43,15 @@ public class ManagerView {
             System.out.println("12. Thêm cuộc hẹn mới");
             System.out.println("13. Xem thông tin chi tiết cuộc hẹn");
             System.out.println("14. Chuyển phòng");
+            System.out.println("15. Tính doanh thu tổng theo khoảng ngày");
+            System.out.println("16. Tính doanh thu tiền phòng theo khoảng ngày");
             System.out.println("0. Quay lại");
 
 
             choice = getIntWithBound("Input choice", 0, 30);
             switch (choice) {
                 case 1:
-                   displayRoomClientView();
+                    displayRoomClientView();
                     displayReservation();
                     break;
                 case 2:
@@ -89,6 +92,12 @@ public class ManagerView {
                     break;
                 case 14:
                     changeRoomByReservationId();
+                    break;
+                case 15:
+                    calculateRevenueByDateRangeAndPrintDetails();
+                    break;
+                case 16:
+                    calculatePricePerHourByDateRangeAndPrintDetails();
                     break;
 
                 case 0:
@@ -301,6 +310,7 @@ public class ManagerView {
         System.out.println("\t\t\t\t====================================================================================================================================================\n\n");
 
     }
+
     public static void changeRoomStatusByReservationId() {
         ReservationService.loadReservation();
 
@@ -346,7 +356,7 @@ public class ManagerView {
                 case 5:
                     newStatus = ERoomStatus.WAITING;
                     break;
-                    case 6:
+                case 6:
                     newStatus = ERoomStatus.WAITING;
                     break;
                 default:
@@ -358,6 +368,7 @@ public class ManagerView {
         System.out.println("Trạng thái của phòng đã được cập nhật.");
         displayReservation();
     }
+
     public static void makeBill() {
         String employee = getString("Nhập tên thu ngân");
         int reservationId = getInt("Nhập vào Id cuộc hẹn cần tính tiền");
@@ -407,16 +418,18 @@ public class ManagerView {
         long soGioSuDung = Duration.between(gioVao, gioRa).toHours();
         long soPhutSuDung = Duration.between(gioVao, gioRa).toMinutes();
 
-        long soPhutDuRa = soPhutSuDung - soGioSuDung*60;
+        long soPhutDuRa = soPhutSuDung - soGioSuDung * 60;
         double giaPhong = room.getRoomPricePerHour();
-        double thanhTienPhong = giaPhong/60 * soPhutSuDung;
+        double thanhTienPhong = giaPhong / 60 * soPhutSuDung;
         double thanhTienDoAn = 0;
         if (doAn != null) {
             for (OrderedFood mon : doAn) {
-                thanhTienDoAn += mon.getQuantity()*mon.getFood().getFoodPrice();
+                thanhTienDoAn += mon.getQuantity() * mon.getFood().getFoodPrice();
             }
         }
         double thanhTien = thanhTienPhong + thanhTienDoAn - reservation.getDownPayment();
+        BillDetails billDetails = new BillDetails(reservation.getCustomerName(), reservation.getTimeExpected(), thanhTienPhong, thanhTien);
+        billDetailsList.add(billDetails);
         String note = getString("Nhập vào ghi chú");
 
         System.out.println("HÓA ĐƠN PHÒNG HÁT KARAOKE DN");
@@ -425,25 +438,26 @@ public class ManagerView {
         System.out.println("Giờ vào: " + gioVao);
         System.out.println("Giờ ra: " + gioRa);
         System.out.println("Thời gian sử dụng: " + soGioSuDung + "giờ " + soPhutDuRa + " phút");
-        System.out.println("Tiền thuê phòng: " + CurrencyFormat.covertPriceToString(thanhTienPhong) );
+        System.out.println("Tiền thuê phòng: " + CurrencyFormat.covertPriceToString(thanhTienPhong));
         if (doAn != null && !doAn.isEmpty()) {
             System.out.println("Đồ ăn đã đặt:");
             for (OrderedFood mon : doAn) {
                 System.out.println("- " + mon.getFood().getFoodName() + " " +
-                        "- Số lượng: " + mon.getQuantity() + "- Giá: "+ CurrencyFormat.covertPriceToString(mon.getFood().getFoodPrice()) + " Tổng tiền: " +
-                        " " +CurrencyFormat.covertPriceToString(mon.getFood().getFoodPrice()*mon.getQuantity()));
+                        "- Số lượng: " + mon.getQuantity() + "- Giá: " + CurrencyFormat.covertPriceToString(mon.getFood().getFoodPrice()) + " Tổng tiền: " +
+                        " " + CurrencyFormat.covertPriceToString(mon.getFood().getFoodPrice() * mon.getQuantity()));
             }
-            System.out.println("Tiền đồ ăn: " + CurrencyFormat.covertPriceToString(thanhTienDoAn)  );
+            System.out.println("Tiền đồ ăn: " + CurrencyFormat.covertPriceToString(thanhTienDoAn));
         }
-        System.out.println("Tiền khách cọc trước " + CurrencyFormat.covertPriceToString( reservation.getDownPayment()));
+        System.out.println("Tiền khách cọc trước " + CurrencyFormat.covertPriceToString(reservation.getDownPayment()));
         System.out.println(note);
-        System.out.println("Tổng thành tiền: " + CurrencyFormat.covertPriceToString(thanhTien)  );
+        System.out.println("Tổng thành tiền: " + CurrencyFormat.covertPriceToString(thanhTien));
 
         System.out.println("Nhân viên thu tiền: " + employee);
         reservation.setReservationRoomStatus(ERoomStatus.MAINTENANCE);
         ReservationService.saveReservation();
     }
-    public static void createNewReservation(){
+
+    public static void createNewReservation() {
         String customerName = getString("Nhập tên khách");
         LocalDateTime timeExpected = getDateTimeNow();
         double downPayment = getDouble("Nhập vào số tiền  cọc trước");
@@ -481,6 +495,7 @@ public class ManagerView {
 
 
     }
+
     public static void addFoodToReservation() {
         ReservationService.loadReservation();
         int reservationId = getInt("Nhập Id cuộc hẹn mà bạn muốn thêm đồ ăn");
@@ -548,7 +563,8 @@ public class ManagerView {
         }
         ReservationService.saveReservation();
     }
-    public static void checkReservationDetails(){
+
+    public static void checkReservationDetails() {
         ReservationService.loadReservation();
         displayReservation();
         int reservationId = getInt("Nhập ID cuộc hẹn bạn muốn xem:");
@@ -599,13 +615,13 @@ public class ManagerView {
         long soGioSuDung = Duration.between(gioVao, gioRa).toHours();
         long soPhutSuDung = Duration.between(gioVao, gioRa).toMinutes();
 
-        long soPhutDuRa = soPhutSuDung - soGioSuDung*60;
+        long soPhutDuRa = soPhutSuDung - soGioSuDung * 60;
         double giaPhong = room.getRoomPricePerHour();
-        double thanhTienPhong = giaPhong/60 * soPhutSuDung;
+        double thanhTienPhong = giaPhong / 60 * soPhutSuDung;
         double thanhTienDoAn = 0;
         if (doAn != null) {
             for (OrderedFood mon : doAn) {
-                thanhTienDoAn += mon.getQuantity()*mon.getFood().getFoodPrice();
+                thanhTienDoAn += mon.getQuantity() * mon.getFood().getFoodPrice();
             }
         }
         double thanhTien = thanhTienPhong + thanhTienDoAn - reservation.getDownPayment();
@@ -614,20 +630,21 @@ public class ManagerView {
         System.out.println("Giờ vào: " + gioVao);
         System.out.println("Giờ ra: " + gioRa);
         System.out.println("Thời gian sử dụng: " + soGioSuDung + "giờ " + soPhutDuRa + " phút");
-        System.out.println("Tiền thuê phòng: " + CurrencyFormat.covertPriceToString(thanhTienPhong) );
+        System.out.println("Tiền thuê phòng: " + CurrencyFormat.covertPriceToString(thanhTienPhong));
         if (doAn != null && !doAn.isEmpty()) {
             System.out.println("Đồ ăn đã đặt:");
             for (OrderedFood mon : doAn) {
                 System.out.println("- " + mon.getFood().getFoodName() + " " +
-                        "- Số lượng: " + mon.getQuantity() + "- Giá: "+ CurrencyFormat.covertPriceToString(mon.getFood().getFoodPrice()) + " Tổng tiền: " +
-                        " " +CurrencyFormat.covertPriceToString(mon.getFood().getFoodPrice()*mon.getQuantity()));
+                        "- Số lượng: " + mon.getQuantity() + "- Giá: " + CurrencyFormat.covertPriceToString(mon.getFood().getFoodPrice()) + " Tổng tiền: " +
+                        " " + CurrencyFormat.covertPriceToString(mon.getFood().getFoodPrice() * mon.getQuantity()));
             }
-            System.out.println("Tiền đồ ăn: " + CurrencyFormat.covertPriceToString(thanhTienDoAn)  );
+            System.out.println("Tiền đồ ăn: " + CurrencyFormat.covertPriceToString(thanhTienDoAn));
         }
-        System.out.println("Tiền khách cọc trước " + CurrencyFormat.covertPriceToString( reservation.getDownPayment()));
-        System.out.println("Tổng thành tiền: " + CurrencyFormat.covertPriceToString(thanhTien)  );
+        System.out.println("Tiền khách cọc trước " + CurrencyFormat.covertPriceToString(reservation.getDownPayment()));
+        System.out.println("Tổng thành tiền: " + CurrencyFormat.covertPriceToString(thanhTien));
     }
-    public static void changeRoomByReservationId( ) {
+
+    public static void changeRoomByReservationId() {
         ReservationService.loadReservation();
         int reservationId = getInt("Nhập ID cuộc hẹn");
 
@@ -702,7 +719,7 @@ public class ManagerView {
         }
         long soPhutSuDung = Duration.between(gioVao, gioRa).toMinutes();
         double giaPhongCu = oldRoom.getRoomPricePerHour();
-        double thanhTienPhongCu = giaPhongCu/60 * soPhutSuDung;
+        double thanhTienPhongCu = giaPhongCu / 60 * soPhutSuDung;
         System.out.println("Giá tiền hát phòng cũ là: " + CurrencyFormat.covertPriceToString(thanhTienPhongCu));
 
 
@@ -711,8 +728,97 @@ public class ManagerView {
         displayReservation();
     }
 
+    public static double calculateTotalRevenue() {
+        BillDetailService.loadBillDetails();
+        double totalRevenue = 0;
+        for (BillDetails billDetails : billDetailsList) {
+            totalRevenue += billDetails.getThanhTien();
+        }
+        return totalRevenue;
+    }
 
+    public static double calculateRevenueByDateRangeAndPrintDetails() {
+        LocalDateTime startDate;
+        LocalDateTime endDate;
+        while (true) {
+            String startDateStr = getString("Nhập ngày bắt đầu (yyyy-MM-dd HH:mm:ss): ");
+            try {
+                startDate = parseDateTime(startDateStr);
+            } catch (DateTimeParseException e) {
+                System.out.println("Lỗi định dạng ngày giờ. Vui lòng nhập lại.");
+                continue;
+            }
+            break;
+        }
 
+        while (true) {
+            String endDateStr = getString("Nhập ngày kết thúc (yyyy-MM-dd HH:mm:ss): ");
+            try {
+                endDate = parseDateTime(endDateStr);
+            } catch (DateTimeParseException e) {
+                System.out.println("Lỗi định dạng ngày giờ. Vui lòng nhập lại.");
+                continue;
+            }
+            if (endDate.isBefore(startDate)) {
+                System.out.println("Ngày kết thúc phải sau ngày bắt đầu. Vui lòng nhập lại.");
+                continue;
+            }
+            break;
+        }
+        BillDetailService.loadBillDetails();
+        double totalRevenue = 0;
+        for (BillDetails billDetails : billDetailsList) {
+            LocalDateTime billDate = billDetails.getTimeExpected();
+            if (billDate.isEqual(startDate) || billDate.isEqual(endDate) ||
+                    (billDate.isAfter(startDate) && billDate.isBefore(endDate))) {
+                totalRevenue += billDetails.getThanhTien();
+                System.out.println("Hóa đơn ngày " + billDetails.getTimeExpected() + " của khách hàng " + billDetails.getCustomerName() + " có tổng tiền là " + CurrencyFormat.covertPriceToString(billDetails.getThanhTien()));
+            }
+        }
+        System.out.println("Tổng doanh thu từ " + startDate + " đến " + endDate + " là: " + CurrencyFormat.covertPriceToString(totalRevenue));
+        return totalRevenue;
+    }
+    public static double calculatePricePerHourByDateRangeAndPrintDetails() {
+        LocalDateTime startDate;
+        LocalDateTime endDate;
+        while (true) {
+            String startDateStr = getString("Nhập ngày bắt đầu (yyyy-MM-dd HH:mm:ss): ");
+            try {
+                startDate = parseDateTime(startDateStr);
+            } catch (DateTimeParseException e) {
+                System.out.println("Lỗi định dạng ngày giờ. Vui lòng nhập lại.");
+                continue;
+            }
+            break;
+        }
+
+        while (true) {
+            String endDateStr = getString("Nhập ngày kết thúc (yyyy-MM-dd HH:mm:ss): ");
+            try {
+                endDate = parseDateTime(endDateStr);
+            } catch (DateTimeParseException e) {
+                System.out.println("Lỗi định dạng ngày giờ. Vui lòng nhập lại.");
+                continue;
+            }
+            if (endDate.isBefore(startDate)) {
+                System.out.println("Ngày kết thúc phải sau ngày bắt đầu. Vui lòng nhập lại.");
+                continue;
+            }
+            break;
+        }
+        BillDetailService.loadBillDetails();
+        double totalRevenue = 0;
+        for (BillDetails billDetails : billDetailsList) {
+            LocalDateTime billDate = billDetails.getTimeExpected();
+            if (billDate.isEqual(startDate) || billDate.isEqual(endDate) ||
+                    (billDate.isAfter(startDate) && billDate.isBefore(endDate))) {
+                totalRevenue += billDetails.getThanhTienPhong();
+                System.out.println("Hóa đơn ngày " + billDetails.getTimeExpected() + " của khách hàng " + billDetails.getCustomerName() + " có tổng tiền là " + CurrencyFormat.covertPriceToString(billDetails.getThanhTien()));
+            }
+        }
+        System.out.println("Tổng doanh thu từ " + startDate + " đến " + endDate + " là: " + CurrencyFormat.covertPriceToString(totalRevenue));
+        return totalRevenue;
+    }
 
 
 }

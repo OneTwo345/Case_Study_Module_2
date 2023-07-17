@@ -130,6 +130,15 @@ public class InitData {
         SerializationUtil.serialize(billList, EPath.Bill.getFilePath());
 
     }
+    public static void initBillDetails() {
+
+        List<BillDetails> billDetailsList = new ArrayList<>();
+        LocalDateTime date1 = AppUtils.parseDateTime("2023-07-16 14:30:30");
+        BillDetails billDetails = new BillDetails("Tuan",date1,100000,300000);
+        billDetailsList.add(billDetails);
+        SerializationUtil.serialize(billDetailsList, EPath.BILLDETAILS.getFilePath());
+
+    }
 
     public static void initManager() {
         Manager manager = new Manager("duy123", "duy@gmail.com", "123456", "0769973715");
