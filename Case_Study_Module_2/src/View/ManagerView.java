@@ -35,7 +35,7 @@ public class ManagerView {
 //            System.out.println("0. Quay lại");
             System.out.println("                               ╔═══════════════════════════════════════════════════════════════════════════════════╗");
             System.out.println("                               ║                              GIAO DIỆN QUẢN LÝ                                    ║");
-            System.out.println("                               ║                       [1]  DANH SÁCH CUỘC HẸN                                     ║");
+            System.out.println("                               ║                       [1] DANH SÁCH CUỘC HẸN                                      ║");
             System.out.println("                               ║                       [2] KIỂM TRA TIN NHẮN                                       ║");
             System.out.println("                               ║                       [3] THÊM THỨC ĂN VÀO PHÒNG                                  ║");
             System.out.println("                               ║                       [4] TÍNH DOANH THU TỔNG THEO KHOẢNG NGÀY                    ║");
@@ -508,32 +508,11 @@ public class ManagerView {
                 thanhTienDoAn += mon.getQuantity() * mon.getFood().getFoodPrice();
             }
         }
-        double thanhTien = thanhTienPhong + thanhTienDoAn - reservation.getDownPayment();
+        Double note = getDouble("Nhập vào tiền phát sinh nếu có");
+        double thanhTien = thanhTienPhong + thanhTienDoAn - reservation.getDownPayment() + note;
         BillDetails billDetails = new BillDetails(reservation.getCustomerName(), reservation.getTimeExpected(), thanhTienPhong, thanhTien, reservation.getReservationId());
         billDetailsList.add(billDetails);
-        String note = getString("Nhập vào ghi chú");
 
-//        System.out.println("HÓA ĐƠN PHÒNG HÁT KARAOKE DN");
-//        System.out.println("Tên khách hàng: " + customer);
-//        System.out.println("Phòng: " + room.getRoomName());
-//        System.out.println("Giờ vào: " + gioVao);
-//        System.out.println("Giờ ra: " + gioRa);
-//        System.out.println("Thời gian sử dụng: " + soGioSuDung + "giờ " + soPhutDuRa + " phút");
-//        System.out.println("Tiền thuê phòng: " + CurrencyFormat.covertPriceToString(thanhTienPhong));
-//        if (doAn != null && !doAn.isEmpty()) {
-//            System.out.println("Đồ ăn đã đặt:");
-//            for (OrderedFood mon : doAn) {
-//                System.out.println("- " + mon.getFood().getFoodName() + " " +
-//                        "- Số lượng: " + mon.getQuantity() + "- Giá: " + CurrencyFormat.covertPriceToString(mon.getFood().getFoodPrice()) + " Tổng tiền: " +
-//                        " " + CurrencyFormat.covertPriceToString(mon.getFood().getFoodPrice() * mon.getQuantity()));
-//            }
-//            System.out.println("Tiền đồ ăn: " + CurrencyFormat.covertPriceToString(thanhTienDoAn));
-//        }
-//        System.out.println("Tiền khách cọc trước " + CurrencyFormat.covertPriceToString(reservation.getDownPayment()));
-//        System.out.println(note);
-//        System.out.println("Tổng thành tiền: " + CurrencyFormat.covertPriceToString(thanhTien));
-//
-//        System.out.println("Nhân viên thu tiền: " + employee);
         System.out.println("                               ╔═══════════════════════════════════════════════════════════════════════════════════");
         System.out.println("                               ║                              KARAOKE DUY NGUYỄN                                   ");
         System.out.println("                               ║      Địa chỉ: 01 Nguyễn Trường Tộ, Huế                                            ");
@@ -548,7 +527,7 @@ public class ManagerView {
         if (doAn != null && !doAn.isEmpty()) {
             System.out.println("                                  Đồ ăn đã đặt:");
             for (OrderedFood mon : doAn) {
-                System.out.println("                                 - " + mon.getFood().getFoodName() +"\n"+
+                System.out.println("                                 - " + mon.getFood().getFoodName() + "\n" +
                         "                                            - Số lượng: " + mon.getQuantity() + "\n" +
                         "                                           - Giá: " + CurrencyFormat.covertPriceToString(mon.getFood().getFoodPrice()) + "\n" +
                         "                                          Tổng tiền: " + "\n" +
@@ -559,13 +538,14 @@ public class ManagerView {
         System.out.println("                               ║      Tiền phòng: " + CurrencyFormat.covertPriceToString(thanhTienPhong) + "        ");
         System.out.println("                               ║      Tiền khách cọc trước " + CurrencyFormat.covertPriceToString(reservation.getDownPayment()));
         ;
+        System.out.println("                               ║      " + "Tiền phát sinh: " + CurrencyFormat.covertPriceToString(note) + "                                                              ");
         System.out.println("                               ║      Tổng thành tiền: " + CurrencyFormat.covertPriceToString(thanhTien));
-        System.out.println("                               ║      " + note + "                                                              ");
         System.out.println("                               ║      Nhân viên thu ngân: " + employee + "                                                              ");
         System.out.println("                               ╚═══════════════════════════════════════════════════════════════════════════════════");
 
         reservation.setReservationRoomStatus(ERoomStatus.MAINTENANCE);
         ReservationService.saveReservation();
+        BillDetailService.saveBillDetail();
     }
 
     public static void createNewReservation() {

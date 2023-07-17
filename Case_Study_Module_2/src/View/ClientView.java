@@ -515,6 +515,7 @@ public class ClientView {
         if (!foundReservation) {
             System.out.println("ID nhập vào không hợp lệ.");
         }
+        System.out.println("Gửi tin nhắn thành công");
 
 
     }
